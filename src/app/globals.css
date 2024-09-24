@@ -7,7 +7,11 @@
 :root {
   --primary: #ef7a46;
   --primary-light: #f1ecf2;
+  --primary-light-0: rgba(235, 102, 43, 0.38);
   --primary-light-1: #fef7f4;
+  --primary-light-2:rgba(235, 102, 43, .1);
+  --primary-light-3:rgba(235, 102, 43, .04);
+  --primary-light-4:rgba(235, 102, 43, 0.6);
   --secondary: #006ce4;
 
   --color-dark-0: #717171;
@@ -15,13 +19,19 @@
   --color-dark-2: #424854;
   --color-dark-3: #2c333f;
 
+  --color-green-0: #eff7f1;
+  --color-green-1: #63b06f;
+
+  --color-red-0: #ffe5e5;
+  --color-red-1: #ff0000;
+
   --yellow-1: #ffa800;
 
   --border: #e9ecef;
   --background: #fafafa;
   --transparent: #ffffff00;
 
-  --shadow:rgba(235, 102, 43, 0.16);
+  --shadow: rgba(235, 102, 43, 0.16);
 }
 
 html,
@@ -51,6 +61,27 @@ input[type="checkbox"]:checked + div {
 input[type="checkbox"]:checked + div > svg {
   transform: scale(1.5);
 }
-.sliderTrack{
-  background-color: rgba(235, 102, 43,0.38);
+.sliderTrack {
+  background-color: rgba(235, 102, 43, 0.38);
+}
+
+*::selection {
+  background-color: var(--primary);
+  color: white;
+}
+
+.line {
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+.itineraryGrid:not(:last-child) .dashedLine::before {
+  
+  content: "";
+  position: absolute;
+  border-right: 1px var(--primary) dashed;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 20px;
+  bottom: -66px;
 }

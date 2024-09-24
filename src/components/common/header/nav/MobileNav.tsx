@@ -1,6 +1,7 @@
 import React from "react";
 import {
   Sheet,
+  SheetClose,
   SheetContent,
   SheetDescription,
   SheetHeader,
@@ -24,8 +25,10 @@ const MobileNav: React.FC<Props> = ({ className }) => {
           <SheetTitle className="sr-only">Menu</SheetTitle>
           <SheetHeader className="mt-12 h-full justify-between">
             <SheetDescription />
-            <Nav className="flex-col" />
-            <NavButtons className="flex-col" />
+            <SheetClose>
+              <Nav className="flex-col" />
+              <NavButtons className="flex-col" />
+            </SheetClose>
           </SheetHeader>
         </SheetContent>
       </Sheet>

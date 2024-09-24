@@ -1,21 +1,20 @@
 import React from "react";
-import { IoMdStar, IoMdStarHalf } from "react-icons/io";
+import { TiStarFullOutline,TiStarHalfOutline } from "react-icons/ti";
 
 interface Props {
   rating: number;
   styles?: string;
 }
-
 const Ratings: React.FC<Props> = ({ rating, styles="" }) => {
-  const stars: any[] = [];
+  const stars: React.ReactElement[] = [];
 
   for (let i = 1; i <= 5; i++) {
     if (i <= rating) {
-      stars.push(<IoMdStar className="text-yellow-500" />);
+      stars.push(<TiStarFullOutline className="text-yellow-500" />);
     } else if (i === Math.ceil(rating) && !Number.isInteger(rating)) {
-      stars.push(<IoMdStarHalf className="text-yellow-500" />);
+      stars.push(<TiStarHalfOutline className="text-yellow-500" />);
     } else {
-      stars.push(<IoMdStar className="text-gray-400" />);
+      stars.push(<TiStarFullOutline className="text-gray-400" />);
     }
   }
 

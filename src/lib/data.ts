@@ -56,29 +56,74 @@ export const ACTIVITY_IMAGES = [
   },
 ];
 
-export const TOUR_TYPE=[
+export const TOUR_TYPE = [
   {
-    label:'Nature Tour',
-    value:'nature'
+    label: "Nature Tour",
+    value: "nature",
   },
   {
-    label:'Adventure Tour',
-    value:'adventure'
+    label: "Adventure Tour",
+    value: "adventure",
   },
   {
-    label:'Cultural Tour',
-    value:'cultural'
+    label: "Cultural Tour",
+    value: "cultural",
   },
   {
-    label:'Beach Tour',
-    value:'beach'
+    label: "Beach Tour",
+    value: "beach",
   },
   {
-    label:'Bus Tour',
-    value:'bus'
+    label: "Bus Tour",
+    value: "bus",
   },
   {
-    label:'Day Cruises',
-    value:'cruises'
+    label: "Day Cruises",
+    value: "cruises",
   },
-]
+];
+
+export const TOUR_DURATION = [
+  {
+    label: "1 days",
+    value: "1days",
+  },
+  {
+    label: "2 days",
+    value: "2days",
+  },
+  {
+    label: "5 days",
+    value: "5days",
+  },
+  {
+    label: "7 days",
+    value: "7days",
+  },
+  {
+    label: "10 days",
+    value: "10days",
+  },
+];
+export const RATINGS = [
+  {
+    label: "5",
+    value: 5,
+  },
+  {
+    label: "4",
+    value: 4,
+  },
+  {
+    label: "3",
+    value: 3,
+  },
+  {
+    label: "2",
+    value: 2,
+  },
+  {
+    label: "1",
+    value: 1,
+  },
+];

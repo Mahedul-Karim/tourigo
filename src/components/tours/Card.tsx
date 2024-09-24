@@ -4,7 +4,8 @@ import { LuMapPin } from "react-icons/lu";
 import Ratings from "../common/ui/Ratings";
 import { CiClock2 } from "react-icons/ci";
 import { IoMdHeart, IoMdHeartEmpty } from "react-icons/io";
-
+import Link from "next/link";
+/**bg-gradient-to-r from-[#000] from-0% to-[#000] bg-no-repeat bg-[0_95%] bg-[length:0_1px] transition-all duration-300 hover:bg-[length:100%_1px] line */
 const Card = () => {
   return (
     <div className="bg-white overflow-clip border border-solid border-border rounded-[12px]">
@@ -27,11 +28,14 @@ const Card = () => {
           <LuMapPin className="text-[10px] xs:text-[14px]" />
           Paris,France
         </div>
-        <p className="text-[10px] xs:text-[12px] sm:text-[15px] mt-1 line-clamp-2 text-dark-1 font-medium leading-[1.4]">
+        <Link
+          href="/tours/efrtvsr"
+          className="text-[10px] xs:text-[12px] sm:text-[15px] mt-1 line-clamp-2 text-dark-1 font-medium leading-[1.4] "
+        >
           Centipede Tour - Guided Arizona Desert Tour by ATV
-        </p>
+        </Link>
         <div className="my-1 flex items-center gap-1">
-          <Ratings rating={2.4} styles="text-[10px] xs:text-base" />
+          <Ratings rating={2.4} styles="text-[10px] xs:text-sm" />
           <p className="text-[8px] xs:text-[10px] sm:text-[11px] text-center text-dark-0">
             4.8(272)
           </p>
