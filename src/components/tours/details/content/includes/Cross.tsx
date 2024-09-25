@@ -7,7 +7,7 @@ const Cross = () => {
       <span className="size-[18px] xs:size-[20px] flex items-center justify-center bg-red-0 text-red-1 rounded-full shrink-0">
         <RxCross2 className="text-[10px] xs:text-xs" />
       </span>
-      <p className="text-dark-1 text-[11px] xs:text-[13px]">
+      <p className="text-dark-1 text-[12px] xs:text-[13px]">
         Beverages, drinking water, morning tea and buffet lunch
       </p>
     </div>

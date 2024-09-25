@@ -11,14 +11,14 @@ interface Props {
 const StarRating: React.FC<Props> = ({ label, value, setValue }) => {
   return (
     <div className="flex items-center gap-2">
-      <p className="text-dark-1 text-[10px] xs:text-sm">{label}:</p>
+      <p className="text-dark-1 text-xs xs:text-sm">{label}:</p>
       <div className="flex items-center">
         {[1, 2, 3, 4, 5].map((rat) => (
           <span
             key={rat}
             className={`${
               rat <= value ? "text-yellow-500" : "text-gray-400"
-            } cursor-pointer text-xs xs:text-base`}
+            } cursor-pointer text-sm xs:text-base`}
             onClick={() => setValue(rat)}
           >
             <TiStarFullOutline />

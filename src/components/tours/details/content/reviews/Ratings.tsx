@@ -34,15 +34,15 @@ const Ratings: React.FC<Props> = ({
       <div className="flex items-center gap-2 xs:gap-4">
         <p>{icon}</p>
         <p className="flex flex-col">
-          <span className="text-[11px] xs:text-[15px] text-dark-1 font-medium">{label}</span>
-          <span className="text-[9px] xs:text-[13px] text-dark-1">{type}</span>
+          <span className="text-[12px] xs:text-[15px] text-dark-1 font-medium">{label}</span>
+          <span className="text-[10px] xs:text-[13px] text-dark-1">{type}</span>
         </p>
       </div>
       <div className="flex items-center gap-1 xs:gap-2">
         <span>
           <TiStarFullOutline className="text-sm xs:text-base text-yellow-500" />
         </span>
-        <span className="text-[13px] xs:text-[15px] text-dark-1 font-medium">{rating}</span>
+        <span className="text-[12px] xs:text-[15px] text-dark-1 font-medium">{rating}</span>
       </div>
     </div>
   );

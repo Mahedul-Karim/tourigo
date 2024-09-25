@@ -9,7 +9,7 @@ const Includes = () => {
   return (
     <div>
       <Title>What&apos;s included</Title>
-      <div className="mt-4 grid grid-cols-2 gap-1 sm:gap-2">
+      <div className="mt-4 grid xs:grid-cols-2 gap-4 xs:gap-2">
         <div className="flex flex-col gap-4">
           <Check />
           <Check />

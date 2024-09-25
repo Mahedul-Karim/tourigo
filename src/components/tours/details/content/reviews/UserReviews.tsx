@@ -8,11 +8,11 @@ const UserReviews = () => {
           <div className="flex items-center gap-2">
             <UserAvatar />
             <div className="flex flex-col">
-              <p className="text-xs xs:text-sm text-dark-1">John Doe</p>
-              <Ratings rating={4.5} styles="text-[10px] xs:text-xs"/>
+              <p className="text-sm text-dark-1">John Doe</p>
+              <Ratings rating={4.5} styles="text-xs"/>
             </div>
           </div>
-          <p className="text-[10px] xs:text-xs text-dark-1 !leading-[1.9]">Great for 4-5 hours to explore. Really a lot to see and tons of photo spots. Even have a passport for you to collect all the stamps as a souvenir. Must see for a Harry Potter fan.</p>
+          <p className="text-xs text-dark-1 !leading-[1.9]">Great for 4-5 hours to explore. Really a lot to see and tons of photo spots. Even have a passport for you to collect all the stamps as a souvenir. Must see for a Harry Potter fan.</p>
         </div>
   )
 }

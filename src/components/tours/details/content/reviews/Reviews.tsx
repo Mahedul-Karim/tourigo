@@ -16,7 +16,7 @@ const Reviews = () => {
         <Ratings
           isOverall
           icon={
-            <MdOutlineStars className="text-primary text-xl xs:text-3xl" />
+            <MdOutlineStars className="text-primary text-2xl xs:text-3xl" />
           }
           label="Overall Rating"
           rating={5}
@@ -24,37 +24,39 @@ const Reviews = () => {
         <div className="grid grid-cols-2 gap-2">
           <Ratings
             icon={
-              <MdOutlineLocationOn className="text-primary text-xl xs:text-3xl" />
+              <MdOutlineLocationOn className="text-primary text-2xl xs:text-3xl" />
             }
             label="Location"
             rating={5}
           />
           <Ratings
-            icon={<RiAppsLine className="text-primary text-xl xs:text-3xl" />}
+            icon={<RiAppsLine className="text-primary text-2xl xs:text-3xl" />}
             label="Amenities"
             rating={5}
           />
           <Ratings
             icon={
-              <LiaUtensilsSolid className="text-primary text-xl xs:text-3xl" />
+              <LiaUtensilsSolid className="text-primary text-2xl xs:text-3xl" />
             }
             label="Food"
             rating={5}
           />
           <Ratings
             icon={
-              <IoPricetagOutline className="text-primary text-xl xs:text-3xl" />
+              <IoPricetagOutline className="text-primary text-2xl xs:text-3xl" />
             }
             label="Price"
             rating={5}
           />
           <Ratings
-            icon={<IoBedOutline className="text-primary text-xl xs:text-3xl" />}
+            icon={
+              <IoBedOutline className="text-primary text-2xl xs:text-3xl" />
+            }
             label="Rooms"
             rating={5}
           />
           <Ratings
-            icon={<BiSupport className="text-primary text-xl xs:text-3xl" />}
+            icon={<BiSupport className="text-primary text-2xl xs:text-3xl" />}
             label="Tour Support"
             rating={1.5}
           />

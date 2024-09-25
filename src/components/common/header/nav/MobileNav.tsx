@@ -23,11 +23,13 @@ const MobileNav: React.FC<Props> = ({ className }) => {
         </SheetTrigger>
         <SheetContent>
           <SheetTitle className="sr-only">Menu</SheetTitle>
-          <SheetHeader className="mt-12 h-full justify-between">
+          <SheetHeader className="h-full">
             <SheetDescription />
-            <SheetClose>
-              <Nav className="flex-col" />
-              <NavButtons className="flex-col" />
+            <SheetClose asChild>
+              <div className="mt-12 h-full flex flex-col justify-between">
+                <Nav className="flex-col" />
+                <NavButtons className="flex-col" />
+              </div>
             </SheetClose>
           </SheetHeader>
         </SheetContent>

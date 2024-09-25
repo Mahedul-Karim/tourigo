@@ -43,14 +43,14 @@ const CommentForm: React.FC<Props> = ({
   const {
     formState: { errors, isSubmitting },
     getValues,
-    reset
+    reset,
   } = form;
 
   const onSubmit = async (values: z.infer<typeof ratingSchema>) => {
-    await new Promise(resolve=>setTimeout(resolve,1000));
+    await new Promise((resolve) => setTimeout(resolve, 1000));
     reset({
-        reviews:""
-    })
+      reviews: "",
+    });
   };
   return (
     <div className="mt-4">
@@ -61,12 +61,14 @@ const CommentForm: React.FC<Props> = ({
             name="reviews"
             render={({ field }) => (
               <FormItem className="mt-6">
-                <AnimatedTextArea
-                  label={"Review"}
-                  text={getValues("reviews")}
-                  error={errors?.reviews?.message || ""}
-                  {...field}
-                />
+                <FormControl>
+                  <AnimatedTextArea
+                    label={"Review"}
+                    text={getValues("reviews")}
+                    error={errors?.reviews?.message || ""}
+                    {...field}
+                  />
+                </FormControl>
 
                 <FormMessage />
               </FormItem>

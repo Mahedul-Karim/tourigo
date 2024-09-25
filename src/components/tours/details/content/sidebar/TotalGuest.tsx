@@ -4,7 +4,7 @@ import { FaMinus, FaPlus } from "react-icons/fa6";
 const TotalGuest = () => {
   return (
     <div className="flex items-center justify-between">
-      <div className="flex items-center text-[11px] xs:text-[13px] text-dark-1 gap-1">
+      <div className="flex items-center text-[12px] xs:text-[13px] text-dark-1 gap-1">
         <p>Adult (18+years)</p>
         <span className="font-medium">$180</span>
       </div>
