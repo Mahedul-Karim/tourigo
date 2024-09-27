@@ -24,19 +24,19 @@ const Card = () => {
             {/* <IoMdHeart className="text-sm xs:text-base md:text-lg fill-primary" /> */}
           </button>
         </div>
-        <div className="flex items-center gap-1 text-[10px] font-medium text-dark-0">
+        <div className="flex items-center gap-1 text-[10px] sm:text-[11px] font-normal text-dark-0">
           <LuMapPin className="text-xs xs:text-[14px]" />
           Paris,France
         </div>
         <Link
           href="/tours/efrtvsr"
-          className="text-[12px] sm:text-[15px] mt-1 line-clamp-2 text-dark-1 font-medium leading-[1.4] "
+          className="text-[12px] sm:text-[15px] mt-1 line-clamp-2 text-dark-1 font-medium leading-[1.6]"
         >
           Centipede Tour - Guided Arizona Desert Tour by ATV
         </Link>
         <div className="my-1 flex items-center gap-1">
           <Ratings rating={2.4} styles="text-[12px] xs:text-sm" />
-          <p className="text-[10px] sm:text-[11px] text-center text-dark-0">
+          <p className="text-[10px] sm:text-[12px] text-center text-dark-0">
             4.8(272)
           </p>
         </div>

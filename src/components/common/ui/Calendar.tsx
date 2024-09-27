@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { memo, useState } from "react";
 import { FaChevronRight, FaChevronLeft } from "react-icons/fa6";
 
 const DAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
@@ -122,4 +122,4 @@ const Calendar = () => {
   );
 };
 
-export default Calendar;
+export default memo(Calendar);
