@@ -5,18 +5,12 @@ import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import {
   Form,
-  FormControl,
-  FormDescription,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
 
 import { ratingSchema } from "@/components/forms/formSchema";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
 import AnimatedTextArea from "@/components/forms/inputs/AnimatedTextArea";
 
 interface Props {
@@ -48,6 +42,7 @@ const CommentForm: React.FC<Props> = ({
 
   const onSubmit = async (values: z.infer<typeof ratingSchema>) => {
     await new Promise((resolve) => setTimeout(resolve, 1000));
+    console.log(values)
     reset({
       reviews: "",
     });
@@ -61,14 +56,13 @@ const CommentForm: React.FC<Props> = ({
             name="reviews"
             render={({ field }) => (
               <FormItem className="mt-6">
-                <FormControl>
+                
                   <AnimatedTextArea
                     label={"Review"}
                     text={getValues("reviews")}
                     error={errors?.reviews?.message || ""}
                     {...field}
                   />
-                </FormControl>
 
                 <FormMessage />
               </FormItem>
@@ -76,7 +70,7 @@ const CommentForm: React.FC<Props> = ({
           />
           <Button
             type="submit"
-            className="text-xs xs:text-sm bg-primary disabled:bg-primary-0 hover:bg-primary"
+            className="text-xs xs:text-sm bg-primary disabled:bg-disabled hover:bg-primary"
             disabled={isSubmitting}
             size={"lg"}
           >

@@ -22,6 +22,7 @@ const config: Config = {
         light: "var(--primary-light)",
         lighter: "var(--primary-light-1)",
         secondary: "var(--secondary)",
+        disabled:'var(--primary-light-4)',
         dark: {
           "0": "var(--color-dark-0)",
           "1": "var(--color-dark-1)",
