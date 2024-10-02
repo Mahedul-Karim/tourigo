@@ -16,7 +16,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning={true}>
       <body
         className={`font-inter bg-background`}
-        suppressHydrationWarning
+        suppressHydrationWarning={true}
       >
         {children}
       </body>

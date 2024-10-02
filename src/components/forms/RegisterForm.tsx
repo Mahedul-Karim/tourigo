@@ -27,16 +27,19 @@ const RegisterForm = () => {
     reset({
       firstName: "",
       lastName: "",
-      email:"",
-      password:"",
-      confirmPassword:""
+      email: "",
+      password: "",
+      confirmPassword: "",
     });
   };
 
   return (
     <div className="max-w-[380px] w-full">
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-1">
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="flex flex-col gap-1"
+        >
           <FormField
             control={form.control}
             name="firstName"
@@ -49,6 +52,7 @@ const RegisterForm = () => {
                   error={errors?.firstName?.message || ""}
                   {...field}
                   type="text"
+                  disabled={isSubmitting}
                 />
 
                 <FormMessage />
@@ -67,6 +71,7 @@ const RegisterForm = () => {
                   error={errors?.lastName?.message || ""}
                   type="text"
                   {...field}
+                  disabled={isSubmitting}
                 />
 
                 <FormMessage />
@@ -85,6 +90,7 @@ const RegisterForm = () => {
                   error={errors?.email?.message || ""}
                   type="email"
                   {...field}
+                  disabled={isSubmitting}
                 />
 
                 <FormMessage />
@@ -103,6 +109,7 @@ const RegisterForm = () => {
                   error={errors?.password?.message || ""}
                   type="password"
                   {...field}
+                  disabled={isSubmitting}
                 />
 
                 <FormMessage />
@@ -121,6 +128,7 @@ const RegisterForm = () => {
                   error={errors?.confirmPassword?.message || ""}
                   type="password"
                   {...field}
+                  disabled={isSubmitting}
                 />
 
                 <FormMessage />
@@ -129,7 +137,7 @@ const RegisterForm = () => {
           />
           <Button
             type="submit"
-            className="text-xs xs:text-sm bg-primary disabled:bg-disabled hover:bg-primary w-full rounded-xl mt-[4px]"
+            className="text-xs xs:text-sm bg-primary disabled:bg-disabled hover:bg-primary w-full rounded-xl mt-[20px]"
             disabled={isSubmitting}
             size={"lg"}
           >
@@ -137,8 +145,6 @@ const RegisterForm = () => {
           </Button>
         </form>
       </Form>
-      
-      
     </div>
   );
 };

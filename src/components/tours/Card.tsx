@@ -5,10 +5,10 @@ import Ratings from "../common/ui/Ratings";
 import { CiClock2 } from "react-icons/ci";
 import { IoMdHeart, IoMdHeartEmpty } from "react-icons/io";
 import Link from "next/link";
-/**bg-gradient-to-r from-[#000] from-0% to-[#000] bg-no-repeat bg-[0_95%] bg-[length:0_1px] transition-all duration-300 hover:bg-[length:100%_1px] line */
+
 const Card = () => {
   return (
-    <div className="bg-white overflow-clip border border-solid border-border rounded-[12px]">
+    <div className="bg-white group overflow-clip border border-solid border-border rounded-[12px]">
       <div>
         <Image
           src="https://viatour-nextjs.vercel.app/_next/image?url=%2Fimg%2FtourCards%2F1%2F1.png&w=640&q=75"
@@ -32,7 +32,8 @@ const Card = () => {
           href="/tours/efrtvsr"
           className="text-[12px] sm:text-[15px] mt-1 line-clamp-2 text-dark-1 font-medium leading-[1.6]"
         >
-          Centipede Tour - Guided Arizona Desert Tour by ATV
+          <span className="bg-gradient-to-r from-[#000] from-0% to-[#000] bg-no-repeat bg-[0_100%] bg-[length:0_1px] transition-all duration-500 group-hover:bg-[length:100%_1px] py-[2px]">Centipede Tour - Guided Arizona Desert Tour by ATV</span>
+          
         </Link>
         <div className="my-1 flex items-center gap-1">
           <Ratings rating={2.4} styles="text-[12px] xs:text-sm" />

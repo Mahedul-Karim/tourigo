@@ -8,6 +8,7 @@ import NavButtons from "./nav/NavButtons";
 import UserAvatar from "../ui/UserAvatar";
 import MobileNav from "./nav/MobileNav";
 import { usePathname } from "next/navigation";
+import Link from "next/link";
 
 const Header = () => {
   const pathname = usePathname();
@@ -37,8 +38,10 @@ const Header = () => {
         <Logo />
 
         <Nav className="hidden md:flex" />
-        <NavButtons className="hidden md:flex" />
-        {/* <UserAvatar /> */}
+        {/* <NavButtons className="hidden md:flex" /> */}
+        <Link href={"/user"}>
+          <UserAvatar />
+        </Link>
         <MobileNav className="block md:hidden" />
       </Container>
     </header>

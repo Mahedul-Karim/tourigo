@@ -6,7 +6,7 @@ import React from "react";
 
 const Page = () => {
   return (
-    <section className="bg-white h-[calc(100vh_+_70px)] grid place-items-center">
+    <section className="bg-white py-32 xs:py-40 grid place-items-center">
       <Container>
         <div className="grid sm:grid-cols-2">
           <div className="flex flex-col gap-4 items-center justify-center">
