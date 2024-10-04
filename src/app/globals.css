@@ -85,3 +85,7 @@ input[type="checkbox"]:checked + div > svg {
   top: 20px;
   bottom: -66px;
 }
+
+.bookingsCard > article:not(:last-child){
+  border-bottom: 1px solid var(--border);
+}
