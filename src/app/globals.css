@@ -9,9 +9,9 @@
   --primary-light: #f1ecf2;
   --primary-light-0: rgba(235, 102, 43, 0.38);
   --primary-light-1: #fef7f4;
-  --primary-light-2:rgba(235, 102, 43, .1);
-  --primary-light-3:rgba(235, 102, 43, .04);
-  --primary-light-4:rgba(235, 102, 43, 0.6);
+  --primary-light-2: rgba(235, 102, 43, 0.1);
+  --primary-light-3: rgba(235, 102, 43, 0.04);
+  --primary-light-4: rgba(235, 102, 43, 0.6);
   --secondary: #006ce4;
 
   --color-dark-0: #717171;
@@ -39,6 +39,27 @@ body {
   overflow-x: clip;
 }
 
+@layer base {
+  :root {
+    --chart-1: 12 76% 61%;
+    --chart-2: 173 58% 39%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
+  }
+
+  .dark {
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
+  }
+}
+
+.recharts-responsive-container {
+  height: 250px !important;
+}
 .sticky-header {
   background: white;
   border-bottom: 1px solid var(--border);
@@ -76,7 +97,6 @@ input[type="checkbox"]:checked + div > svg {
 }
 
 .itineraryGrid:not(:last-child) .dashedLine::before {
-  
   content: "";
   position: absolute;
   border-right: 1px var(--primary) dashed;
@@ -86,6 +106,23 @@ input[type="checkbox"]:checked + div > svg {
   bottom: -66px;
 }
 
-.bookingsCard > article:not(:last-child){
+.bookingsCard > article:not(:last-child) {
   border-bottom: 1px solid var(--border);
+}
+.hideScrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.showScrollbar::-webkit-scrollbar {
+  width: 5px;
+}
+
+
+.showScrollbar::-webkit-scrollbar-track {
+  background-color: var(--primary-light);
+}
+
+.showScrollbar::-webkit-scrollbar-thumb {
+  background-color: var(--primary);
+  border-radius: 10px;
 }

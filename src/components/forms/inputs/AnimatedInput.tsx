@@ -1,11 +1,12 @@
 import React, { forwardRef } from "react";
 import { FormControl, FormLabel } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { FieldError, FieldErrorsImpl, Merge } from "react-hook-form";
 
 interface Props {
   label: string;
-  text: string;
-  error?: string;
+  text?: string;
+  error?: string | FieldError | Merge<FieldError, FieldErrorsImpl<any>>;
   type:string;
   labelBg?: string;
   disabled?:boolean;

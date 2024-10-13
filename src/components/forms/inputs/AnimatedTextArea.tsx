@@ -2,12 +2,14 @@ import React,{ forwardRef } from "react";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { FormControl,FormLabel } from "@/components/ui/form";
+import { FieldError, FieldErrorsImpl, Merge } from "react-hook-form";
 
 interface Props {
   label: string;
   text: string;
-  error?: string;
+  error?: string | FieldError | Merge<FieldError, FieldErrorsImpl<any>>;
   labelBg?:string;
+  disabled?:boolean;
 }
 
 const AnimatedTextArea: React.FC<Props> = forwardRef(({
@@ -29,9 +31,9 @@ const AnimatedTextArea: React.FC<Props> = forwardRef(({
         />
       </FormControl>
       <FormLabel
-        className={`${labelBg ? labelBg : 'bg-background'}  peer-focus:-top-[18px] transition-all duration-300 left-[15px] font-normal absolute py-[5px] px-[7px] text-sm ${
-          text ? "-top-[15px] xs:-top-[18px]" : "top-[10px]"
-        } xs:text-base text-dark-1`}
+        className={`${labelBg ? labelBg : 'bg-background'}  peer-focus:-top-[15px] transition-all duration-300 left-[15px] font-normal absolute py-[5px] px-[7px] text-sm ${
+          text ? "-top-[15px]" : "top-[10px]"
+        }  text-dark-1`}
       >
         {label}
       </FormLabel>

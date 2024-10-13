@@ -29,7 +29,10 @@ const CardList = () => {
           <LuMapPin className="text-[10px] xs:text-[14px]" />
           Paris,France
         </div>
-        <Link href="/tours/efrtvsr" className="text-[12px] xs:text-[13px] sm:text-[16px] mt-1 line-clamp-2 text-dark-1 font-medium leading-[1.4]">
+        <Link
+          href="/tours/efrtvsr"
+          className="text-[12px] xs:text-[13px] sm:text-[16px] mt-1 line-clamp-2 text-dark-1 font-medium leading-[1.4]"
+        >
           Centipede Tour - Guided Arizona Desert Tour by ATV
         </Link>
         <div className="my-1 flex items-center gap-1">
@@ -39,17 +42,17 @@ const CardList = () => {
           </p>
         </div>
         <p className="text-[10px] xs:text-[12px] sm:text-[13px] mt-1 line-clamp-2 text-dark-0 font-medium leading-[1.4]">
-          Centipede Tour - Guided Arizona Desert Tour by ATV Centipede Tour -
-          Guided Arizona Desert Tour by ATV Centipede Tour - Guided Arizona
-          Desert Tour by ATV
+          <span className="bg-gradient-to-r from-[#000] from-0% to-[#000] bg-no-repeat bg-[0_100%] bg-[length:0_1px] transition-all duration-500 group-hover:bg-[length:100%_1px] py-[2px]">
+            Centipede Tour - Guided Arizona Desert Tour by ATV Centipede Tour -
+            Guided Arizona Desert Tour by ATV Centipede Tour - Guided Arizona
+            Desert Tour by ATV
+          </span>
         </p>
       </div>
       <div className="flex sm:flex-col justify-between sm:items-center px-2 xs:px-4">
         <div className="flex items-center gap-1 text-dark-1">
           <CiClock2 className="text-dark-1 text-sm xs:text-[18px]" />
-          <span className="text-center text-[10px] sm:text-[12px]">
-            4 days
-          </span>
+          <span className="text-center text-[10px] sm:text-[12px]">4 days</span>
         </div>
         <div className="flex items-center text-dark-1">
           <span className="text-[10px] sm:text-xs">From</span>
@@ -58,7 +61,6 @@ const CardList = () => {
           </p>
         </div>
       </div>
-      
     </div>
   );
 };

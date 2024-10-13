@@ -127,3 +127,19 @@ export const RATINGS = [
     value: 1,
   },
 ];
+
+
+export const STATUS:any={
+  completed:{
+    bg:'#dcfce7',
+    text:'#15803d'
+  },
+  pending:{
+    bg:'#fef9c3',
+    text:'#a16207'
+  },
+  canceled:{
+    bg:'#e5e7eb',
+    text:'#374151'
+  }
+}
