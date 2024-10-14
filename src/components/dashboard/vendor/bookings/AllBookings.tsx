@@ -7,7 +7,7 @@ import BookingsBody from "./BookingsBody";
 const AllBookings = () => {
   return (
     <GridContainer>
-      <THead columns="90px 0.9fr 0.3fr 0.3fr 0.2fr 0.3fr 0.3fr">
+      <THead columns="90px 0.9fr 0.3fr 0.3fr 0.2fr 0.3fr 0.3fr 0.1fr">
         <div>Id</div>
         <div>Tour</div>
         <div>Start Date</div>

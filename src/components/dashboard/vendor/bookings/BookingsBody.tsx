@@ -1,14 +1,21 @@
-import React from 'react'
+"use client";
+
+import React, { useState } from "react";
 import Grid from "../../common/table/Grid";
 import Image from "next/image";
 import Badge from "@/components/common/ui/Badge";
 import { STATUS } from "@/lib/data";
 import { formatCurrency } from "@/lib/utils";
+import { BsThreeDotsVertical } from "react-icons/bs";
+import ConfirmationModal from "@/components/common/ui/modal/ConfirmationModal";
 
 const BookingsBody = () => {
+  const [open, setOpen] = useState(false);
+
   return (
-    <Grid
-        columns="90px 0.9fr 0.3fr 0.3fr 0.2fr 0.3fr 0.3fr"
+    <>
+      <Grid
+        columns="90px 0.9fr 0.3fr 0.3fr 0.2fr 0.3fr 0.3fr 0.1fr"
         className="text-dark-1 text-[13px] items-center"
       >
         <div className="whitespace-nowrap overflow-clip text-ellipsis">
@@ -41,8 +48,21 @@ const BookingsBody = () => {
             Pending
           </Badge>
         </div>
+        <div>
+          <button onClick={setOpen.bind(null, true)}>
+            <BsThreeDotsVertical className="text-lg" />
+          </button>
+        </div>
       </Grid>
-  )
-}
+      {open && (
+        <ConfirmationModal
+          title="Are you sure want to update the status of this tour to completed?"
+          onModalClose={setOpen}
+          onModalAction={() => {}}
+        />
+      )}
+    </>
+  );
+};
 
-export default BookingsBody
+export default BookingsBody;

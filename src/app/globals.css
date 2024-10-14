@@ -117,6 +117,16 @@ input[type="checkbox"]:checked + div > svg {
   width: 5px;
 }
 
+.horizontalScrollbar::-webkit-scrollbar {
+  height: 5px;
+}
+.horizontalScrollbar::-webkit-scrollbar-track {
+  background-color: var(--primary-light);
+}
+.horizontalScrollbar::-webkit-scrollbar-thumb {
+  background-color: var(--primary);
+  border-radius: 10px;
+}
 
 .showScrollbar::-webkit-scrollbar-track {
   background-color: var(--primary-light);

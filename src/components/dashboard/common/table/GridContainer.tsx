@@ -7,7 +7,7 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
 const GridContainer: React.FC<Props> = ({ children, className }) => {
   return (
     <div
-      className={`border border-solid border-border overflow-x-auto hideScrollbar rounded-md mt-6  ${className}`}
+      className={`border border-solid border-border overflow-x-auto horizontalScrollbar rounded-md mt-6  ${className}`}
       id="table"
     >
       {children}
