@@ -32,7 +32,6 @@ const Includes: React.FC<Props> = ({ setValue, isSubmitting }) => {
       newArray = [...existingArray, e.target.value];
     }
 
-    console.log(newArray);
     setIncludes(newArray);
     setValue("includes", newArray);
   };

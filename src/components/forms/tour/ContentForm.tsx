@@ -40,15 +40,12 @@ const ContentForm: React.FC<Props> = ({
           <FormItem className="mt-6">
             <AnimatedInput
               labelBg="bg-white"
-              label={"Tour Name"}
+              label={"Name"}
               text={getValues("tourName")}
-              error={errors?.tourName?.message || ""}
               {...field}
               type="text"
               disabled={isSubmitting}
             />
-
-            <FormMessage />
           </FormItem>
         )}
       />
@@ -68,8 +65,6 @@ const ContentForm: React.FC<Props> = ({
                 </option>
               ))}
             </select>
-
-            <FormMessage />
           </FormItem>
         )}
       />
@@ -80,19 +75,65 @@ const ContentForm: React.FC<Props> = ({
           <FormItem className="mt-6">
             <AnimatedInput
               labelBg="bg-white"
-              label={"Tour Location"}
+              label={"Location"}
               text={getValues("location")}
-              error={errors?.location?.message || ""}
               {...field}
               type="text"
               disabled={isSubmitting}
             />
-
-            <FormMessage />
           </FormItem>
         )}
       />
+      
       <ManualInputField getValues={getValues} setValue={setValue} />
+      <FormField
+        control={control}
+        name="duration"
+        render={({ field }) => (
+          <FormItem className="mt-6">
+            <AnimatedInput
+              labelBg="bg-white"
+              label={"Duration"}
+              text={getValues("duration")}
+              {...field}
+              type="text"
+              disabled={isSubmitting}
+            />
+          </FormItem>
+        )}
+      />
+      <FormField
+        control={control}
+        name="price"
+        render={({ field }) => (
+          <FormItem className="mt-6">
+            <AnimatedInput
+              labelBg="bg-white"
+              label={"Price"}
+              text={getValues("price")}
+              {...field}
+              type="number"
+              disabled={isSubmitting}
+            />
+          </FormItem>
+        )}
+      />
+      <FormField
+        control={control}
+        name="groupSize"
+        render={({ field }) => (
+          <FormItem className="mt-6">
+            <AnimatedInput
+              labelBg="bg-white"
+              label={"Group Size"}
+              text={getValues("groupSize")}
+              {...field}
+              type="number"
+              disabled={isSubmitting}
+            />
+          </FormItem>
+        )}
+      />
       <FormField
         control={control}
         name="overview"
@@ -100,13 +141,10 @@ const ContentForm: React.FC<Props> = ({
           <FormItem className="mt-6">
             <AnimatedTextArea
               labelBg="bg-white"
-              label={"Tour Overview"}
+              label={"Overview"}
               text={getValues("overview")}
-              error={errors?.overview?.message || ""}
               {...field}
             />
-
-            <FormMessage />
           </FormItem>
         )}
       />
