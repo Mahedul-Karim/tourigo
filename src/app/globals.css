@@ -120,19 +120,17 @@ input[type="checkbox"]:checked + div > svg {
 .horizontalScrollbar::-webkit-scrollbar {
   height: 5px;
 }
-.horizontalScrollbar::-webkit-scrollbar-track {
-  background-color: var(--primary-light);
-}
-.horizontalScrollbar::-webkit-scrollbar-thumb {
-  background-color: var(--primary);
-  border-radius: 10px;
-}
 
+.horizontalScrollbar::-webkit-scrollbar-track,
 .showScrollbar::-webkit-scrollbar-track {
   background-color: var(--primary-light);
 }
-
+.horizontalScrollbar::-webkit-scrollbar-thumb,
 .showScrollbar::-webkit-scrollbar-thumb {
   background-color: var(--primary);
   border-radius: 10px;
+}
+
+input[type="number"]::-webkit-inner-spin-button{
+  display: none;
 }

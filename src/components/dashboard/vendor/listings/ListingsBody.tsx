@@ -3,6 +3,8 @@ import Image from "next/image";
 import Grid from "../../common/table/Grid";
 import { formatCurrency } from "@/lib/utils";
 import TableAction from "../../common/table/TableAction";
+import Badge from "@/components/common/ui/Badge";
+import { STATUS } from "@/lib/data";
 
 const ListingsBody = () => {
   return (
@@ -13,20 +15,28 @@ const ListingsBody = () => {
           alt=""
           width={890}
           height={750}
-          className="w-[100px] h-[70px] object-cover rounded-md"
+          className="w-[80px] h-[50px] object-cover rounded-md"
         />
       </div>
       <div>
-        <p className="text-[15px] text-dark-1 font-semibold">
+        <p className="text-[14px] text-dark-1 font-semibold">
           Centipede Tour - Guided Arizona Desert Tour by ATV
         </p>
       </div>
       <div>
-        <p className="text-sm text-dark-1 font-semibold">
+        <p className="text-[13px] text-dark-1 font-semibold">
           {formatCurrency(1999)}
         </p>
       </div>
-      <div className="text-sm text-dark-1 font-medium">21 Aug, 2020</div>
+      <div className="text-[13px] text-dark-1 font-medium">21 Aug, 2020</div>
+      <div>
+        <Badge
+          backgroundColor={STATUS["approved"].bg}
+          textColor={STATUS["approved"].text}
+        >
+          approved
+        </Badge>
+      </div>
       <div>
         <TableAction />
       </div>

@@ -8,7 +8,7 @@ interface Props extends React.HTMLAttributes<HTMLDivElement> {
 const Grid: React.FC<Props> = ({
   children,
   className,
-  columns = "100px 0.9fr 0.3fr 0.3fr 0.2fr",
+  columns = "80px 0.9fr 0.2fr 0.3fr 0.2fr 0.2fr",
 }) => {
   return (
     <div

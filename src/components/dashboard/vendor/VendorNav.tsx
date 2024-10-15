@@ -36,11 +36,6 @@ const NAV_LINKS = [
     icon: <HiOutlineTicket className="text-xl" />,
   },
   {
-    href: "/vendor/activites",
-    label: "Activites",
-    icon: <HiOutlineBell className="text-xl" />,
-  },
-  {
     href: "/vendor/earnings",
     label: "Earnings",
     icon: <HiOutlineCurrencyDollar className="text-xl" />,

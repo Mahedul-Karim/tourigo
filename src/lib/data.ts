@@ -134,6 +134,10 @@ export const STATUS:any={
     bg:'#dcfce7',
     text:'#15803d'
   },
+  approved:{
+    bg:'#dcfce7',
+    text:'#15803d'
+  },
   pending:{
     bg:'#fef9c3',
     text:'#a16207'

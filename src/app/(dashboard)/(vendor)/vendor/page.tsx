@@ -12,6 +12,7 @@ import SectionHeading from "@/components/dashboard/common/SectionHeading";
 import VisitorsBar from "@/components/dashboard/vendor/home/VisitorsBar";
 import RecentBookings from "@/components/dashboard/vendor/home/RecentBookings";
 
+
 const Page = () => {
   return (
     <Container className="py-8">

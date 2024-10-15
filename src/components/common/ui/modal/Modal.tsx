@@ -6,14 +6,14 @@ import { createPortal } from "react-dom";
 
 interface Props extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode;
-  width: string;
+  width?: string;
   onModalClose: (val: boolean) => void;
 }
 
 const Modal: React.FC<Props> = ({
   className,
   children,
-  width,
+  width="450px",
   onModalClose,
 }) => {
   const modal = (
