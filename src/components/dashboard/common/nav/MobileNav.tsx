@@ -2,8 +2,13 @@
 
 import React, { useState } from "react";
 import VendorNav from "../../vendor/VendorNav";
+import AdminNav from "../../admin/AdminNav";
 
-const MobileNav = () => {
+interface Props {
+  isAdmin?: boolean;
+}
+
+const MobileNav: React.FC<Props> = ({ isAdmin }) => {
   const [open, setOpen] = useState(false);
 
   return (
@@ -26,12 +31,21 @@ const MobileNav = () => {
             } transition-all duration-300 -z-[9]`}
             onClick={setOpen.bind(null, false)}
           />
-          <VendorNav
-            className={`md:hidden block w-max transition-all duration-300 delay-300 ${
-              open ? "translate-x-0" : "-translate-x-[100%]"
-            }`}
-            onClick={setOpen}
-          />
+          {isAdmin ? (
+            <AdminNav
+              className={`md:hidden block w-max transition-all duration-300 delay-300 ${
+                open ? "translate-x-0" : "-translate-x-[100%]"
+              }`}
+              onClick={setOpen}
+            />
+          ) : (
+            <VendorNav
+              className={`md:hidden block w-max transition-all duration-300 delay-300 ${
+                open ? "translate-x-0" : "-translate-x-[100%]"
+              }`}
+              onClick={setOpen}
+            />
+          )}
         </div>
       }
     </div>

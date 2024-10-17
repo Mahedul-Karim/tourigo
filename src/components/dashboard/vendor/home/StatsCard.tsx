@@ -16,7 +16,7 @@ const StatsCard: React.FC<Props> = ({ Icon, label,value }) => {
       </div>
       <div className="flex flex-col">
         <p className="text-dark-0 text-[10px] xs:text-sm">{label}</p>
-        <p className="text-base xs:text-xl text-dark-1 font-semibold">{value}</p>
+        <p className="text-sm xs:text-xl text-dark-1 font-semibold">{value}</p>
       </div>
     </div>
   );

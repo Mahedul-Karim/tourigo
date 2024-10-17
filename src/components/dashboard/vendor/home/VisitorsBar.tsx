@@ -10,26 +10,22 @@ import {
     ChartTooltipContent,
   } from "@/components/ui/chart"
 
-  const chartData = [
-    { month: "January", visited: 186, wishlist: 80 },
-    { month: "February", visited: 305, wishlist: 200 },
-    { month: "March", visited: 237, wishlist: 120 },
-    { month: "April", visited: 73, wishlist: 190 },
-    { month: "May", visited: 209, wishlist: 130 },
-    { month: "June", visited: 214, wishlist: 140 },
-  ]
-  const chartConfig = {
-    visited: {
-      label: "Visited",
-      color: "var(--primary)",
-    },
-    wishlist: {
-      label: "Wishlist",
-      color: "hsl(var(--chart-2))",
-    },
-  } satisfies ChartConfig
 
-const VisitorsBar = () => {
+  interface Props {
+    chartData: {
+      month: string;
+      [key: string]: string | number;
+    }[];
+    dataKey1: string;
+    datakey2:string;
+    chartConfig: {
+      [key: string]: {
+        [key: string]: string;
+      };
+    };
+  }
+
+const VisitorsBar:React.FC<Props> = ({chartData,dataKey1,datakey2,chartConfig}) => {
   return (
     <div className='mt-6'>
         <ChartContainer config={chartConfig}>
@@ -46,8 +42,8 @@ const VisitorsBar = () => {
               cursor={false}
               content={<ChartTooltipContent indicator="dashed" />}
             />
-            <Bar dataKey="visited" fill="var(--color-visited)" radius={4} />
-            <Bar dataKey="wishlist" fill="var(--color-wishlist)" radius={4} />
+            <Bar dataKey={dataKey1} fill={`var(--color-${dataKey1})`} radius={4} />
+            <Bar dataKey={datakey2} fill={`var(--color-${datakey2})`} radius={4} />
           </BarChart>
         </ChartContainer>
     </div>

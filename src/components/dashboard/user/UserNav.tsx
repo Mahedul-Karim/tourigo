@@ -3,8 +3,7 @@
 import React from "react";
 import { CiUser } from "react-icons/ci";
 import { GoShieldCheck } from "react-icons/go";
-import { LuBellRing } from "react-icons/lu";
-import { IoSettingsOutline } from "react-icons/io5";
+import { MdOutlineAdminPanelSettings } from "react-icons/md";
 import { IoChatbubbleOutline } from "react-icons/io5";
 import { CiBookmarkCheck, CiHeart } from "react-icons/ci";
 import Link from "next/link";
@@ -26,6 +25,11 @@ const navData = [
     Icon: <IoChatbubbleOutline className="text-xl" />,
     href: "/user/chats",
     isChat: true,
+  },
+  {
+    label: "Admin Dashboard",
+    Icon: <MdOutlineAdminPanelSettings className="text-xl" />,
+    href: "/admin"
   },
   {
     label: "My Bookings",

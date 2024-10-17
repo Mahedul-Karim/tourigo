@@ -10,30 +10,30 @@ import {
 } from "@/components/ui/chart";
 import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from "recharts";
 
-const chartData = [
-  { month: "January", booked: 80 },
-  { month: "February", booked: 150 },
-  { month: "March", booked: 100 },
-  { month: "April", booked: 200 },
-  { month: "May", booked: 130 },
-  { month: "June", booked: 140 },
-];
 
-const chartConfig = {
-  booked: {
-    label: "Booked",
-    color: "var(--primary)",
-  },
-} satisfies ChartConfig;
 
-const BookingChart = () => {
+interface Props {
+  chartData: {
+    month: string;
+    [key: string]: string | number;
+  }[];
+  dataKey: string;
+  title: string;
+  chartConfig: {
+    [key: string]: {
+      [key: string]: string;
+    };
+  };
+}
+
+const BookingChart: React.FC<Props> = ({ chartData, dataKey, title,chartConfig }) => {
   return (
     <div>
-      <SectionHeading>Booking Stats</SectionHeading>
+      <SectionHeading>{title}</SectionHeading>
       <div className="mt-6">
         <ChartContainer config={chartConfig} className="min-h-[250px] w-full">
           <AreaChart accessibilityLayer data={chartData}>
-            <CartesianGrid vertical={false} strokeDasharray={"3 3"}/>
+            <CartesianGrid vertical={false} strokeDasharray={"3 3"} />
             <XAxis
               dataKey="month"
               tickLine={false}
@@ -63,7 +63,7 @@ const BookingChart = () => {
               </linearGradient>
             </defs>
             <Area
-              dataKey="booked"
+              dataKey={dataKey}
               type="natural"
               fill="url(#fillMobile)"
               fillOpacity={0.4}
