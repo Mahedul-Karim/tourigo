@@ -1,12 +1,14 @@
 "use client";
 
-import DotMenu from "@/components/common/DotMenu";
 import React, { useState } from "react";
+import DotMenu from "@/components/common/DotMenu";
 import { BsThreeDotsVertical } from "react-icons/bs";
+import { MdBlock } from "react-icons/md";
+import { FiTrash } from "react-icons/fi";
 import { IoMdCheckmarkCircleOutline } from "react-icons/io";
 import { RxCross2 } from "react-icons/rx";
 
-const TableAction = () => {
+const UserAction = () => {
   const [open, setOpen] = useState(false);
 
   return (
@@ -23,10 +25,16 @@ const TableAction = () => {
             <RxCross2 className="text-base" />
             Decline
           </div>
+          <div className="hover:bg-background cursor-pointer flex items-center gap-2">
+            <MdBlock className="text-base" /> Block
+          </div>
+          <div className="hover:bg-background cursor-pointer flex items-center gap-2">
+            <FiTrash className="text-base" /> Delete
+          </div>
         </DotMenu>
       )}
     </div>
   );
 };
 
-export default TableAction;
+export default UserAction;

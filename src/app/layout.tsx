@@ -15,7 +15,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning={true}>
       <body
-        className={`font-inter bg-background`}
+        className={`font-inter bg-background showScrollbar`}
         suppressHydrationWarning={true}
       >
         {children}

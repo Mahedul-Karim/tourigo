@@ -131,6 +131,10 @@ input[type="checkbox"]:checked + div > svg {
   border-radius: 10px;
 }
 
-input[type="number"]::-webkit-inner-spin-button{
+input[type="number"]::-webkit-inner-spin-button {
   display: none;
+}
+
+#dotMenu > *:not(:last-child) {
+  border-bottom: 1px solid var(--border);
 }

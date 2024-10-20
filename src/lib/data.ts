@@ -138,6 +138,10 @@ export const STATUS:any={
     bg:'#dcfce7',
     text:'#15803d'
   },
+  available:{
+    bg:'#dcfce7',
+    text:'#15803d'
+  },
   pending:{
     bg:'#fef9c3',
     text:'#a16207'
@@ -145,5 +149,13 @@ export const STATUS:any={
   canceled:{
     bg:'#e5e7eb',
     text:'#374151'
-  }
+  },
+  rejected:{
+    bg:'#fee2e2',
+    text:'#b91c1c'
+  },
+  blocked:{
+    bg:'#fee2e2',
+    text:'#b91c1c'
+  },
 }
