@@ -38,11 +38,14 @@ const Header = () => {
         <Logo />
 
         <Nav className="hidden md:flex" />
-        {/* <NavButtons className="hidden md:flex" /> */}
-        <Link href={"/user"}>
+        
+        <div className="flex items-center gap-2">
+        <NavButtons className="hidden md:flex" />
+        {/* <Link href={"/user"}>
           <UserAvatar />
-        </Link>
+        </Link> */}
         <MobileNav className="block md:hidden" />
+        </div>
       </Container>
     </header>
   );

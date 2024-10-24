@@ -9,8 +9,14 @@ import { Form, FormField, FormItem, FormMessage } from "@/components/ui/form";
 
 import AnimatedInput from "./inputs/AnimatedInput";
 import { signUpSchema } from "./formSchema";
+import { register } from "@/lib/actions/auth";
+
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 const RegisterForm = () => {
+  const router = useRouter();
+
   const form = useForm<z.infer<typeof signUpSchema>>({
     resolver: zodResolver(signUpSchema),
   });
@@ -22,15 +28,38 @@ const RegisterForm = () => {
   } = form;
 
   const onSubmit = async (values: z.infer<typeof signUpSchema>) => {
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    console.log(values);
-    reset({
-      firstName: "",
-      lastName: "",
-      email: "",
-      password: "",
-      confirmPassword: "",
-    });
+    const { firstName, lastName, email, password, confirmPassword } = values;
+    try {
+      const data = await register({
+        firstName,
+        lastName,
+        email,
+        password,
+        confirmPassword,
+      });
+
+      if (!data?.success) {
+        throw new Error(data?.message);
+      }
+
+      reset({
+        firstName: "",
+        lastName: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
+      });
+
+      toast.success("Success!", {
+        description: "User created successfully!",
+      });
+
+      router.push("/login");
+    } catch (err: any) {
+      toast.error("Error!", {
+        description: err.message,
+      });
+    }
   };
 
   return (

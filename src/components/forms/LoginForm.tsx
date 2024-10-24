@@ -23,12 +23,17 @@ const LoginForm = () => {
   } = form;
 
   const onSubmit = async (values: z.infer<typeof loginSchema>) => {
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    console.log(values);
-    reset({
-      email: "",
-      password: "",
-    });
+    const { email, password } = values;
+
+    try {
+
+      // reset({
+      //   email: "",
+      //   password: "",
+      // });
+    } catch (err:any) {
+      console.log(err.message);
+    }
   };
 
   return (

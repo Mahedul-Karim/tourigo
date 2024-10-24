@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-
+import { Toaster } from "@/components/ui/sonner"
 
 export const metadata: Metadata = {
   title: "Tourigo",
@@ -19,6 +19,7 @@ export default function RootLayout({
         suppressHydrationWarning={true}
       >
         {children}
+        <Toaster richColors/>
       </body>
     </html>
   );
