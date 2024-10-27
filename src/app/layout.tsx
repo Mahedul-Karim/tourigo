@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { Toaster } from "@/components/ui/sonner"
+import { Toaster } from "@/components/ui/sonner";
+import ContextProvider from "@/context/ContextProvider";
 
 export const metadata: Metadata = {
   title: "Tourigo",
@@ -18,8 +19,10 @@ export default function RootLayout({
         className={`font-inter bg-background showScrollbar`}
         suppressHydrationWarning={true}
       >
-        {children}
-        <Toaster richColors/>
+        <ContextProvider>
+          {children}
+          <Toaster richColors />
+        </ContextProvider>
       </body>
     </html>
   );

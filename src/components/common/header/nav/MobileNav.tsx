@@ -11,10 +11,13 @@ import {
 import { GiHamburgerMenu } from "react-icons/gi";
 import Nav from "./Nav";
 import NavButtons from "./NavButtons";
+import { useCtx } from "@/context/ContextProvider";
 
 type Props = React.HTMLAttributes<HTMLDivElement>;
 
 const MobileNav: React.FC<Props> = ({ className }) => {
+  const { isLoggedIn } = useCtx();
+
   return (
     <div className={`${className}`}>
       <Sheet>
@@ -28,7 +31,7 @@ const MobileNav: React.FC<Props> = ({ className }) => {
             <SheetClose asChild>
               <div className="mt-12 h-full flex flex-col justify-between">
                 <Nav className="flex-col" />
-                <NavButtons className="flex-col" />
+                {!isLoggedIn && <NavButtons className="flex-col" />}
               </div>
             </SheetClose>
           </SheetHeader>

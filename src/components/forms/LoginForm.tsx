@@ -10,8 +10,15 @@ import { FaGoogle } from "react-icons/fa6";
 
 import AnimatedInput from "./inputs/AnimatedInput";
 import { loginSchema } from "./formSchema";
+import { toast } from "sonner";
+import { useCtx } from "@/context/ContextProvider";
+import { useRouter } from "next/navigation";
 
 const LoginForm = () => {
+  const { setUser, setIsLoggedIn, setToken,isLoggedIn } = useCtx();
+
+  const router = useRouter()
+
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
   });
@@ -26,15 +33,42 @@ const LoginForm = () => {
     const { email, password } = values;
 
     try {
+      const res = await fetch("/api/login", {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        method: "POST",
+        body: JSON.stringify({
+          email,
+          password,
+        }),
+      });
 
-      // reset({
-      //   email: "",
-      //   password: "",
-      // });
-    } catch (err:any) {
-      console.log(err.message);
+      const data = await res.json();
+
+      if (!data.success) {
+        throw new Error(data.message);
+      }
+
+      setUser(data?.user);
+      setToken(data?.token);
+      setIsLoggedIn(true);
+      localStorage.setItem("userToken", JSON.stringify(data?.token));
+      router.push('/')
+      reset({
+        email: "",
+        password: "",
+      });
+    } catch (err: any) {
+      toast.error("Error!", {
+        description: err.message,
+      });
     }
   };
+
+  if(isLoggedIn){
+    router.push('/')
+  }
 
   return (
     <div className="max-w-[380px] w-full">

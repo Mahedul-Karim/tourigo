@@ -9,11 +9,14 @@ import UserAvatar from "../ui/UserAvatar";
 import MobileNav from "./nav/MobileNav";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
+import { useCtx } from "@/context/ContextProvider";
 
 const Header = () => {
   const pathname = usePathname();
 
   const headerRef = useRef<HTMLDivElement | null>(null);
+
+  const { user, isLoggedIn } = useCtx();
 
   useEffect(() => {
     window.addEventListener("scroll", () => {
@@ -38,13 +41,16 @@ const Header = () => {
         <Logo />
 
         <Nav className="hidden md:flex" />
-        
+
         <div className="flex items-center gap-2">
-        <NavButtons className="hidden md:flex" />
-        {/* <Link href={"/user"}>
-          <UserAvatar />
-        </Link> */}
-        <MobileNav className="block md:hidden" />
+          {!isLoggedIn ? (
+            <NavButtons className="hidden md:flex" />
+          ) : (
+            <Link href={"/user"}>
+              <UserAvatar src={user?.image} fallback={user && user?.firstName?.[0]+user?.lastName?.[0]}/>
+            </Link>
+          )}
+          <MobileNav className="block md:hidden" />
         </div>
       </Container>
     </header>

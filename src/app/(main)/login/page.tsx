@@ -21,7 +21,6 @@ const Page = () => {
               </p>
             </div>
             <LoginForm />
-            
           </div>
           <div className="hidden sm:block">
             <Image alt="" src={"/assets/login.png"} width={500} height={250} />
