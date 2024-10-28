@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
@@ -13,11 +13,13 @@ import { loginSchema } from "./formSchema";
 import { toast } from "sonner";
 import { useCtx } from "@/context/ContextProvider";
 import { useRouter } from "next/navigation";
+import { popUp } from "@/lib/firebase";
+import { GoogleAuthProvider } from "firebase/auth";
 
 const LoginForm = () => {
-  const { setUser, setIsLoggedIn, setToken,isLoggedIn } = useCtx();
+  const { setUser, setIsLoggedIn, setToken, isLoggedIn } = useCtx();
 
-  const router = useRouter()
+  const router = useRouter();
 
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
@@ -54,7 +56,7 @@ const LoginForm = () => {
       setToken(data?.token);
       setIsLoggedIn(true);
       localStorage.setItem("userToken", JSON.stringify(data?.token));
-      router.push('/')
+      router.push("/");
       reset({
         email: "",
         password: "",
@@ -66,9 +68,51 @@ const LoginForm = () => {
     }
   };
 
-  if(isLoggedIn){
-    router.push('/')
-  }
+  const googleSignIn = async () => {
+    try {
+      const data = await popUp();
+
+      const email = data.user.email;
+
+      const token = await data.user.getIdToken();
+
+      const displayName = data.user.displayName?.split(" ");
+
+      const firstName = displayName?.at(0);
+      const lastName = displayName?.at(-1);
+
+      const res = await fetch("/api/google", {
+        method: "POST",
+        body: JSON.stringify({
+          email,
+          token,
+          firstName,
+          lastName,
+        }),
+      });
+
+      const resData = await res.json();
+
+      if (!resData.success) {
+        throw new Error("Something Went Wrong! Please try again later!");
+      }
+
+      setUser(resData?.user);
+      setToken(resData?.token);
+      setIsLoggedIn(true);
+      localStorage.setItem("userToken", JSON.stringify(resData?.token));
+      router.push("/");
+    } catch (err: any) {
+      toast.error("Error!", {
+        description: err.message,
+      });
+    }
+  };
+  useEffect(() => {
+    if (isLoggedIn) {
+      router.push("/");
+    }
+  }, []);
 
   return (
     <div className="max-w-[380px] w-full">
@@ -131,6 +175,7 @@ const LoginForm = () => {
         <Button
           variant={"outline"}
           className="flex items-center justify-center w-full hover:bg-transparent bg-transparent text-sm text-dark-0 hover:text-dark-0 gap-2"
+          onClick={googleSignIn}
         >
           {" "}
           <FaGoogle /> Continue with Google

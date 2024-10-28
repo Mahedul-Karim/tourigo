@@ -26,6 +26,7 @@ export const POST = async (req: NextRequest) => {
       );
     }
 
+
     const verifiedToken = await adminAuth.verifyIdToken(token);
 
     if (!verifiedToken) {
