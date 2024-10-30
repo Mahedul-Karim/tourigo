@@ -8,6 +8,7 @@ import { Form, FormField, FormItem, FormMessage } from "@/components/ui/form";
 import AnimatedInput from "@/components/forms/inputs/AnimatedInput";
 import AnimatedTextArea from "@/components/forms/inputs/AnimatedTextArea";
 import VendorButton from "../VendorButton";
+import { useCtx } from "@/context/ContextProvider";
 
 interface UserInfo {
   firstName?: string;
@@ -18,11 +19,15 @@ interface UserInfo {
 }
 
 const InfoForm = () => {
+
+
+  const { user } = useCtx()
+
   const form = useForm({
     defaultValues: {
-      firstName: "",
-      lastName: "",
-      email: "test@gmail.com",
+      firstName: user?.firstName || "",
+      lastName:user?.lastName || "",
+      email: user?.email || "",
       phoneNumber: "",
       bio: "",
     },

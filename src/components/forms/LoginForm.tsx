@@ -128,8 +128,9 @@ const LoginForm = () => {
                   label={"Email Address"}
                   text={getValues("email")}
                   error={errors?.email?.message || ""}
-                  {...field}
+                  disabled={isSubmitting}
                   type="email"
+                  {...field}
                 />
 
                 <FormMessage />
@@ -147,6 +148,7 @@ const LoginForm = () => {
                   text={getValues("password")}
                   error={errors?.password?.message || ""}
                   type="password"
+                  disabled={isSubmitting}
                   {...field}
                 />
 

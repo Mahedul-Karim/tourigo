@@ -10,7 +10,7 @@ export const POST = async (req: NextRequest) => {
   try {
     const { user } = await signInWithEmailAndPassword(auth, email, password);
 
-    const tokenPromise = user.getIdToken(true);
+    const tokenPromise = user.getIdToken();
 
     const userDataPromise = prisma.user.findUnique({
       where: {

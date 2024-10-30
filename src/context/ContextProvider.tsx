@@ -15,8 +15,8 @@ interface Props {
 }
 
 interface ContextType {
-  user: User | null;
-  setUser: Dispatch<SetStateAction<User | null>>;
+  user: User | null | undefined;
+  setUser: Dispatch<SetStateAction<User | null | undefined>>;
   isLoggedIn: boolean;
   setIsLoggedIn: Dispatch<SetStateAction<boolean>>;
   token: string;
@@ -33,7 +33,7 @@ const Context = createContext<ContextType>({
 });
 
 const ContextProvider: React.FC<Props> = ({ children }) => {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<User | null | undefined>(null);
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
 
   const userToken =

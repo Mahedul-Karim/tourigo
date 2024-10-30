@@ -47,7 +47,7 @@ const Header = () => {
             <NavButtons className="hidden md:flex" />
           ) : (
             <Link href={"/user"}>
-              <UserAvatar src={user?.image} fallback={user && user?.firstName?.[0]+user?.lastName?.[0]}/>
+              <UserAvatar src={user?.image?.url} fallback={user && user?.firstName?.[0]+user?.lastName?.[0]}/>
             </Link>
           )}
           <MobileNav className="block md:hidden" />

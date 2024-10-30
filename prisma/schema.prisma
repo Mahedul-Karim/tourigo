@@ -18,11 +18,19 @@ model User{
   firstName String
   lastName String
   email String @unique
-  image String?
+  image Image?
+  phoneNumber String?
+  bio String?
   role Role @default(user)
   status Status @default(available)
   joinedAt DateTime @default(now())
 }
+
+type Image{
+  public_id String
+  url String
+}
+
 
 enum Status{
   completed
@@ -38,4 +46,5 @@ enum Role{
   admin
   user
   vendor
+  pending
 }
