@@ -1,5 +1,5 @@
 import React from "react";
-import Modal from "@/components/common/ui/modal/Modal";
+import Modal from './Modal'
 import { Button } from "@/components/ui/button";
 import { RxCross1 } from "react-icons/rx";
 import { FiTrash } from "react-icons/fi";

@@ -61,14 +61,14 @@ const ContextProvider: React.FC<Props> = ({ children }) => {
         const data = await res.json();
 
         if(!data.success){
-          throw new Error('Invalid credential!')
+          throw new Error(data?.message)
         }
 
         setIsLoggedIn(true);
         setUser(data.user)
 
-      }catch(err){
-        console.log('Invalid credential!')
+      }catch(err:any){
+        console.log(err.message)
       }
     })()
 

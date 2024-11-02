@@ -19,9 +19,10 @@ export const POST = async (req: NextRequest) => {
       return NextResponse.json(
         {
           success: false,
+          message:'Missing Token!'
         },
         {
-          status: 401,
+          status: 403,
         }
       );
     }
@@ -33,9 +34,10 @@ export const POST = async (req: NextRequest) => {
       return NextResponse.json(
         {
           success: false,
+          message:'Token has expired'
         },
         {
-          status: 401,
+          status: 403,
         }
       );
     }
@@ -58,12 +60,14 @@ export const POST = async (req: NextRequest) => {
       }
     );
   } catch (err) {
+    
     return NextResponse.json(
       {
         success: false,
+        message:'Token has expired'
       },
       {
-        status: 401,
+        status: 501,
       }
     );
   }

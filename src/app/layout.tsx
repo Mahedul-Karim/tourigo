@@ -20,6 +20,7 @@ export default function RootLayout({
         suppressHydrationWarning={true}
       >
         <ContextProvider>
+          
           {children}
           <Toaster richColors />
         </ContextProvider>

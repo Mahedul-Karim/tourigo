@@ -1,12 +1,14 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
-import Modal from "@/components/common/ui/modal/Modal";
+import Modal from './Modal'
+import SpinnerButton from "../SpinnerButton";
 
 interface Props {
   title: string;
   description?: string;
   onModalClose: (val: boolean) => void;
   onModalAction: () => void;
+  isLoading?: boolean;
 }
 
 const ConfirmationModal: React.FC<Props> = ({
@@ -14,6 +16,7 @@ const ConfirmationModal: React.FC<Props> = ({
   description,
   onModalClose,
   onModalAction,
+  isLoading,
 }) => {
   return (
     <Modal width="450px" onModalClose={onModalClose}>
@@ -28,7 +31,13 @@ const ConfirmationModal: React.FC<Props> = ({
           >
             Cancel
           </Button>
-          <Button onClick={onModalAction} >Continue</Button>
+          <Button
+            disabled={isLoading}
+            onClick={onModalAction}
+            className="flex items-center gap-2"
+          >
+            {isLoading && <SpinnerButton size="size-4" />} Continue
+          </Button>
         </div>
       </div>
     </Modal>

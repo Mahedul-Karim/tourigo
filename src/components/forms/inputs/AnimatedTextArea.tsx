@@ -31,8 +31,8 @@ const AnimatedTextArea: React.FC<Props> = forwardRef(({
         />
       </FormControl>
       <FormLabel
-        className={`${labelBg ? labelBg : 'bg-background'}  peer-focus:-top-[15px] transition-all duration-300 left-[15px] font-normal absolute py-[5px] px-[7px] text-sm ${
-          text ? "-top-[15px]" : "top-[10px]"
+        className={`${labelBg ? labelBg : 'bg-background'}  peer-focus:-top-[13px] transition-all duration-300 left-[15px] font-normal absolute py-[5px] px-[7px] text-sm peer-focus:text-xs ${
+          text ? "-top-[13px] text-xs" : "top-[10px]"
         }  text-dark-1`}
       >
         {label}

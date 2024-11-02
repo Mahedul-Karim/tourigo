@@ -5,9 +5,9 @@ interface Props{
 }
 
 
-const SpinnerButton:React.FC<Props> = ({size="size-5"}) => {
+const SpinnerButton:React.FC<Props> = ({size="size-4"}) => {
   return (
-    <div className={`${size} rounded-full border-[4px] border-solid border-white border-b-transparent animate-spin`}></div>
+    <div className={`${size} rounded-full border-[3px] border-solid border-white border-b-transparent animate-spin`}></div>
   )
 }
 

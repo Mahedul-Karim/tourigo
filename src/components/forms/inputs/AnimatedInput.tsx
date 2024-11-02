@@ -29,8 +29,8 @@ const AnimatedInput: React.FC<Props> = forwardRef(
         <FormLabel
           className={`${
             labelBg ? labelBg : "bg-background"
-          } peer-focus:-top-[15px] transition-all duration-300 left-[15px] font-normal absolute py-[5px] px-[7px] text-sm ${
-            text ? "-top-[15px]" : "top-[7px]"
+          } peer-focus:-top-[13px] transition-all duration-300 left-[15px] font-normal absolute py-[5px] px-[7px] peer-focus:text-xs text-sm ${
+            text ? "-top-[13px] text-xs" : "top-[7px]"
           } ${disabled ? 'text-dark-0' : 'text-dark-1'} `}
         >
           {label}

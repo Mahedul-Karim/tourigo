@@ -10,6 +10,10 @@ import AnimatedTextArea from "@/components/forms/inputs/AnimatedTextArea";
 import VendorButton from "../VendorButton";
 import { useCtx } from "@/context/ContextProvider";
 
+import SpinnerButton from "@/components/common/ui/SpinnerButton";
+import { toast } from "sonner";
+import { updateUserDetails } from "@/lib/actions/user";
+
 interface UserInfo {
   firstName?: string;
   lastName?: string;
@@ -19,30 +23,47 @@ interface UserInfo {
 }
 
 const InfoForm = () => {
-
-
-  const { user } = useCtx()
+  const { user, setUser } = useCtx();
 
   const form = useForm({
     defaultValues: {
       firstName: user?.firstName || "",
-      lastName:user?.lastName || "",
+      lastName: user?.lastName || "",
       email: user?.email || "",
-      phoneNumber: "",
-      bio: "",
+      phoneNumber: user?.phoneNumber || "",
+      bio: user?.bio || "",
     },
   });
 
   const {
-    formState: { errors, isSubmitting },
+    formState: { isSubmitting, isDirty },
     getValues,
     reset,
   } = form;
 
   const onSubmit = async (values: UserInfo) => {
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    console.log(values);
-    reset();
+    if (!isDirty) {
+      return toast.warning("Warning", {
+        description: "Details must be edited before submitting the form!",
+      });
+    }
+    try {
+      const data = await updateUserDetails(values);
+
+      if (!data.success) {
+        throw new Error(data.message);
+      }
+
+      setUser(data.user);
+
+      toast.success("Success!", {
+        description: "Profile updated successfully!",
+      });
+    } catch (err: any) {
+      toast.error("Error!", {
+        description: err.message,
+      });
+    }
   };
 
   return (
@@ -147,11 +168,11 @@ const InfoForm = () => {
           <div className="flex items-center gap-4 mt-8">
             <Button
               type="submit"
-              className="text-xs xs:text-sm bg-primary disabled:bg-disabled hover:bg-primary"
+              className="text-xs xs:text-sm bg-primary disabled:bg-disabled hover:bg-primary flex items-center gap-2"
               disabled={isSubmitting}
               size={"lg"}
             >
-              Submit
+              {isSubmitting && <SpinnerButton />} Submit
             </Button>
             <VendorButton className="block md:hidden" />
           </div>
