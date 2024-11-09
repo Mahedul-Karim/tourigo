@@ -22,6 +22,20 @@ const uploadUserImage = async (image: string, email: string) => {
           url: result.url,
         },
       },
+      select: {
+        id: true,
+        firstName: true,
+        lastName: true,
+        email: true,
+        image: {
+          select:{
+            url:true
+          }
+        },
+        phoneNumber: true,
+        bio: true,
+        role: true,
+      }
     });
 
     return {

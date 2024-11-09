@@ -41,7 +41,7 @@ const UserImage: React.FC<Props> = ({ className }) => {
       if (!data.success) {
         throw new Error(data.message);
       }
-
+      //@ts-ignore
       setUser(data?.user);
       setImage(data?.user?.image?.url);
 
