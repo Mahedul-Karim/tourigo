@@ -53,7 +53,7 @@ const InfoForm = () => {
       if (!data.success) {
         throw new Error(data.message);
       }
-
+      //@ts-ignore
       setUser(data.user);
 
       toast.success("Success!", {

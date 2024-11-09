@@ -73,6 +73,20 @@ const updateUserDetails = async (details: UserInfo) => {
         phoneNumber,
         bio,
       },
+      select: {
+        id: true,
+        firstName: true,
+        lastName: true,
+        email: true,
+        image: {
+          select:{
+            url:true
+          }
+        },
+        phoneNumber: true,
+        bio: true,
+        role: true,
+      }
     });
 
     return {
