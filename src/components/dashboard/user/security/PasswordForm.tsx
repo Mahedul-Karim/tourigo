@@ -6,25 +6,35 @@ import { Button } from "@/components/ui/button";
 import { Form, FormField, FormItem, FormMessage } from "@/components/ui/form";
 
 import AnimatedInput from "@/components/forms/inputs/AnimatedInput";
-import AnimatedTextArea from "@/components/forms/inputs/AnimatedTextArea";
+import { updateUserPassword } from "@/lib/actions/user";
+import LinearProgress from "@/components/common/ui/LinearProgress";
+import { toast } from "sonner";
 
 const PasswordForm = () => {
   const form = useForm();
 
   const {
-    formState: { errors, isSubmitting },
+    formState: {  isSubmitting },
     getValues,
-    reset,
   } = form;
 
-  const onSubmit = async (values:any) => {
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    console.log(values);
-    reset();
+  const onSubmit = async (values: any) => {
+    try {
+      const data = await updateUserPassword(values.newPassword);
+
+      if (!data.success) {
+        throw new Error(data.message);
+      }
+    } catch (err: any) {
+      toast.error("Error!", {
+        description: err.message,
+      });
+    }
   };
 
   return (
     <div className="mt-2">
+      {isSubmitting && <LinearProgress />}
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}

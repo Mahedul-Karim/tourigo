@@ -14,7 +14,6 @@ import { toast } from "sonner";
 import { useCtx } from "@/context/ContextProvider";
 import { useRouter } from "next/navigation";
 import { popUp } from "@/lib/firebase";
-import { GoogleAuthProvider } from "firebase/auth";
 
 const LoginForm = () => {
   const { setUser, setIsLoggedIn, setToken, isLoggedIn } = useCtx();

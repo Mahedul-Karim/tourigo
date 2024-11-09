@@ -19,7 +19,7 @@ export const POST = async (req: NextRequest) => {
       return NextResponse.json(
         {
           success: false,
-          message:'Missing Token!'
+          message: "Missing Token!",
         },
         {
           status: 403,
@@ -27,14 +27,13 @@ export const POST = async (req: NextRequest) => {
       );
     }
 
-
     const verifiedToken = await adminAuth.verifyIdToken(token);
 
     if (!verifiedToken) {
       return NextResponse.json(
         {
           success: false,
-          message:'Token has expired'
+          message: "Token has expired",
         },
         {
           status: 403,
@@ -47,6 +46,23 @@ export const POST = async (req: NextRequest) => {
     const user = await prisma.user.findUnique({
       where: {
         email,
+        status: {
+          not: "blocked",
+        },
+      },
+      select: {
+        id: true,
+        firstName: true,
+        lastName: true,
+        email: true,
+        image: {
+          select:{
+            url:true
+          }
+        },
+        phoneNumber: true,
+        bio: true,
+        role: true,
       },
     });
 
@@ -60,14 +76,13 @@ export const POST = async (req: NextRequest) => {
       }
     );
   } catch (err) {
-    
     return NextResponse.json(
       {
         success: false,
-        message:'Token has expired'
+        message: "Token has expired",
       },
       {
-        status: 501,
+        status: 401,
       }
     );
   }

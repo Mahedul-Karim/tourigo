@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { RxCross1 } from "react-icons/rx";
 import {
   FieldValues,
@@ -9,12 +9,26 @@ import {
 interface Props {
   getValues: UseFormGetValues<FieldValues>;
   setValue: UseFormSetValue<FieldValues>;
+  isSubmitSuccessful: boolean;
 }
 
-const ManualInputField: React.FC<Props> = ({ getValues, setValue }) => {
-  const [highlights, setHighlights] = useState<Array<string>>([]);
+const ManualInputField: React.FC<Props> = ({
+  getValues,
+  setValue,
+  isSubmitSuccessful,
+}) => {
+  const [highlights, setHighlights] = useState<Array<string>>(
+    getValues("highlight") || []
+  );
 
   const [text, setText] = useState<string>("");
+
+  useEffect(() => {
+    if (isSubmitSuccessful) {
+      setText("");
+      setHighlights([]);
+    }
+  }, [isSubmitSuccessful]);
 
   const handleDelete = (index: number) => {
     const exisitngHighlight = [...highlights];
@@ -57,7 +71,7 @@ const ManualInputField: React.FC<Props> = ({ getValues, setValue }) => {
               <span>
                 {i + 1}. {high}
               </span>
-              <button onClick={handleDelete.bind(null,i)} type="button">
+              <button onClick={handleDelete.bind(null, i)} type="button">
                 <RxCross1 />
               </button>
             </p>

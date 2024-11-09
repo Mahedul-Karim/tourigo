@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Control,
   FieldErrors,
@@ -18,6 +18,7 @@ interface Props {
   getValues: UseFormGetValues<FieldValues>;
   setValue: UseFormSetValue<FieldValues>;
   control: Control<FieldValues, any>;
+  isSubmitSuccessful: boolean;
 }
 
 type ItineraryType = {
@@ -31,18 +32,29 @@ const Itinerarys: React.FC<Props> = ({
   getValues,
   setValue,
   control,
+  isSubmitSuccessful,
 }) => {
   const [title, setTitle] = useState<string>("");
   const [description, setDescription] = useState<string>("");
-  const [itinerarys, setItinerarys] = useState<Array<ItineraryType>>([]);
+  const [itinerarys, setItinerarys] = useState<Array<ItineraryType>>(
+    getValues("itinerarys") || []
+  );
+
+  useEffect(() => {
+    if (isSubmitSuccessful) {
+      setItinerarys([]);
+    }
+  }, [isSubmitSuccessful]);
 
   const props = {
+    value:title,
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
       setTitle(e.target.value);
     },
   };
 
   const desc = {
+    value:description,
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
       setDescription(e.target.value);
     },
@@ -60,7 +72,7 @@ const Itinerarys: React.FC<Props> = ({
     setItinerarys(existingArray);
     setValue("itinerarys", existingArray);
     setTitle("");
-    setDescription("")
+    setDescription("");
   };
 
   const handleRemoveItinerary = (index: number) => {

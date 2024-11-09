@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FormField, FormItem, FormMessage } from "@/components/ui/form";
 
 import { LuImagePlus } from "react-icons/lu";
@@ -21,6 +21,7 @@ interface Props {
   getValues: UseFormGetValues<FieldValues>;
   setValue: UseFormSetValue<FieldValues>;
   control: Control<FieldValues, any>;
+  isSubmitSuccessful: boolean;
 }
 
 const Gallery: React.FC<Props> = ({
@@ -29,8 +30,15 @@ const Gallery: React.FC<Props> = ({
   getValues,
   setValue,
   control,
+  isSubmitSuccessful,
 }) => {
-  const [images, setImages] = useState<Array<string>>([]);
+  const [images, setImages] = useState<Array<any>>(getValues("gallery") || []);
+
+  useEffect(() => {
+    if (isSubmitSuccessful) {
+      setImages([]);
+    }
+  }, [isSubmitSuccessful]);
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const existingImages: Array<any> = [...images];

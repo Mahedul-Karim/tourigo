@@ -1,6 +1,6 @@
 "use client";
 
-import { User } from "@prisma/client";
+
 import React, {
   createContext,
   Dispatch,

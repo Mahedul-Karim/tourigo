@@ -2,6 +2,9 @@
 
 import { configCloudinary, uploadToCloudinary } from "../util/cloudinary";
 import prisma from "../prisma";
+import { auth } from "../firebase";
+
+import { updatePassword } from "firebase/auth";
 
 const uploadUserImage = async (image: string, email: string) => {
   try {
@@ -70,4 +73,50 @@ const updateUserDetails = async (details: UserInfo) => {
   }
 };
 
-export { uploadUserImage,updateUserDetails };
+const updateUserPassword = async (newPassword: string) => {
+  try {
+    const currentUser = auth.currentUser;
+
+    await updatePassword(currentUser!, newPassword);
+
+    return {
+      success: true,
+      message: "Password updated successfully!",
+    };
+  } catch (err: any) {
+    return {
+      success: false,
+      message: "Something went wrong! Please try again later",
+    };
+  }
+};
+
+const requestForVendor = async (email: string) => {
+  try {
+    const user = await prisma.user.update({
+      where: {
+        email,
+      },
+      data: {
+        role: "pending",
+      },
+    });
+
+    return {
+      success: true,
+      user,
+    };
+  } catch (err: any) {
+    return {
+      success: false,
+      message: "Something went wrong! Please try again later",
+    };
+  }
+};
+
+export {
+  uploadUserImage,
+  updateUserDetails,
+  updateUserPassword,
+  requestForVendor,
+};

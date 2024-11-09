@@ -15,7 +15,24 @@ export const POST = async (req: NextRequest) => {
     const userDataPromise = prisma.user.findUnique({
       where: {
         email: user.email!,
+        status: {
+          not: "blocked",
+        },
       },
+      select: {
+        id: true,
+        firstName: true,
+        lastName: true,
+        email: true,
+        image: {
+          select:{
+            url:true
+          }
+        },
+        phoneNumber: true,
+        bio: true,
+        role: true,
+      }
     });
 
     const [token, userData] = await Promise.all([

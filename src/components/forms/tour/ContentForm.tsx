@@ -22,6 +22,7 @@ interface Props {
   getValues: UseFormGetValues<FieldValues>;
   setValue: UseFormSetValue<FieldValues>;
   control: Control<FieldValues, any>;
+  isSubmitSuccessful:boolean;
 }
 
 const ContentForm: React.FC<Props> = ({
@@ -30,6 +31,7 @@ const ContentForm: React.FC<Props> = ({
   getValues,
   setValue,
   control,
+  isSubmitSuccessful
 }) => {
   return (
     <div>
@@ -85,7 +87,7 @@ const ContentForm: React.FC<Props> = ({
         )}
       />
       
-      <ManualInputField getValues={getValues} setValue={setValue} />
+      <ManualInputField getValues={getValues} setValue={setValue} isSubmitSuccessful={isSubmitSuccessful}/>
       <FormField
         control={control}
         name="duration"

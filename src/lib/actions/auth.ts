@@ -24,6 +24,7 @@ export const register = async (data: z.infer<typeof signUpSchema>) => {
       success: true,
     };
   } catch (err: any) {
+    console.log(err.message)
     if (err.code === "auth/email-already-in-use") {
       return {
         success: false,

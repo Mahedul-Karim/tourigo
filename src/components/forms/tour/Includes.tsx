@@ -1,11 +1,17 @@
 import CheckMark from "@/components/tours/all-tours/filters/CheckMark";
-import React, { useState } from "react";
-import { FieldValues, UseFormSetValue } from "react-hook-form";
+import React, { useEffect, useState } from "react";
+import {
+  FieldValues,
+  UseFormGetValues,
+  UseFormSetValue,
+} from "react-hook-form";
 import { Button } from "@/components/ui/button";
 
 interface Props {
   setValue: UseFormSetValue<FieldValues>;
   isSubmitting: boolean;
+  isSubmitSuccessful: boolean;
+  getValues: UseFormGetValues<FieldValues>;
 }
 
 const includesArray = [
@@ -18,8 +24,21 @@ const includesArray = [
   "Alcoholic Beverages",
 ];
 
-const Includes: React.FC<Props> = ({ setValue, isSubmitting }) => {
-  const [includes, setIncludes] = useState<Array<string>>([]);
+const Includes: React.FC<Props> = ({
+  setValue,
+  isSubmitting,
+  isSubmitSuccessful,
+  getValues,
+}) => {
+  const [includes, setIncludes] = useState<Array<string>>(
+    getValues("includes") || []
+  );
+
+  useEffect(() => {
+    if (isSubmitSuccessful) {
+      setIncludes([]);
+    }
+  }, [isSubmitSuccessful]);
 
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const existingArray = [...includes];
@@ -46,6 +65,7 @@ const Includes: React.FC<Props> = ({ setValue, isSubmitting }) => {
             index={i}
             key={i}
             onChange={handleOnChange}
+            checked={includes.includes(inc)}
           />
         ))}
       </div>
@@ -55,7 +75,7 @@ const Includes: React.FC<Props> = ({ setValue, isSubmitting }) => {
         disabled={isSubmitting}
         size={"lg"}
       >
-        {isSubmitting ? "Creating..." : "Create Tour"}
+        {"Create Tour"}
       </Button>
     </div>
   );

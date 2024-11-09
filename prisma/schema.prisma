@@ -24,13 +24,38 @@ model User{
   role Role @default(user)
   status Status @default(available)
   joinedAt DateTime @default(now())
+ 
+}
+
+model Tour{
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  tourName String @unique
+  category String
+  location String
+  highlight String[]
+  duration String
+  price Int
+  groupSize Int
+  overview String
+  gallery Image[]
+  itinerarys Itinerary[]
+  includes String[]
+  createdAt DateTime @default(now())
+  status Status @default(pending)
+  creatorId String @db.ObjectId
+
+}
+
+
+type Itinerary{
+  title String
+  description String
 }
 
 type Image{
   public_id String
   url String
 }
-
 
 enum Status{
   completed
