@@ -11,3 +11,14 @@ type User = {
   };
 };
 
+type AllToursType ={
+  id:string;
+  tourName:string;
+  location:string;
+  gallery:{
+    url:string;
+  }[];
+  duration:string;
+  price:number;
+  totalRatings:number;
+}

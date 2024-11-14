@@ -7,10 +7,10 @@ interface Props{
 const Spinner:React.FC<Props> = ({size="size-[112px]"}) => {
   return (
    
-<div className={`${size}`}>
-  <div className="box1"></div>
-  <div className="box2"></div>
-  <div className="box3"></div>
+<div className="typewriter">
+    <div className="slide"><i></i></div>
+    <div className="paper"></div>
+    <div className="keyboard"></div>
 </div>
   )
 }

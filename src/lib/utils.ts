@@ -13,4 +13,10 @@ export const formatCurrency = (number: number) => {
   }).format(number);
 };
 
-
+export const formatDate = (date: Date) => {
+  return date.toLocaleDateString("en", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  });
+};

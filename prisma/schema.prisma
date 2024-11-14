@@ -40,9 +40,27 @@ model Tour{
   gallery Image[]
   itinerarys Itinerary[]
   includes String[]
+  totalRatings Int @default(0)
   createdAt DateTime @default(now())
   status Status @default(pending)
   creatorId String @db.ObjectId
+
+}
+
+model Review{
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  userId String @db.ObjectId
+
+  tourId String @db.ObjectId
+
+  location Int
+  amenities Int
+  food Int
+  price Int
+  rooms Int
+  tourSupport Int
+  total Int
 
 }
 

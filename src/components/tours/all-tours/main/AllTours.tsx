@@ -1,13 +1,47 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import LayoutToggle from "./LayoutToggle";
 import Search from "./Search";
-import CardList from "../../CardList";
-import Card from "../../Card";
+import Spinner from "@/components/common/ui/Spinner";
+import GridCard from "./card/GridCard";
+import Empty from "@/components/common/ui/Empty";
+import { toast } from "sonner";
 
 const AllTours = () => {
   const [type, setType] = useState("grid");
+  const [tours, setTours] = useState<AllToursType[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    const fetchTours = async function () {
+      try {
+        setIsLoading(true);
+
+        const res = await fetch("/api/tour", {
+          next: {
+            revalidate: 3600,
+            tags: ["allTours"],
+          },
+        });
+
+        const data = await res.json();
+
+        if (!data.success) {
+          throw new Error(data.message);
+        }
+
+        setTours(data?.tours);
+      } catch (err: any) {
+        toast.error("Error!", {
+          description: err.message,
+        });
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchTours();
+  }, []);
 
   return (
     <>
@@ -17,21 +51,15 @@ const AllTours = () => {
           <Search />
         </div>
       </div>
-      {type === "grid" && (
-        <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 xs:gap-4 sm:gap-6 mt-6">
-          <Card />
-          <Card />
-          <Card />
-          <Card />
+      {isLoading && (
+        <div className="flex items-center justify-center h-full">
+          <Spinner />
         </div>
       )}
-      {type === "list" && (
-        <div className="flex flex-col mt-6 gap-4">
-          <CardList />
-          <CardList />
-          <CardList />
-        </div>
+      {!isLoading && tours?.length > 0 && (
+        <GridCard type={type} tours={tours} />
       )}
+      {!isLoading && tours?.length === 0 && <Empty />}
     </>
   );
 };

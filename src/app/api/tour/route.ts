@@ -2,6 +2,7 @@ import prisma from "@/lib/prisma";
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 import { configCloudinary, uploadToCloudinary } from "@/lib/util/cloudinary";
+import { revalidateTag } from "next/cache";
 
 export const POST = async (req: NextRequest) => {
   try {
@@ -29,6 +30,8 @@ export const POST = async (req: NextRequest) => {
       data: { ...values, gallery },
     });
 
+    revalidateTag('allTours')
+
     return NextResponse.json(
       {
         success: true,
@@ -52,7 +55,34 @@ export const POST = async (req: NextRequest) => {
 
 export const GET = async () => {
   try {
-    const tours = await prisma.tour.findMany();
+    const tours = await prisma.tour.findMany({
+      select:{
+        tourName:true,
+        id:true,
+        location:true,
+        gallery:{
+          select:{
+            url:true
+          },
+          
+        },
+        duration:true,
+        price:true,
+        totalRatings:true
+      }
+    });
+
+    if(!tours || tours.length === 0 ){
+      return NextResponse.json(
+        {
+          success: true,
+          tours:[],
+        },
+        {
+          status: 200,
+        }
+      );
+    }
 
     return NextResponse.json(
       {
