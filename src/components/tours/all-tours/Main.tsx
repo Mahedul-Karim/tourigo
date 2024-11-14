@@ -1,10 +1,14 @@
 import React from "react";
 import AllTours from "./main/AllTours";
 
-const Main = () => {
+type Props={
+  data:AllToursType[]
+}
+
+const Main:React.FC<Props> = ({data}) => {
   return (
     <>
-      <AllTours />
+      <AllTours data={data}/>
     </>
   );
 };

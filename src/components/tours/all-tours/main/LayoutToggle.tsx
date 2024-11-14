@@ -1,9 +1,11 @@
+'use client'
+
 import React from "react";
 import { CiGrid41, CiCircleList } from "react-icons/ci";
 
 interface Props {
   type: string;
-  setType: (str: string) => void;
+  setType?: (str: string) => void;
 }
 
 const LayoutToggle: React.FC<Props> = ({ type, setType }) => {
@@ -13,7 +15,7 @@ const LayoutToggle: React.FC<Props> = ({ type, setType }) => {
         className={`text-lg xs:text-xl p-1 rounded-md ${
           type === "grid" && "bg-primary text-white"
         }`}
-        onClick={() => setType("grid")}
+        onClick={() =>setType && setType("grid")}
       >
         <CiGrid41 />
       </button>
@@ -21,7 +23,7 @@ const LayoutToggle: React.FC<Props> = ({ type, setType }) => {
         className={`text-lg xs:text-xl  p-1 rounded-md ${
           type === "list" && "bg-primary text-white"
         }`}
-        onClick={() => setType("list")}
+        onClick={() =>setType && setType("list")}
       >
         <CiCircleList />
       </button>
