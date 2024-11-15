@@ -23,7 +23,7 @@ type Props = {
     }[];
     creatorId: string;
     createdAt: Date;
-    creator: {
+    creator?: {
       firstName: string;
       lastName: string;
     };

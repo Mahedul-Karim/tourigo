@@ -1,15 +1,11 @@
 import React from "react";
 import Title from "@/components/dashboard/common/Title";
 import AllListings from "@/components/dashboard/admin/all-listings/AllListings";
+import { adminAllTours } from "@/lib/actions/tours";
 
 const Page = async () => {
-  const res = await fetch(`${process.env.BASE_URL}/api/admin/all-listings`, {
-    next: {
-      revalidate: 3600,
-    },
-  });
+  const data = await adminAllTours()
 
-  const data = await res.json();
 
   return (
     <>

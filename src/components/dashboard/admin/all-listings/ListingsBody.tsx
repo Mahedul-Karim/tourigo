@@ -14,7 +14,7 @@ type Props = {
   price: number;
   status: string;
   createdAt: Date;
-  creator: {
+  creator?: {
     firstName: string;
     lastName: string;
   };
@@ -28,10 +28,10 @@ type Props = {
     }[];
     creatorId: string;
     createdAt: Date;
-    creator: {
+    creator?: {
       firstName: string;
       lastName: string;
-    };
+    }
   }[];
   setListings: (val: any) => void;
 };
