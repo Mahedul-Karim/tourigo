@@ -21,4 +21,5 @@ type AllToursType ={
   duration:string;
   price:number;
   totalRatings:number;
+  overview:string;
 }

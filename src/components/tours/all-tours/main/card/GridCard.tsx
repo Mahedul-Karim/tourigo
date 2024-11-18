@@ -27,7 +27,18 @@ const GridCard: React.FC<Props> = ({ type, tours }) => {
       )}
       {type === "list" && (
         <div className="flex flex-col mt-6 gap-4">
-          <CardList />
+          {tours?.map((tour) => (
+            <CardList
+              key={tour?.id}
+              tourName={tour?.tourName}
+              location={tour?.location}
+              totalRatings={tour?.totalRatings}
+              duration={tour?.duration}
+              price={tour?.price}
+              gallery={tour?.gallery}
+              overview={tour?.overview}
+            />
+          ))}
         </div>
       )}
     </>

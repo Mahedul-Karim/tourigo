@@ -86,23 +86,23 @@ export const TOUR_TYPE = [
 export const TOUR_DURATION = [
   {
     label: "1 days",
-    value: "1days",
+    value: "1 days",
   },
   {
     label: "2 days",
-    value: "2days",
+    value: "2 days",
   },
   {
     label: "5 days",
-    value: "5days",
+    value: "5 days",
   },
   {
     label: "7 days",
-    value: "7days",
+    value: "7 days",
   },
   {
     label: "10 days",
-    value: "10days",
+    value: "10 days",
   },
 ];
 export const RATINGS = [

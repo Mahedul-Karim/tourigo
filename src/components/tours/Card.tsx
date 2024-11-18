@@ -6,6 +6,8 @@ import { CiClock2 } from "react-icons/ci";
 import { IoMdHeart, IoMdHeartEmpty } from "react-icons/io";
 import Link from "next/link";
 import { formatCurrency } from "@/lib/utils";
+import { useSearchParams } from "next/navigation";
+import { highlightText } from "@/lib/highlightText";
 
 type Props ={
   tourName:string;
@@ -16,9 +18,14 @@ type Props ={
   duration:string;
   price:number;
   totalRatings:number;
+  overview?:string;
 }
 
 const Card:React.FC<Props> = ({tourName,gallery,price,totalRatings,duration,location}) => {
+
+  const search = useSearchParams().get("search") || "";
+
+
   return (
     <div className="bg-white group overflow-clip border border-solid border-border rounded-[12px]">
       <div>
@@ -43,10 +50,10 @@ const Card:React.FC<Props> = ({tourName,gallery,price,totalRatings,duration,loca
           {location}
         </div>
         <Link
-          href={`/tours/${tourName?.toLowerCase()}`}
+          href={`/tours/${tourName?.toLowerCase().split(" ").join('-')}`}
           className="text-[12px] sm:text-[15px] mt-1 line-clamp-2 text-dark-1 font-medium leading-[1.6] h-[40px] sm:h-[48px]"
         >
-          <span className="bg-gradient-to-r from-[#000] from-0% to-[#000] bg-no-repeat bg-[0_100%] bg-[length:0_1px] transition-all duration-500 group-hover:bg-[length:100%_1px] py-[2px]">{tourName}</span>
+          <span className="bg-gradient-to-r from-[#000] from-0% to-[#000] bg-no-repeat bg-[0_100%] bg-[length:0_1px] transition-all duration-500 group-hover:bg-[length:100%_1px] py-[2px]">{highlightText(tourName,search)}</span>
           
         </Link>
         <div className="my-1 flex items-center gap-1">

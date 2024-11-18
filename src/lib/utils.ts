@@ -20,3 +20,4 @@ export const formatDate = (date: Date) => {
     year: "numeric",
   });
 };
+

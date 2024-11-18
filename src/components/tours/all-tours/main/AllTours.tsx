@@ -7,9 +7,16 @@ import Spinner from "@/components/common/ui/Spinner";
 import GridCard from "./card/GridCard";
 import Empty from "@/components/common/ui/Empty";
 
+
 const AllTours = ({ data }: { data: AllToursType[] }) => {
   const [type, setType] = useState("grid");
-  const [tours, setTours] = useState<AllToursType[]>(data || []);
+  const [tours, setTours] = useState<AllToursType[]>(data);
+
+
+
+  useEffect(() => {
+    setTours(data);
+  }, [data.length]);
 
   return (
     <>

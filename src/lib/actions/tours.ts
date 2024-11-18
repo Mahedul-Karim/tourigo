@@ -111,9 +111,62 @@ const adminAllTours = cache(
 );
 
 const allTours = cache(
-  async () => {
+  async (queryParams: any) => {
     try {
+      const { type, price, duration, rating, search } = queryParams;
+
+      const query: any = {};
+
+      if (type) {
+        query.category = {
+          equals: type,
+          mode: "insensitive",
+        };
+      }
+
+      if (duration) {
+        query.duration = {
+          contains: duration,
+          mode: "insensitive",
+        };
+      }
+
+      if (price) {
+        const splitPrice = price.split("-");
+        const lowPrice = splitPrice.at(0);
+        const highPrice = splitPrice.at(1);
+
+        query.AND = [
+          {
+            price: {
+              gte: +lowPrice,
+            },
+          },
+          {
+            price: {
+              lte: +highPrice,
+            },
+          },
+        ];
+      }
+
+      if (rating) {
+        const numberArray = rating.split("-").map((rat: string) => +rat);
+
+        query.totalRatings = {
+          in: numberArray,
+        };
+      }
+
+      if (search) {
+        query.tourName = {
+          contains: search,
+          mode: "insensitive",
+        };
+      }
+
       const tours = await prisma.tour.findMany({
+        where: query,
         select: {
           tourName: true,
           id: true,
@@ -126,21 +179,30 @@ const allTours = cache(
           duration: true,
           price: true,
           totalRatings: true,
+          overview: true,
+        },
+        orderBy: {
+          createdAt: "desc",
         },
       });
 
       if (!tours || tours.length === 0) {
-        return [];
+        return {
+          success: true,
+          tours: [],
+        };
       }
 
-      return tours;
+      return { success: true, tours };
     } catch (err: any) {
-      return [];
+      return {
+        success: false,
+        tours: [],
+      };
     }
   },
   ["allToursPage"],
   {
-    revalidate: 3600,
     tags: ["allTours"],
   }
 );
