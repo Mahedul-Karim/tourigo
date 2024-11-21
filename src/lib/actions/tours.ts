@@ -180,6 +180,11 @@ const allTours = cache(
           price: true,
           totalRatings: true,
           overview: true,
+          reviews:{
+            select:{
+              id:true
+            }
+          }
         },
         orderBy: {
           createdAt: "desc",
@@ -207,4 +212,25 @@ const allTours = cache(
   }
 );
 
-export { updateTourStatus, adminAllTours, allTours };
+const getSingleTour = async (name: string) => {
+  try {
+    const tour = await prisma.tour.findUnique({
+      where: {
+        tourName: name,
+      },
+      include: {
+        reviews: true,
+      },
+    });
+
+    if (!tour) {
+      return null;
+    }
+
+    return { tour };
+  } catch (err) {
+    return null;
+  }
+};
+
+export { updateTourStatus, adminAllTours, allTours, getSingleTour };

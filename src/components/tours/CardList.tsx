@@ -5,11 +5,13 @@ import { LuMapPin } from "react-icons/lu";
 import { IoMdHeart, IoMdHeartEmpty } from "react-icons/io";
 import Image from "next/image";
 import Link from "next/link";
-import { formatCurrency } from "@/lib/utils";
+import { formatCurrency,handleAddWishlist } from "@/lib/utils";
 import { useSearchParams } from "next/navigation";
 import { highlightText } from "@/lib/highlightText";
+import { useCtx } from "@/context/ContextProvider";
 
 type Props ={
+  id:string;
   tourName:string;
   location:string;
   gallery:{
@@ -21,10 +23,14 @@ type Props ={
   overview:string;
 }
 
-const CardList:React.FC<Props> = ({tourName,gallery,price,totalRatings,duration,location,overview}) => {
+const CardList:React.FC<Props> = ({id,tourName,gallery,price,totalRatings,duration,location,overview}) => {
 
 
   const search = useSearchParams().get("search") || "";
+
+  const { user, isLoggedIn, setUser } = useCtx();
+
+  const isInWishlist = user?.wishlist?.find((tour) => tour.tourId === id);
 
   return (
     <div className="bg-white overflow-clip border border-solid border-border grid sm:grid-cols-[200px_1fr_0.4fr] rounded-[12px] p-4 gap-4 sm:gap-0">
@@ -37,9 +43,16 @@ const CardList:React.FC<Props> = ({tourName,gallery,price,totalRatings,duration,
           className="rounded-[12px] object-cover sm:h-[180px] w-full"
         />
         <div className="bg-white rounded-full size-6 xs:size-8 flex items-center justify-center absolute top-[12px] xs:top-[15px] right-[15px] border border-solid border-border">
-          <button>
-            <IoMdHeartEmpty className="text-sm xs:text-base md:text-lg" />
-            {/* <IoMdHeart className="text-sm xs:text-base md:text-lg fill-primary" /> */}
+        <button
+            onClick={() =>
+              handleAddWishlist({ user, isLoggedIn, setUser, tourId: id })
+            }
+          >
+            {isInWishlist ? (
+              <IoMdHeart className="text-sm xs:text-base md:text-lg fill-primary" />
+            ) : (
+              <IoMdHeartEmpty className="text-sm xs:text-base md:text-lg" />
+            )}
           </button>
         </div>
       </div>
@@ -49,7 +62,7 @@ const CardList:React.FC<Props> = ({tourName,gallery,price,totalRatings,duration,
           {location}
         </div>
         <Link
-          href={`/tours/${tourName?.toLowerCase()?.split(" ").join('-')}`}
+          href={`/tours/${tourName?.replace(/\s+/, "-")}`}
           className="text-[12px] xs:text-[13px] sm:text-[16px] mt-1 line-clamp-2 text-dark-1 font-medium leading-[1.4]"
         >
           {highlightText(tourName,search)}

@@ -63,7 +63,17 @@ export const POST = async (req: NextRequest) => {
         phoneNumber: true,
         bio: true,
         role: true,
-      },
+        wishlist:{
+          select:{
+            tourId:true
+          }
+        },
+        writtenReviews:{
+          select:{
+            tourId:true
+          }
+        }
+      }
     });
 
     return NextResponse.json(

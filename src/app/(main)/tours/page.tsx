@@ -19,6 +19,8 @@ const Page: React.FC<Props> = async ({ searchParams }) => {
     search:searchParams?.search
   });
 
+  
+
   return (
     <main>
       <Container className="py-32 xs:py-40 grid md:grid-cols-[0.4fr_1fr] gap-6">

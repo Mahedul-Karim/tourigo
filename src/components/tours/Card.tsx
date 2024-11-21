@@ -5,26 +5,41 @@ import Ratings from "../common/ui/Ratings";
 import { CiClock2 } from "react-icons/ci";
 import { IoMdHeart, IoMdHeartEmpty } from "react-icons/io";
 import Link from "next/link";
-import { formatCurrency } from "@/lib/utils";
+import { formatCurrency, handleAddWishlist } from "@/lib/utils";
 import { useSearchParams } from "next/navigation";
 import { highlightText } from "@/lib/highlightText";
+import { useCtx } from "@/context/ContextProvider";
+import { toast } from "sonner";
 
-type Props ={
-  tourName:string;
-  location:string;
-  gallery:{
-    url:string;
+type Props = {
+  id: string;
+  tourName: string;
+  location: string;
+  gallery: {
+    url: string;
   }[];
-  duration:string;
-  price:number;
-  totalRatings:number;
-  overview?:string;
-}
+  duration: string;
+  price: number;
+  totalRatings: number;
+  overview?: string;
+  totalReviews: number;
+};
 
-const Card:React.FC<Props> = ({tourName,gallery,price,totalRatings,duration,location}) => {
-
+const Card: React.FC<Props> = ({
+  id,
+  tourName,
+  gallery,
+  price,
+  totalRatings,
+  duration,
+  location,
+  totalReviews,
+}) => {
   const search = useSearchParams().get("search") || "";
 
+  const { user, isLoggedIn, setUser } = useCtx();
+
+  const isInWishlist = user?.wishlist?.find((tour) => tour.tourId === id);
 
   return (
     <div className="bg-white group overflow-clip border border-solid border-border rounded-[12px]">
@@ -39,33 +54,40 @@ const Card:React.FC<Props> = ({tourName,gallery,price,totalRatings,duration,loca
       </div>
       <div className="px-[5px] xs:px-[10px] sm:px-5 py-[10px] flex flex-col relative">
         <div className="bg-white rounded-full size-6 xs:size-8 flex items-center justify-center absolute top-[-12px] xs:top-[-15px] right-[15px] border border-solid border-border">
-          <button>
-            <IoMdHeartEmpty className="text-sm xs:text-base md:text-lg" />
-            {/* <IoMdHeart className="text-sm xs:text-base md:text-lg fill-primary" /> */}
+          <button
+            onClick={() =>
+              handleAddWishlist({ user, isLoggedIn, setUser, tourId: id })
+            }
+          >
+            {isInWishlist ? (
+              <IoMdHeart className="text-sm xs:text-base md:text-lg fill-primary" />
+            ) : (
+              <IoMdHeartEmpty className="text-sm xs:text-base md:text-lg" />
+            )}
           </button>
         </div>
-        
+
         <div className="flex items-center gap-1 text-[10px] sm:text-[11px] font-normal text-dark-0 capitalize">
           <LuMapPin className="text-xs xs:text-[14px]" />
           {location}
         </div>
         <Link
-          href={`/tours/${tourName?.toLowerCase().split(" ").join('-')}`}
+          href={`/tours/${tourName?.replace(/\s+/, "-")}`}
           className="text-[12px] sm:text-[15px] mt-1 line-clamp-2 text-dark-1 font-medium leading-[1.6] h-[40px] sm:h-[48px]"
         >
-          <span className="bg-gradient-to-r from-[#000] from-0% to-[#000] bg-no-repeat bg-[0_100%] bg-[length:0_1px] transition-all duration-500 group-hover:bg-[length:100%_1px] py-[2px]">{highlightText(tourName,search)}</span>
-          
+          <span className="bg-gradient-to-r from-[#000] from-0% to-[#000] bg-no-repeat bg-[0_100%] bg-[length:0_1px] transition-all duration-500 group-hover:bg-[length:100%_1px] py-[2px]">
+            {highlightText(tourName, search)}
+          </span>
         </Link>
         <div className="my-1 flex items-center gap-1">
           <Ratings rating={totalRatings} styles="text-[12px] xs:text-sm" />
           <p className="text-[10px] sm:text-[12px] text-center text-dark-0">
-            {totalRatings}
+            {totalRatings}({totalReviews})
           </p>
         </div>
-        
-        
+
         <div className="my-1 xs:my-3 border-t border-solid border-border" />
-        
+
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-1 text-dark-1">
             <CiClock2 className="text-dark-1 text-sm xs:text-[18px]" />
@@ -79,7 +101,6 @@ const Card:React.FC<Props> = ({tourName,gallery,price,totalRatings,duration,loca
               {formatCurrency(price)}
             </p>
           </div>
-          
         </div>
       </div>
     </div>

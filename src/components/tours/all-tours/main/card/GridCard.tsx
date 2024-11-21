@@ -15,12 +15,14 @@ const GridCard: React.FC<Props> = ({ type, tours }) => {
           {tours?.map((tour) => (
             <Card
               key={tour?.id}
+              id={tour?.id}
               tourName={tour?.tourName}
               location={tour?.location}
               totalRatings={tour?.totalRatings}
               duration={tour?.duration}
               price={tour?.price}
               gallery={tour?.gallery}
+              totalReviews={tour?.reviews?.length}
             />
           ))}
         </div>
@@ -30,6 +32,7 @@ const GridCard: React.FC<Props> = ({ type, tours }) => {
           {tours?.map((tour) => (
             <CardList
               key={tour?.id}
+              id={tour?.id}
               tourName={tour?.tourName}
               location={tour?.location}
               totalRatings={tour?.totalRatings}

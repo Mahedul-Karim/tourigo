@@ -28,14 +28,14 @@ const uploadUserImage = async (image: string, email: string) => {
         lastName: true,
         email: true,
         image: {
-          select:{
-            url:true
-          }
+          select: {
+            url: true,
+          },
         },
         phoneNumber: true,
         bio: true,
         role: true,
-      }
+      },
     });
 
     return {
@@ -79,14 +79,24 @@ const updateUserDetails = async (details: UserInfo) => {
         lastName: true,
         email: true,
         image: {
-          select:{
-            url:true
-          }
+          select: {
+            url: true,
+          },
         },
         phoneNumber: true,
         bio: true,
         role: true,
-      }
+        wishlist: {
+          select: {
+            tourId: true,
+          },
+        },
+        writtenReviews: {
+          select: {
+            tourId: true,
+          },
+        },
+      },
     });
 
     return {
@@ -142,9 +152,67 @@ const requestForVendor = async (email: string) => {
   }
 };
 
+const addTourToWishlist = async ({
+  userId,
+  tourId,
+}: {
+  userId: string;
+  tourId: string;
+}) => {
+  try {
+    await prisma.wishlist.create({
+      data: {
+        userId,
+        tourId,
+      },
+    });
+
+    return {
+      success: true,
+    };
+  } catch (err) {
+    return {
+      success: false,
+    };
+  }
+};
+
+const removeFromWishlist = async ({
+  userId,
+  tourId,
+}: {
+  userId: string;
+  tourId: string;
+}) => {
+  try {
+    const wishlist = await prisma.wishlist.findFirst({
+      where: {
+        userId: userId,
+        tourId: tourId,
+      },
+    });
+
+    await prisma.wishlist.delete({
+      where: {
+        id: wishlist?.id,
+      },
+    });
+
+    return {
+      success: true,
+    };
+  } catch (err) {
+    return {
+      success: false,
+    };
+  }
+};
+
 export {
   uploadUserImage,
   updateUserDetails,
   updateUserPassword,
   requestForVendor,
+  addTourToWishlist,
+  removeFromWishlist
 };

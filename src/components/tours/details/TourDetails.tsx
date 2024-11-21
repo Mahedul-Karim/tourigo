@@ -11,12 +11,15 @@ import { MdHome } from "react-icons/md";
 import Gallery from "./Gallery";
 import Heading from "./Heading";
 import Content from "./Content";
+import { Tour } from "@prisma/client";
 
 interface Props {
   tourId: string;
+  tour:Tour
 }
 
-const TourDetails: React.FC<Props> = ({ tourId }) => {
+const TourDetails: React.FC<Props> = ({ tourId,tour }) => {
+
   return (
     <>
       <Breadcrumb>
@@ -32,11 +35,11 @@ const TourDetails: React.FC<Props> = ({ tourId }) => {
           </BreadcrumbItem>
           <BreadcrumbSeparator />
           <BreadcrumbItem>
-            <BreadcrumbPage>{tourId}</BreadcrumbPage>
+            <BreadcrumbPage className="capitalize">{tourId}</BreadcrumbPage>
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>
-      <Heading />
+      <Heading name={tour?.tourName} totalRatings={tour?.totalRatings} location={tour?.location}/>
       <Gallery />
       <Content />
       

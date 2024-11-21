@@ -12,7 +12,7 @@ const AllTours = ({ data }: { data: AllToursType[] }) => {
   const [type, setType] = useState("grid");
   const [tours, setTours] = useState<AllToursType[]>(data);
 
-
+  
 
   useEffect(() => {
     setTours(data);

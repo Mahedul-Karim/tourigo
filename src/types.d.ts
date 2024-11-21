@@ -9,6 +9,8 @@ type User = {
   image?: {
     url: string;
   };
+  wishlist:Array<any>;
+  writtenReviews:Array<any>;
 };
 
 type AllToursType ={
@@ -22,4 +24,5 @@ type AllToursType ={
   price:number;
   totalRatings:number;
   overview:string;
+  reviews:Array<any>
 }
