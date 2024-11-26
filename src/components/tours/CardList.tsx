@@ -62,7 +62,7 @@ const CardList:React.FC<Props> = ({id,tourName,gallery,price,totalRatings,durati
           {location}
         </div>
         <Link
-          href={`/tours/${tourName?.replace(/\s+/, "-")}`}
+          href={`/tours/${tourName?.replace(/\s+/, "-")}?id=${id}`}
           className="text-[12px] xs:text-[13px] sm:text-[16px] mt-1 line-clamp-2 text-dark-1 font-medium leading-[1.4]"
         >
           {highlightText(tourName,search)}

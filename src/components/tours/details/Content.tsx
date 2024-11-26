@@ -12,56 +12,92 @@ import Reviews from "./content/reviews/Reviews";
 import RatingForm from "./content/reviews/RatingForm";
 import Sidebar from "./content/sidebar/Sidebar";
 
-const BADGES_DETAILS = [
-  {
-    icon: <CiClock2 className="text-xl md:text-2xl" />,
-    label: "Duration",
-    details: "3 days",
-  },
-  {
-    icon: <IoPeopleOutline className="text-xl md:text-2xl" />,
-    label: "Group Size",
-    details: "10 people",
-  },
-  {
-    icon: <BsCake className="text-xl md:text-2xl" />,
-    label: "Ages",
-    details: "18+",
-  },
-  {
-    icon: <IoLanguageOutline className="text-xl md:text-2xl" />,
-    label: "Languages",
-    details: "English",
-  },
-];
+interface Props {
+  id: string;
+  duration: string;
+  groupSize: number;
+  overview: string;
+  highlight: string[];
+  includes: string[];
+  itinerarys: {
+    title: string;
+    description: string;
+  }[];
+  price: number;
+  reviews: {
+    total: number;
+    comment: string;
+    user: {
+      firstName: string;
+      lastName: string;
+      image: {
+        public_id: string;
+        url: string;
+      };
+    };
+  }[];
+  creatorId: string;
+}
 
-const Content = () => {
+//new RegExp('(\\d+)') for splitting the string with number
+// string.match(/\d+/)[0] to get the first number from a string
+
+const Content: React.FC<Props> = ({
+  id,
+  duration,
+  groupSize,
+  overview,
+  highlight,
+  includes,
+  itinerarys,
+  price,
+  reviews,
+  creatorId,
+}) => {
   return (
     <div className="mt-6 grid md:grid-cols-[1fr_0.4fr] gap-8">
       <div>
         <div className="grid grid-cols-2 gap-8 sm:gap-0 sm:grid-cols-4">
-          {BADGES_DETAILS.map((badge, i) => (
-            <Badges
-              key={i}
-              icon={badge.icon}
-              label={badge.label}
-              details={badge.details}
-            />
-          ))}
+          <Badges
+            icon={<CiClock2 className="text-xl md:text-2xl" />}
+            label={"Duration"}
+            details={duration}
+          />
+          <Badges
+            icon={<IoPeopleOutline className="text-xl md:text-2xl" />}
+            label={"Group Size"}
+            details={`${groupSize} People`}
+          />
+          <Badges
+            icon={<BsCake className="text-xl md:text-2xl" />}
+            label={"Age"}
+            details={"1-99"}
+          />
+          <Badges
+            icon={<IoLanguageOutline className="text-xl md:text-2xl" />}
+            label={"Languages"}
+            details={"English"}
+          />
         </div>
-        <Overview />
+        <Overview overview={overview} highlight={highlight} />
         <div className="border-t border-solid border-border my-12" />
-        <Includes />
+        <Includes includes={includes} />
         <div className="border-t border-solid border-border my-12" />
-        <Itinerary />
+        <Itinerary itinerarys={itinerarys} />
         <div className="border-t border-solid border-border my-12" />
         <FAQ />
         <div className="border-t border-solid border-border my-12" />
-        <Reviews />
+        <Reviews reviews={reviews} />
         <div className="border-t border-solid border-border my-12" />
-        <RatingForm />
+        {/* <RatingForm /> */}
       </div>
-      <Sidebar />
+      <Sidebar
+        id={id}
+        price={price}
+        duration={duration}
+        groupSize={groupSize}
+        creatorId={creatorId}
+      />
     </div>
   );
 };

@@ -27,6 +27,7 @@ model User{
 
   writtenReviews Review[]
   wishlist Wishlist[]
+  bookings Booking[]
  
 }
 
@@ -47,9 +48,10 @@ model Tour{
   createdAt DateTime @default(now())
   status Status @default(pending)
   creatorId String @db.ObjectId
-  reviews Review[]
 
+  reviews Review[]
   wishlisted Wishlist[]
+  bookings Booking[]
 
 }
 
@@ -87,6 +89,21 @@ model Wishlist{
   @@unique([userId,tourId])
 }
 
+model Booking{
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  userId String @db.ObjectId
+  user User @relation(fields: [userId],references: [id],onDelete:Cascade)
+
+  tourId String @db.ObjectId
+  tour Tour @relation(fields: [tourId],references: [id],onDelete:Cascade)
+
+  status String
+  startDate DateTime
+  endDate DateTime
+  totalPeople Int
+
+}
 
 type Itinerary{
   title String

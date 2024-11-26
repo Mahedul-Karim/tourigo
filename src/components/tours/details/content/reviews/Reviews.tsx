@@ -8,7 +8,22 @@ import { IoPricetagOutline, IoBedOutline } from "react-icons/io5";
 import { BiSupport } from "react-icons/bi";
 import UserReviews from "./UserReviews";
 
-const Reviews = () => {
+interface Props {
+  reviews: {
+    total: number;
+    comment: string;
+    user: {
+      firstName: string;
+      lastName: string;
+      image: {
+        public_id: string;
+        url: string;
+      };
+    };
+  }[];
+}
+
+const Reviews: React.FC<Props> = ({ reviews }) => {
   return (
     <div>
       <Title>Reviews</Title>
@@ -63,10 +78,8 @@ const Reviews = () => {
         </div>
       </div>
       <div className="mt-8 flex flex-col gap-6">
-        <UserReviews />
-        <UserReviews />
-        <UserReviews />
-        <UserReviews />
+        {reviews?.length > 0 &&
+          reviews?.map((rev, i) => <UserReviews key={i} />)}
       </div>
     </div>
   );

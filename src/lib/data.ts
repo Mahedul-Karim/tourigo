@@ -134,6 +134,14 @@ export const STATUS:any={
     bg:'#dcfce7',
     text:'#15803d'
   },
+  paid:{
+    bg:'#dcfce7',
+    text:'#15803d'
+  },
+  "checked in":{
+    bg:'#fef9c3',
+    text:'#a16207'
+  },
   approved:{
     bg:'#dcfce7',
     text:'#15803d'

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import LayoutToggle from "./LayoutToggle";
 import Search from "./Search";
 import Spinner from "@/components/common/ui/Spinner";
@@ -12,11 +12,11 @@ const AllTours = ({ data }: { data: AllToursType[] }) => {
   const [type, setType] = useState("grid");
   const [tours, setTours] = useState<AllToursType[]>(data);
 
+  const memoizeData = useMemo(()=>data,[data])
   
-
   useEffect(() => {
-    setTours(data);
-  }, [data.length]);
+    setTours(memoizeData);
+  }, [memoizeData]);
 
   return (
     <>

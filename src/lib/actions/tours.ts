@@ -212,14 +212,26 @@ const allTours = cache(
   }
 );
 
-const getSingleTour = async (name: string) => {
+const getSingleTour = async (id: string) => {
   try {
     const tour = await prisma.tour.findUnique({
       where: {
-        tourName: name,
+        id,
       },
       include: {
-        reviews: true,
+        reviews: {
+          select:{
+            comment:true,
+            total:true,
+            user:{
+              select:{
+                firstName:true,
+                lastName:true,
+                image:true
+              }
+            }
+          }
+        },
       },
     });
 

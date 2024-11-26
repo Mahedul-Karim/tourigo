@@ -18,8 +18,15 @@ const MONTHS = [
   "Decenmber",
 ];
 
-const Calendar = () => {
+interface Props {
+  startDate: number;
+  setStartDate: (val: number) => void;
+}
+
+const Calendar: React.FC<Props> = ({ startDate, setStartDate }) => {
   const currentDate = new Date();
+
+  const selectedDate = new Date(startDate);
 
   const [currentYear, setCurrentYear] = useState(currentDate.getFullYear());
   const [currentMonth, setCurrentMonth] = useState(currentDate.getMonth());
@@ -102,21 +109,37 @@ const Calendar = () => {
         ))}
       </div>
       <div className="grid grid-cols-7 mt-4">
-        {dates.map((date, i) => (
-          <div key={i}>
-            <button
-              type="button"
-              className={`mb-4 disabled:text-gray-400 disabled:hover:bg-transparent hover:bg-primary hover:text-white hover:transition-all hover:duration-300 w-8 h-8 rounded-full text-xs xs:text-sm`}
-              disabled={
-                !date.isActive ||
-                (currentDate.getMonth() === currentMonth &&
-                  date.date < currentDate.getDate())
-              }
-            >
-              {date.date}
-            </button>
-          </div>
-        ))}
+        {dates.map((date, i) => {
+          const isDisabled =
+            !date.isActive ||
+            (currentDate.getMonth() === currentMonth &&
+              date.date < currentDate.getDate());
+
+          return (
+            <div key={i}>
+              <button
+                type="button"
+                className={`mb-4 disabled:text-gray-400 disabled:hover:bg-transparent hover:bg-primary hover:text-white hover:transition-all hover:duration-300 w-8 h-8 rounded-full text-xs xs:text-sm ${
+                  (date.date === +selectedDate.getDate() &&
+                  !isDisabled && selectedDate.getMonth() === currentMonth) &&
+                  "bg-primary text-white"
+                }`}
+                disabled={isDisabled}
+                onClick={() => {
+                  const selectDate = +new Date(
+                    currentYear,
+                    currentMonth,
+                    date.date
+                  );
+
+                  setStartDate(selectDate);
+                }}
+              >
+                {date.date}
+              </button>
+            </div>
+          );
+        })}
       </div>
     </div>
   );

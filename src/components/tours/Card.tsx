@@ -72,7 +72,7 @@ const Card: React.FC<Props> = ({
           {location}
         </div>
         <Link
-          href={`/tours/${tourName?.replace(/\s+/, "-")}`}
+          href={`/tours/${tourName?.replace(/\s+/, "-")}?id=${id}`}
           className="text-[12px] sm:text-[15px] mt-1 line-clamp-2 text-dark-1 font-medium leading-[1.6] h-[40px] sm:h-[48px]"
         >
           <span className="bg-gradient-to-r from-[#000] from-0% to-[#000] bg-no-repeat bg-[0_100%] bg-[length:0_1px] transition-all duration-500 group-hover:bg-[length:100%_1px] py-[2px]">

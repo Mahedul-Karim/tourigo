@@ -15,11 +15,10 @@ import { Tour } from "@prisma/client";
 
 interface Props {
   tourId: string;
-  tour:Tour
+  tour: any;
 }
 
-const TourDetails: React.FC<Props> = ({ tourId,tour }) => {
-
+const TourDetails: React.FC<Props> = ({ tourId, tour }) => {
   return (
     <>
       <Breadcrumb>
@@ -35,14 +34,32 @@ const TourDetails: React.FC<Props> = ({ tourId,tour }) => {
           </BreadcrumbItem>
           <BreadcrumbSeparator />
           <BreadcrumbItem>
-            <BreadcrumbPage className="capitalize">{tourId}</BreadcrumbPage>
+            <BreadcrumbPage className="capitalize line-clamp-1">
+              {tourId}
+            </BreadcrumbPage>
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>
-      <Heading name={tour?.tourName} totalRatings={tour?.totalRatings} location={tour?.location}/>
-      <Gallery />
-      <Content />
-      
+      <Heading
+      id={tour?.id}
+        name={tour?.tourName}
+        totalRatings={tour?.totalRatings}
+        location={tour?.location}
+        totalReviews={tour?.reviews?.length}
+      />
+      <Gallery gallery={tour?.gallery} />
+      <Content
+        id={tour?.id}
+        duration={tour?.duration}
+        groupSize={tour?.groupSize}
+        overview={tour?.overview}
+        highlight={tour?.highlight}
+        includes={tour?.includes}
+        itinerarys={tour?.itinerarys}
+        price={tour?.price}
+        reviews={tour?.reviews}
+        creatorId={tour?.creatorId}
+      />
     </>
   );
 };

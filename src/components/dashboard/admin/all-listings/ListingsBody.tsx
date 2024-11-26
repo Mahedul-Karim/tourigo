@@ -63,7 +63,7 @@ const ListingsBody: React.FC<Props> = ({
       </div>
       <div>
         <Link
-          href={`/tours/${tourName?.toLowerCase()}`}
+          href={`/tours/${tourName?.replace(/\s+/, "-")}?id=${id}`}
           className="text-[14px] text-dark-1 font-medium"
         >
           <span className="bg-gradient-to-r from-[#000] from-0% to-[#000] bg-no-repeat bg-[0_100%] bg-[length:0_1px] transition-all duration-500 group-hover:bg-[length:100%_1px] py-[2px]">
