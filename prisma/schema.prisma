@@ -102,6 +102,8 @@ model Booking{
   startDate DateTime
   endDate DateTime
   totalPeople Int
+  tourCreator String @db.ObjectId
+  createdAt DateTime @default(now())
 
 }
 

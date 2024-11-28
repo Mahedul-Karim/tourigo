@@ -10,6 +10,9 @@ const getPayment = async (amount: number) => {
     const paymentIntent = await stripe.paymentIntents.create({
       amount,
       currency: "usd",
+      automatic_payment_methods: {
+        enabled: true,
+      },
     });
 
     return {
@@ -30,10 +33,11 @@ const bookTour = async (
   endDate: Date,
   totalPeople: number,
   userId: string,
-  tourId: string
+  tourId: string,
+  tourCreator: string
 ) => {
   try {
-    await prisma.booking.create({
+    const data = await prisma.booking.create({
       data: {
         startDate,
         endDate,
@@ -41,12 +45,14 @@ const bookTour = async (
         userId,
         tourId,
         status: "paid",
+        tourCreator,
       },
     });
 
     return {
       success: true,
       message: "Tour booked successfully!",
+      id: data.id,
     };
   } catch (err: any) {
     console.log(err.message);
@@ -57,4 +63,12 @@ const bookTour = async (
   }
 };
 
-export { getPayment, bookTour };
+const deleteBooking = async (id: string) => {
+  await prisma.booking.delete({
+    where: {
+      id,
+    },
+  });
+};
+
+export { getPayment, bookTour, deleteBooking };

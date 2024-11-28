@@ -21,12 +21,12 @@ const navData = [
     Icon: <GoShieldCheck className="text-xl" />,
     href: "/user/security",
   },
-  {
-    label: "Chats",
-    Icon: <IoChatbubbleOutline className="text-xl" />,
-    href: "/user/chats",
-    isChat: true,
-  },
+  // {
+  //   label: "Chats",
+  //   Icon: <IoChatbubbleOutline className="text-xl" />,
+  //   href: "/user/chats",
+  //   isChat: true,
+  // },
   {
     href: "/admin",
   },
@@ -91,11 +91,11 @@ const UserNav = () => {
                       {nav.label}
                     </span>
                   </p>
-                  {nav.isChat && (
+                  {/* {nav.isChat && (
                     <span className="text-xs top-0 -right-[1px] md:text-sm text-white bg-primary size-[15px] md:size-[20px] flex items-center justify-center rounded-full absolute md:static">
                       2
                     </span>
-                  )}
+                  )} */}
                 </Link>
               );
             }

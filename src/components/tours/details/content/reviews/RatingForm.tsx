@@ -14,10 +14,10 @@ const RatingForm = () => {
   const [tourOperator, setTourOperator] = useState(1);
 
   return (
-    <div className="mt-4">
+    <div>
       <Title>Leave a Comment</Title>
       <div className="mt-6">
-        <div className="grid grid-cols-2 sm:grid-cols-3 gap-y-6">
+        <div className="grid grid-cols-2 gap-y-6">
           <StarRating
             label="Location"
             value={location}

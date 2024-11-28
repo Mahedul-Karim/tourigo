@@ -118,7 +118,7 @@ const Sidebar: React.FC<Props> = ({
         )}
       </div>
       {open && (
-        <LoadStripe>
+        <LoadStripe amount={price*100}>
           <PaymentModal
             userId={user?.id as string}
             tourId={id}
@@ -128,6 +128,7 @@ const Sidebar: React.FC<Props> = ({
             startDate={new Date(startDate)}
             endDate={new Date(endDate)}
             totalPeople={adultGuest + childGuest}
+            tourCreator={creatorId}
           />
         </LoadStripe>
       )}

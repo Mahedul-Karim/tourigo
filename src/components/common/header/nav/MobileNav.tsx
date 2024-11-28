@@ -22,7 +22,11 @@ const MobileNav: React.FC<Props> = ({ className }) => {
     <div className={`${className}`}>
       <Sheet>
         <SheetTrigger className="text-dark-1">
-          <GiHamburgerMenu size={26} />
+          <div className="w-[30px] flex flex-col gap-1 cursor-pointer">
+            <span className="bg-primary w-full h-[3px] rounded-md" />
+            <span className="bg-primary w-[80%] h-[3px] rounded-md self-end" />
+            <span className="bg-primary w-full h-[3px] rounded-md" />
+          </div>
         </SheetTrigger>
         <SheetContent>
           <SheetTitle className="sr-only">Menu</SheetTitle>

@@ -11,9 +11,10 @@ import {
   CardNumberElement,
   useElements,
   useStripe,
+  PaymentElement,
 } from "@stripe/react-stripe-js";
 import { toast } from "sonner";
-import { getPayment, bookTour } from "@/lib/actions/payment";
+import { getPayment, bookTour, deleteBooking } from "@/lib/actions/payment";
 import { StripeCardNumberElement } from "@stripe/stripe-js";
 
 interface Props {
@@ -25,6 +26,7 @@ interface Props {
   startDate: Date;
   endDate: Date;
   totalPeople: number;
+  tourCreator: string;
 }
 
 const PaymentModal: React.FC<Props> = ({
@@ -36,13 +38,16 @@ const PaymentModal: React.FC<Props> = ({
   endDate,
   totalPeople,
   amount,
+  tourCreator,
 }) => {
   const stripe = useStripe();
   const elements = useElements();
 
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleBooking = async () => {
+  const handleBooking = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
     if (!isLoggedIn) {
       return toast.error("Error!", {
         description: "Login first to book a tour!",
@@ -55,35 +60,39 @@ const PaymentModal: React.FC<Props> = ({
       });
     }
 
+    if (!stripe || !elements) {
+      return;
+    }
+
     try {
       setIsLoading(true);
 
-      const payment = await getPayment(amount * 100);
+      // const payment = await getPayment(amount * 100);
 
-      if (!payment.success) {
-        throw new Error(payment.message);
-      }
+      // if (!payment.success) {
+      //   throw new Error(payment.message);
+      // }
 
-      const result = await stripe?.confirmCardPayment(
-        payment?.client_secret as string,
-        {
-          payment_method: {
-            card: elements?.getElement(
-              CardNumberElement
-            ) as StripeCardNumberElement,
-          },
-        }
+      const booking = await bookTour(
+        startDate,
+        endDate,
+        totalPeople,
+        userId,
+        tourId,
+        tourCreator
       );
 
-      if (result?.error) {
-        throw new Error(result?.error.message);
-      }
-
-      await bookTour(startDate, endDate, totalPeople, userId, tourId);
-
-      toast.success("Success!", {
-        description: "Tour booked successfully!",
+      const { error } = await stripe?.confirmPayment({
+        elements,
+        confirmParams: {
+          return_url: `${process.env.NEXT_PUBLIC_BASE_URL}/booking/success`,
+        },
       });
+
+      if (error) {
+        await deleteBooking(booking.id as string);
+        throw new Error("An error occured while processing payment!");
+      }
     } catch (err: any) {
       toast.error("Error!", {
         description: err.message,
@@ -95,9 +104,25 @@ const PaymentModal: React.FC<Props> = ({
   };
 
   return (
-    <Modal onModalClose={onModalClose}>
+    <Modal onModalClose={onModalClose} className="overflow-y-auto max-h-[479px] showScrollbar">
       <h3 className="text-lg text-dark-3 font-semibold">Make Payment</h3>
-      <div className="py-4 flex flex-col gap-3">
+      <form onSubmit={handleBooking}>
+        <PaymentElement />
+        <div className="flex items-center gap-2 justify-end mt-4">
+          <Button
+            variant={"outline"}
+            type="button"
+            className="hover:bg-transparent bg-transparent"
+            onClick={onModalClose.bind(null, false)}
+          >
+            Cancel
+          </Button>
+          <Button disabled={isLoading} className="flex items-center gap-2">
+            {isLoading && <SpinnerButton size="size-4" />} Book Now!
+          </Button>
+        </div>
+      </form>
+      {/* <div className="py-4 flex flex-col gap-3">
         <div>
           <CardNumberElement
             className="bg-white border border-solid border-border text-base p-3 focus:outline-none rounded-lg w-full relative disabled:bg-grey-5 disabled:cursor-not-allowed text-richblack-700 placeholder:text-richblack-700"
@@ -155,7 +180,7 @@ const PaymentModal: React.FC<Props> = ({
         >
           {isLoading && <SpinnerButton size="size-4" />} Book Now!
         </Button>
-      </div>
+      </div> */}
     </Modal>
   );
 };
