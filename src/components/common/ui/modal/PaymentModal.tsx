@@ -87,12 +87,17 @@ const PaymentModal: React.FC<Props> = ({
         confirmParams: {
           return_url: `${process.env.NEXT_PUBLIC_BASE_URL}/booking/success`,
         },
+        redirect: "if_required",
       });
 
       if (error) {
         await deleteBooking(booking.id as string);
         throw new Error("An error occured while processing payment!");
       }
+
+      toast.success("Success!", {
+        description: "Tour booked successfully!",
+      });
     } catch (err: any) {
       toast.error("Error!", {
         description: err.message,
@@ -104,7 +109,10 @@ const PaymentModal: React.FC<Props> = ({
   };
 
   return (
-    <Modal onModalClose={onModalClose} className="overflow-y-auto max-h-[479px] showScrollbar">
+    <Modal
+      onModalClose={onModalClose}
+      className="overflow-y-auto max-h-[479px] showScrollbar"
+    >
       <h3 className="text-lg text-dark-3 font-semibold">Make Payment</h3>
       <form onSubmit={handleBooking}>
         <PaymentElement />

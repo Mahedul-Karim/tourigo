@@ -16,7 +16,6 @@ const Page = () => {
     const animation = lottie.loadAnimation({
       container: containerRef.current as any,
       renderer: "svg",
-    //   loop: true,
       autoplay: true,
       path: "/success.json",
     });
