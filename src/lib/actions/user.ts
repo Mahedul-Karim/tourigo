@@ -5,6 +5,7 @@ import prisma from "../prisma";
 import { auth } from "../firebase";
 
 import { updatePassword } from "firebase/auth";
+import { revalidateTag, unstable_cache as cache } from "next/cache";
 
 const uploadUserImage = async (image: string, email: string) => {
   try {
@@ -167,6 +168,8 @@ const addTourToWishlist = async ({
       },
     });
 
+    revalidateTag("wishlistTours");
+
     return {
       success: true,
     };
@@ -198,6 +201,8 @@ const removeFromWishlist = async ({
       },
     });
 
+    revalidateTag("wishlistTours");
+
     return {
       success: true,
     };
@@ -208,11 +213,111 @@ const removeFromWishlist = async ({
   }
 };
 
+const userWishlists = cache(
+  async (userId: string) => {
+    try {
+      const tours = await prisma.wishlist.findMany({
+        where: {
+          userId,
+        },
+        include: {
+          tour: {
+            select: {
+              tourName: true,
+              id: true,
+              location: true,
+              gallery: {
+                select: {
+                  url: true,
+                },
+              },
+              duration: true,
+              price: true,
+              totalRatings: true,
+              overview: true,
+              reviews: {
+                select: {
+                  id: true,
+                },
+              },
+            },
+          },
+        },
+      });
+
+      if (tours.length === 0 || !tours) {
+        return {
+          success: true,
+          tours: [],
+        };
+      }
+      return {
+        success: true,
+        tours,
+      };
+    } catch (err: any) {
+      return {
+        success: false,
+        message: "Something went wrong! Please try again later",
+      };
+    }
+  },
+  ["userWishlists"],
+  {
+    tags: ["wishlistTours"],
+  }
+);
+
+const usersBookedTours = cache(
+  async (userId: string) => {
+    try {
+      const bookedTours = await prisma.booking.findMany({
+        where: {
+          userId,
+        },
+        include: {
+          tour: {
+            select: {
+              tourName: true,
+              gallery: true,
+              price: true,
+            },
+          },
+        },
+      });
+
+      if (bookedTours.length === 0 || !bookedTours) {
+        return {
+          success: true,
+          tours: [],
+        };
+      }
+
+      return {
+        success: true,
+        tours: bookedTours,
+      };
+    } catch (err: any) {
+      console.log(err.message);
+      return {
+        success: false,
+        message: "Something went wrong! Please try again later",
+      };
+    }
+  },
+  ["usersBookedTours"],
+  {
+    tags: ["bookedTours"],
+  }
+);
+
 export {
   uploadUserImage,
   updateUserDetails,
   updateUserPassword,
   requestForVendor,
   addTourToWishlist,
-  removeFromWishlist
+  removeFromWishlist,
+  userWishlists,
+  usersBookedTours,
 };

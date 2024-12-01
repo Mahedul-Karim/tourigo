@@ -2,6 +2,7 @@
 
 import Stripe from "stripe";
 import prisma from "../prisma";
+import { revalidateTag } from "next/cache";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET as string);
 
@@ -48,6 +49,8 @@ const bookTour = async (
         tourCreator,
       },
     });
+
+    revalidateTag('usersBookedTours')
 
     return {
       success: true,

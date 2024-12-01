@@ -6,15 +6,41 @@ import Link from "next/link";
 import Badge from "@/components/common/ui/Badge";
 import { STATUS } from "@/lib/data";
 import ReviewModal from "@/components/common/ui/modal/ReviewModal";
+import { formatCurrency, formatDate } from "@/lib/utils";
 
-const Card = () => {
+interface Props {
+  tourId: string;
+  status: string;
+  startDate: Date;
+  endDate: Date;
+  totalPeople: number;
+  createdAt: Date;
+  tour: {
+    tourName: string;
+    price: number;
+    gallery: {
+      public_id: string;
+      url: string;
+    }[];
+  };
+}
+
+const Card: React.FC<Props> = ({
+  tourId,
+  status,
+  startDate,
+  endDate,
+  totalPeople,
+  createdAt,
+  tour,
+}) => {
   const [open, setOpen] = useState(false);
 
   return (
     <article className="grid sm:grid-cols-[0.5fr_1fr_0.7fr] gap-3 py-4 px-3">
       <div className="">
         <Image
-          src="https://viatour-nextjs.vercel.app/_next/image?url=%2Fimg%2FtourCards%2F1%2F1.png&w=640&q=75"
+          src={tour?.gallery?.[0].url}
           alt=""
           width={821}
           height={0}
@@ -23,14 +49,14 @@ const Card = () => {
       </div>
       <div className="flex flex-col gap-1 justify-center">
         <Link
-          href="/"
+          href={`/tours/${tour?.tourName?.replace(/\s+/, "-")}?id=${tourId}`}
           className="text-sm xs:text-base lg:text-lg font-semibold text-dark-1"
         >
-          Enchanted Island Escapades: Mystical
+          {tour?.tourName}
         </Link>
-        <p className="text-xs xs:text-sm text-dark-0">3 Adults and 1 infant</p>
+        <p className="text-xs xs:text-sm text-dark-0">{totalPeople} Persons</p>
         <p className="text-xs xs:text-sm text-dark-0">
-          Tour Starts At: 21 Aug, 2026
+          Tour Starts At: {formatDate(new Date(startDate))}
         </p>
       </div>
       <div className="flex flex-col gap-1 justify-center text-dark-1 text-xs xs:text-sm lg:text-base">
@@ -39,28 +65,37 @@ const Card = () => {
           <span className="font-normal">
             {" "}
             <Badge
-              backgroundColor={STATUS["checked in"]?.bg}
-              textColor={STATUS["checked in"]?.text}
+              backgroundColor={STATUS[status]?.bg}
+              textColor={STATUS[status]?.text}
               className="!py-0.5 !text-[10px]"
             >
-              checked in
+              {status}
             </Badge>{" "}
           </span>
         </p>
         <p className="flex items-center justify-between sm:justify-normal gap-0 sm:gap-2 text-sm">
-          Booked At:<span className="font-medium"> 20 Aug, 2029</span>
+          Booked At:
+          <span className="font-medium">
+            {" "}
+            {formatDate(new Date(createdAt))}
+          </span>
         </p>
         <p className="flex items-center justify-between sm:justify-normal gap-0 sm:gap-2 text-sm">
-          Total Price: <span className="font-medium md:text-base">$1873</span>
+          Total Price:{" "}
+          <span className="font-medium md:text-base">
+            {formatCurrency(tour?.price)}
+          </span>
         </p>
-        <div className="flex items-center justify-end mt-2 sm:justify-normal">
-          <button
-            className="bg-dark-1 py-1 px-3  text-sm rounded-lg text-white"
-            onClick={setOpen.bind(null, true)}
-          >
-            Review!
-          </button>
-        </div>
+        {status === "completed" && (
+          <div className="flex items-center justify-end mt-2 sm:justify-normal">
+            <button
+              className="bg-dark-1 py-1 px-3  text-sm rounded-lg text-white"
+              onClick={setOpen.bind(null, true)}
+            >
+              Review!
+            </button>
+          </div>
+        )}
       </div>
       {open && <ReviewModal onModalClose={setOpen} />}
     </article>
