@@ -5,7 +5,18 @@ import { TiStarFullOutline } from "react-icons/ti";
 import StarRating from "./form/StarRating";
 import CommentForm from "./form/CommentForm";
 
-const RatingForm = () => {
+interface Props {
+  tourId: string;
+  creatorId: string;
+  onClose:(val:boolean)=>void;
+  bookingId:string;
+  bookings:BookedTours[];
+  setData:(val:BookedTours[])=>void;
+}
+
+const RatingForm: React.FC<Props> = ({ tourId, creatorId,onClose,bookingId,bookings,
+  setData
+ }) => {
   const [location, setLocation] = useState(1);
   const [amenities, setAmenities] = useState(1);
   const [food, setFood] = useState(1);
@@ -44,6 +55,12 @@ const RatingForm = () => {
           room={room}
           price={price}
           tourOperator={tourOperator}
+          tourId={tourId}
+          creatorId={creatorId}
+          onClose={onClose}
+          bookingId={bookingId}
+          bookings={bookings}
+          setData={setData}
         />
       </div>
     </div>

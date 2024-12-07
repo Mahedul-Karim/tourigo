@@ -5,12 +5,94 @@ import Grid from "../../common/table/Grid";
 import Image from "next/image";
 import Badge from "@/components/common/ui/Badge";
 import { STATUS } from "@/lib/data";
-import { formatCurrency } from "@/lib/utils";
+import { formatCurrency, formatDate } from "@/lib/utils";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import ConfirmationModal from "@/components/common/ui/modal/ConfirmationModal";
+import { updateBookingStatus } from "@/lib/actions/tours";
+import { toast } from "sonner";
 
-const BookingsBody = () => {
+interface Props {
+  tour: {
+    tourName: string;
+    price: number;
+    gallery: {
+      public_id: string;
+      url: string;
+    }[];
+  };
+
+  id: string;
+  status: string;
+  startDate: Date;
+  endDate: Date;
+  totalPeople: number;
+  setData: (data: any) => void;
+  data: {
+    tour: {
+      tourName: string;
+      price: number;
+      gallery: {
+        public_id: string;
+        url: string;
+      }[];
+    };
+    userId: string;
+    tourId: string;
+    id: string;
+    createdAt: Date;
+    status: string;
+    startDate: Date;
+    endDate: Date;
+    totalPeople: number;
+    tourCreator: string;
+  }[];
+}
+
+const BookingsBody: React.FC<Props> = ({
+  id,
+  status,
+  startDate,
+  endDate,
+  totalPeople,
+  tour,
+  setData,
+  data,
+}) => {
   const [open, setOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleBookingUpdate = async () => {
+    const copiedData = [...data];
+
+    const indexOfSelectedData = copiedData.findIndex((dat) => dat.id === id);
+
+    try {
+      setIsLoading(true);
+
+      const state = status === "paid" ? "checked in" : "completed";
+
+      const updatedData = await updateBookingStatus(id, state);
+
+      if (!updatedData.success) {
+        throw new Error(updatedData.message);
+      }
+      //@ts-ignore
+      copiedData[indexOfSelectedData] = updatedData.tour;
+
+      setData(copiedData);
+
+      toast.success("Success!", {
+        description: "Booking status updated successfully!",
+      });
+    } catch (err: any) {
+      toast.error("Error!", {
+        description: err.message,
+      });
+    } finally {
+      setOpen(false);
+      setIsLoading(false);
+    }
+  };
 
   return (
     <>
@@ -19,46 +101,48 @@ const BookingsBody = () => {
         className="text-dark-1 text-[13px] items-center"
       >
         <div className="whitespace-nowrap overflow-clip text-ellipsis">
-          728ed52f
+          {id?.slice(0, 8)}
         </div>
         <div className="flex items-center gap-2">
           <div className="shrink-0">
             <Image
-              src="https://viatour-nextjs.vercel.app/_next/image?url=%2Fimg%2FtourCards%2F1%2F1.png&w=640&q=75"
+              src={tour?.gallery?.[0].url}
               width={50}
               height={50}
               alt=""
               className="rounded-lg aspect-square"
             />
           </div>
-          <p className="line-clamp-2">
-            Phi Phi Islands Adventure Day Trip with Seaview Lunch by V. Marine
-            Tour
-          </p>
+          <p className="line-clamp-2">{tour?.tourName}</p>
         </div>
-        <p>25 Aug, 2025</p>
-        <p>25 Aug, 2025</p>
-        <div>{formatCurrency(2020)}</div>
-        <p>10 People</p>
+        <p>{formatDate(new Date(startDate))}</p>
+        <p>{formatDate(new Date(endDate))}</p>
+        <div>{formatCurrency(tour?.price)}</div>
+        <p>{totalPeople} People</p>
         <div>
           <Badge
-            backgroundColor={STATUS["pending"]?.bg}
-            textColor={STATUS["pending"]?.text}
+            backgroundColor={STATUS[status]?.bg}
+            textColor={STATUS[status]?.text}
           >
-            Pending
+            {status}
           </Badge>
         </div>
         <div>
-          <button onClick={setOpen.bind(null, true)}>
-            <BsThreeDotsVertical className="text-lg" />
-          </button>
+          {status !== "completed" && (
+            <button onClick={setOpen.bind(null, true)}>
+              <BsThreeDotsVertical className="text-lg" />
+            </button>
+          )}
         </div>
       </Grid>
       {open && (
         <ConfirmationModal
-          title="Are you sure want to update the status of this tour to completed?"
+          title={`Mark this booking as ${
+            status === "paid" ? "checked in" : "completed"
+          }?`}
           onModalClose={setOpen}
-          onModalAction={() => {}}
+          onModalAction={handleBookingUpdate}
+          isLoading={isLoading}
         />
       )}
     </>

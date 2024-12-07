@@ -2,6 +2,7 @@ import Container from "@/components/common/ui/Container";
 import Main from "@/components/tours/all-tours/Main";
 import Sidebar from "@/components/tours/all-tours/Sidebar";
 import { allTours } from "@/lib/actions/tours";
+import { revalidateTag } from "next/cache";
 import React from "react";
 
 interface Props {
@@ -11,6 +12,8 @@ interface Props {
 }
 
 const Page: React.FC<Props> = async ({ searchParams }) => {
+
+
   const data = await allTours({
     type: searchParams?.type,
     duration: searchParams?.duration,

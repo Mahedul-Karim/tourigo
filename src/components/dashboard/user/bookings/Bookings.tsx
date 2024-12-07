@@ -8,25 +8,7 @@ import { useCtx } from "@/context/ContextProvider";
 import { usersBookedTours } from "@/lib/actions/user";
 import { toast } from "sonner";
 
-interface BookedTours {
-  id: string;
-  userId: string;
-  tourId: string;
-  status: string;
-  startDate: Date;
-  endDate: Date;
-  totalPeople: number;
-  tourCreator: string;
-  createdAt: Date;
-  tour: {
-    tourName: string;
-    price: number;
-    gallery: {
-      public_id: string;
-      url: string;
-    }[];
-  };
-}
+
 
 const Bookings = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -71,9 +53,10 @@ const Bookings = () => {
     <>
       {data?.length > 0 ? (
         <div className="mt-4 border border-solid border-border rounded-md overflow-clip bookingsCard">
-          {data.map((dat, i) => (
+          {data.map((dat, i,arr) => (
             <Card
               key={i}
+              bookingId={dat?.id}
               tourId={dat?.tourId}
               status={dat?.status}
               startDate={dat?.startDate}
@@ -81,6 +64,10 @@ const Bookings = () => {
               totalPeople={dat?.totalPeople}
               tour={dat?.tour}
               createdAt={dat?.createdAt}
+              isReviewd={dat?.isReviewd}
+              creatorId={dat?.tourCreator}
+              bookings={arr}
+              setData={setData}
             />
           ))}
         </div>

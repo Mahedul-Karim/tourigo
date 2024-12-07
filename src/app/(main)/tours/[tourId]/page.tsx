@@ -21,7 +21,7 @@ const Page: React.FC<Props> = async ({ params, searchParams }) => {
   return (
     <div className="pt-[70px]">
       <Container className="py-10">
-        <TourDetails tourId={tourId} tour={data?.tour as Tour} />
+        <TourDetails tourId={tourId} tour={data?.tour as Tour} overall={data!.overall}/>
       </Container>{" "}
     </div>
   );

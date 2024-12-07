@@ -4,6 +4,7 @@ import Sidebar from "@/components/tours/all-tours/Sidebar";
 import LayoutToggle from "@/components/tours/all-tours/main/LayoutToggle";
 import Search from "@/components/tours/all-tours/main/Search";
 import Spinner from "@/components/common/ui/Spinner";
+import CardSkeleton from "@/components/common/ui/skeleton/CardSkeleton";
 
 const Loading = () => {
   return (
@@ -17,8 +18,13 @@ const Loading = () => {
               <Search />
             </div>
           </div>
-          <div className="flex items-center justify-center h-full">
-            <Spinner />
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 xs:gap-4 sm:gap-6 mt-6">
+            <CardSkeleton />
+            <CardSkeleton />
+            <CardSkeleton />
+            <CardSkeleton />
+            <CardSkeleton />
+            <CardSkeleton />
           </div>
         </main>
       </Container>

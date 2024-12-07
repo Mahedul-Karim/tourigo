@@ -16,9 +16,17 @@ import { Tour } from "@prisma/client";
 interface Props {
   tourId: string;
   tour: any;
+  overall:{
+    location:number | null;
+    amenities:number | null;
+    food:number | null;
+    price:number | null;
+    rooms:number | null;
+    tourSupport:number | null;
+  }
 }
 
-const TourDetails: React.FC<Props> = ({ tourId, tour }) => {
+const TourDetails: React.FC<Props> = ({ tourId, tour,overall }) => {
   return (
     <>
       <Breadcrumb>
@@ -50,6 +58,7 @@ const TourDetails: React.FC<Props> = ({ tourId, tour }) => {
       <Gallery gallery={tour?.gallery} />
       <Content
         id={tour?.id}
+        totalRatings={tour?.totalRatings}
         duration={tour?.duration}
         groupSize={tour?.groupSize}
         overview={tour?.overview}
@@ -59,6 +68,7 @@ const TourDetails: React.FC<Props> = ({ tourId, tour }) => {
         price={tour?.price}
         reviews={tour?.reviews}
         creatorId={tour?.creatorId}
+        overall={overall}
       />
     </>
   );

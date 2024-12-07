@@ -25,11 +25,11 @@ const NAV_LINKS = [
     label: "Add Listings",
     icon: <IoAddCircleOutline className="text-xl" />,
   },
-  {
-    href: "/vendor/chats",
-    label: "Chats",
-    icon: <IoChatbubblesOutline className="text-xl" />,
-  },
+  // {
+  //   href: "/vendor/chats",
+  //   label: "Chats",
+  //   icon: <IoChatbubblesOutline className="text-xl" />,
+  // },
   {
     href: "/vendor/bookings",
     label: "Bookings",

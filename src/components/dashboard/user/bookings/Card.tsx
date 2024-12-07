@@ -9,12 +9,14 @@ import ReviewModal from "@/components/common/ui/modal/ReviewModal";
 import { formatCurrency, formatDate } from "@/lib/utils";
 
 interface Props {
+  bookingId:string;
   tourId: string;
   status: string;
   startDate: Date;
   endDate: Date;
   totalPeople: number;
   createdAt: Date;
+  isReviewd: boolean;
   tour: {
     tourName: string;
     price: number;
@@ -23,6 +25,9 @@ interface Props {
       url: string;
     }[];
   };
+  creatorId: string;
+  bookings:BookedTours[];
+  setData:(val:BookedTours[])=>void;
 }
 
 const Card: React.FC<Props> = ({
@@ -33,6 +38,12 @@ const Card: React.FC<Props> = ({
   totalPeople,
   createdAt,
   tour,
+  isReviewd,
+  creatorId,
+  bookingId,
+  bookings,
+  setData
+
 }) => {
   const [open, setOpen] = useState(false);
 
@@ -86,7 +97,7 @@ const Card: React.FC<Props> = ({
             {formatCurrency(tour?.price)}
           </span>
         </p>
-        {status === "completed" && (
+        {status === "completed" && !isReviewd && (
           <div className="flex items-center justify-end mt-2 sm:justify-normal">
             <button
               className="bg-dark-1 py-1 px-3  text-sm rounded-lg text-white"
@@ -97,7 +108,16 @@ const Card: React.FC<Props> = ({
           </div>
         )}
       </div>
-      {open && <ReviewModal onModalClose={setOpen} />}
+      {open && (
+        <ReviewModal
+          onModalClose={setOpen}
+          tourId={tourId}
+          creatorId={creatorId}
+          bookingId={bookingId}
+          bookings={bookings}
+          setData={setData}
+        />
+      )}
     </article>
   );
 };

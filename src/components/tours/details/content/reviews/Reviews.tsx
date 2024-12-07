@@ -21,9 +21,23 @@ interface Props {
       };
     };
   }[];
+  totalRatings: number;
+  overall: {
+    location: number | null;
+    amenities: number | null;
+    food: number | null;
+    price: number | null;
+    rooms: number | null;
+    tourSupport: number | null;
+  };
 }
 
-const Reviews: React.FC<Props> = ({ reviews }) => {
+const Reviews: React.FC<Props> = ({ reviews, totalRatings, overall }) => {
+  const { location, amenities, food, price, rooms, tourSupport } = overall;
+
+  const reviewLength = reviews?.length;
+
+
   return (
     <div>
       <Title>Reviews</Title>
@@ -34,7 +48,8 @@ const Reviews: React.FC<Props> = ({ reviews }) => {
             <MdOutlineStars className="text-primary text-2xl xs:text-3xl" />
           }
           label="Overall Rating"
-          rating={5}
+          rating={totalRatings}
+          length={reviewLength}
         />
         <div className="grid grid-cols-2 gap-2">
           <Ratings
@@ -42,44 +57,50 @@ const Reviews: React.FC<Props> = ({ reviews }) => {
               <MdOutlineLocationOn className="text-primary text-2xl xs:text-3xl" />
             }
             label="Location"
-            rating={5}
+            rating={location || 0}
+            length={reviewLength}
           />
           <Ratings
             icon={<RiAppsLine className="text-primary text-2xl xs:text-3xl" />}
             label="Amenities"
-            rating={5}
+            rating={amenities || 0}
+            length={reviewLength}
           />
           <Ratings
             icon={
               <LiaUtensilsSolid className="text-primary text-2xl xs:text-3xl" />
             }
             label="Food"
-            rating={5}
+            rating={food || 0}
+            length={reviewLength}
           />
           <Ratings
             icon={
               <IoPricetagOutline className="text-primary text-2xl xs:text-3xl" />
             }
             label="Price"
-            rating={5}
+            rating={price || 0}
+            length={reviewLength}
           />
           <Ratings
             icon={
               <IoBedOutline className="text-primary text-2xl xs:text-3xl" />
             }
             label="Rooms"
-            rating={5}
+            rating={rooms || 0}
+            length={reviewLength}
           />
           <Ratings
             icon={<BiSupport className="text-primary text-2xl xs:text-3xl" />}
             label="Tour Support"
-            rating={1.5}
+            rating={tourSupport || 0}
+            length={reviewLength}
           />
         </div>
       </div>
       <div className="mt-8 flex flex-col gap-6">
         {reviews?.length > 0 &&
-          reviews?.map((rev, i) => <UserReviews key={i} />)}
+          reviews?.map((rev, i) => <UserReviews key={i} review={rev}/>)}
       </div>
     </div>
   );

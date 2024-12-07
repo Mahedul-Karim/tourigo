@@ -180,11 +180,11 @@ const allTours = cache(
           price: true,
           totalRatings: true,
           overview: true,
-          reviews:{
-            select:{
-              id:true
-            }
-          }
+          reviews: {
+            select: {
+              id: true,
+            },
+          },
         },
         orderBy: {
           createdAt: "desc",
@@ -220,17 +220,17 @@ const getSingleTour = async (id: string) => {
       },
       include: {
         reviews: {
-          select:{
-            comment:true,
-            total:true,
-            user:{
-              select:{
-                firstName:true,
-                lastName:true,
-                image:true
-              }
-            }
-          }
+          select: {
+            comment: true,
+            total: true,
+            user: {
+              select: {
+                firstName: true,
+                lastName: true,
+                image: true,
+              },
+            },
+          },
         },
       },
     });
@@ -239,10 +239,62 @@ const getSingleTour = async (id: string) => {
       return null;
     }
 
-    return { tour };
+    const overall = await prisma.review.aggregate({
+      where: {
+        tourId: tour.id,
+      },
+      _avg: {
+        location: true,
+        amenities: true,
+        food: true,
+        price: true,
+        rooms: true,
+        tourSupport: true,
+      },
+    });
+
+    return { tour, overall: overall._avg };
   } catch (err) {
     return null;
   }
 };
 
-export { updateTourStatus, adminAllTours, allTours, getSingleTour };
+const updateBookingStatus = async (id: string, status: string) => {
+  try {
+    const updatedBookingState = await prisma.booking.update({
+      where: {
+        id,
+      },
+      data: {
+        status,
+      },
+      include: {
+        tour: {
+          select: {
+            tourName: true,
+            gallery: true,
+            price: true,
+          },
+        },
+      },
+    });
+
+    return {
+      success: true,
+      tour: updatedBookingState,
+    };
+  } catch (err: any) {
+    return {
+      success: false,
+      message: "Something went wrong! Please try again later!",
+    };
+  }
+};
+
+export {
+  updateTourStatus,
+  adminAllTours,
+  allTours,
+  getSingleTour,
+  updateBookingStatus,
+};

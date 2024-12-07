@@ -37,6 +37,15 @@ interface Props {
     };
   }[];
   creatorId: string;
+  totalRatings:number;
+  overall:{
+    location:number | null;
+    amenities:number | null;
+    food:number | null;
+    price:number | null;
+    rooms:number | null;
+    tourSupport:number | null;
+  };
 }
 
 //new RegExp('(\\d+)') for splitting the string with number
@@ -53,6 +62,8 @@ const Content: React.FC<Props> = ({
   price,
   reviews,
   creatorId,
+  totalRatings,
+  overall
 }) => {
   return (
     <div className="mt-6 grid md:grid-cols-[1fr_0.4fr] gap-8">
@@ -87,7 +98,7 @@ const Content: React.FC<Props> = ({
         <div className="border-t border-solid border-border my-12" />
         <FAQ />
         <div className="border-t border-solid border-border my-12" />
-        <Reviews reviews={reviews} />
+        <Reviews reviews={reviews} totalRatings={totalRatings} overall={overall} />
         <div className="border-t border-solid border-border my-12" />
         {/* <RatingForm /> */}
       </div>

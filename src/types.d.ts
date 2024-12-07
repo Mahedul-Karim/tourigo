@@ -9,20 +9,41 @@ type User = {
   image?: {
     url: string;
   };
-  wishlist:Array<any>;
-  writtenReviews:Array<any>;
+  wishlist: Array<any>;
+  writtenReviews: Array<any>;
 };
 
-type AllToursType ={
-  id:string;
-  tourName:string;
-  location:string;
-  gallery:{
-    url:string;
+type AllToursType = {
+  id: string;
+  tourName: string;
+  location: string;
+  gallery: {
+    url: string;
   }[];
-  duration:string;
-  price:number;
-  totalRatings:number;
-  overview:string;
-  reviews:Array<any>
+  duration: string;
+  price: number;
+  totalRatings: number;
+  overview: string;
+  reviews: Array<any>;
+};
+
+interface BookedTours {
+  id: string;
+  userId: string;
+  tourId: string;
+  status: string;
+  startDate: Date;
+  endDate: Date;
+  totalPeople: number;
+  tourCreator: string;
+  createdAt: Date;
+  isReviewd: boolean;
+  tour: {
+    tourName: string;
+    price: number;
+    gallery: {
+      public_id: string;
+      url: string;
+    }[];
+  };
 }

@@ -5,7 +5,7 @@ import prisma from "../prisma";
 import { auth } from "../firebase";
 
 import { updatePassword } from "firebase/auth";
-import { revalidateTag, unstable_cache as cache } from "next/cache";
+import { revalidateTag, unstable_cache as cache, revalidatePath } from "next/cache";
 
 const uploadUserImage = async (image: string, email: string) => {
   try {
@@ -311,6 +311,52 @@ const usersBookedTours = cache(
   }
 );
 
+const venorBookedTours = cache(
+  async (creatorId: string,path:string) => {
+    try {
+      const bookedTours = await prisma.booking.findMany({
+        where: {
+          tourCreator: creatorId,
+        },
+        include: {
+          tour: {
+            select: {
+              tourName: true,
+              gallery: true,
+              price: true,
+            },
+          },
+        },
+      });
+
+      if (bookedTours.length === 0 || !bookedTours) {
+        return {
+          success: true,
+          tours: [],
+        };
+      }
+
+      revalidateTag("bookedTours");
+      revalidatePath(path)
+
+      return {
+        success: true,
+        tours: bookedTours,
+      };
+    } catch (err: any) {
+      console.log(err.message);
+      return {
+        success: false,
+        message: "Something went wrong! Please try again later",
+      };
+    }
+  },
+  ["vendorBookedTours"],
+  {
+    revalidate: 600,
+  }
+);
+
 export {
   uploadUserImage,
   updateUserDetails,
@@ -320,4 +366,5 @@ export {
   removeFromWishlist,
   userWishlists,
   usersBookedTours,
+  venorBookedTours,
 };
