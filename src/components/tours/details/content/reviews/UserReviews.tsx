@@ -4,7 +4,7 @@ import UserAvatar from "@/components/common/ui/UserAvatar";
 import Ratings from "@/components/common/ui/Ratings";
 
 interface Props {
-  review: {
+  review?: {
     comment: string;
     total: number;
     user: {
@@ -35,7 +35,7 @@ const UserReviews: React.FC<Props> = ({ review }) => {
           <p className="text-sm text-dark-1">
             {review?.user?.firstName + " " + review?.user?.lastName}
           </p>
-          <Ratings rating={review?.total} styles="text-xs" />
+          <Ratings rating={review?.total as number} styles="text-xs" />
         </div>
       </div>
       <p className="text-xs text-dark-1 !leading-[1.9]">{review?.comment}</p>
