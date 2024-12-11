@@ -336,8 +336,8 @@ const venorBookedTours = cache(
         };
       }
 
-      revalidateTag("bookedTours");
-      revalidatePath(path)
+      
+      
 
       return {
         success: true,

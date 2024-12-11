@@ -22,6 +22,8 @@ interface Props {
   setValue: UseFormSetValue<FieldValues>;
   control: Control<FieldValues, any>;
   isSubmitSuccessful: boolean;
+  gallery?: any;
+  isEditing: boolean;
 }
 
 const Gallery: React.FC<Props> = ({
@@ -31,8 +33,14 @@ const Gallery: React.FC<Props> = ({
   setValue,
   control,
   isSubmitSuccessful,
+  gallery = [],
+  isEditing,
 }) => {
-  const [images, setImages] = useState<Array<any>>(getValues("gallery") || []);
+  const [images, setImages] = useState<Array<any>>(gallery);
+
+  // useEffect(()=>{
+  //   setValue("gallery", gallery);
+  // },[])
 
   useEffect(() => {
     if (isSubmitSuccessful) {
@@ -66,39 +74,43 @@ const Gallery: React.FC<Props> = ({
   return (
     <div className="flex flex-col gap-3">
       <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-        <div className="border border-dashed border-primary rounded-xl bg-primary-2 h-[140px] xs:h-[160px] overflow-clip text-primary">
-          <input
-            type="file"
-            id="gallery"
-            className="absolute hidden"
-            onChange={handleImageChange}
-          />
-          <label
-            htmlFor="gallery"
-            className="w-full h-full flex flex-col items-center justify-center cursor-pointer gap-1"
-          >
-            <span>
-              <LuImagePlus className="text-2xl" />{" "}
-            </span>
-            <span className="text-xs xs:text-sm font-medium text-center">
-              Upload Image
-              <br />
-              (4 image)
-            </span>
-          </label>
-        </div>
+        {!isEditing && (
+          <div className="border border-dashed border-primary rounded-xl bg-primary-2 h-[140px] xs:h-[160px] overflow-clip text-primary">
+            <input
+              type="file"
+              id="gallery"
+              className="absolute hidden"
+              onChange={handleImageChange}
+            />
+            <label
+              htmlFor="gallery"
+              className="w-full h-full flex flex-col items-center justify-center cursor-pointer gap-1"
+            >
+              <span>
+                <LuImagePlus className="text-2xl" />{" "}
+              </span>
+              <span className="text-xs xs:text-sm font-medium text-center">
+                Upload Image
+                <br />
+                (4 image)
+              </span>
+            </label>
+          </div>
+        )}
         {images.length > 0 &&
           images.map((img: string, i: number) => (
             <div
               className="rounded-xl h-[140px] xs:h-[160px] overflow-clip relative"
               key={i}
             >
-              <button
-                className="bg-white p-1 absolute top-2 right-2 rounded-lg transition-all duration-300 hover:bg-zinc-900"
-                onClick={deleteImage.bind(null, i)}
-              >
-                <FiTrash2 className="transition-all duration-300 hover:text-white" />
-              </button>
+              {!isEditing && (
+                <button
+                  className="bg-white p-1 absolute top-2 right-2 rounded-lg transition-all duration-300 hover:bg-zinc-900"
+                  onClick={deleteImage.bind(null, i)}
+                >
+                  <FiTrash2 className="transition-all duration-300 hover:text-white" />
+                </button>
+              )}
               <Image
                 alt=""
                 src={img}

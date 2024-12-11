@@ -2,7 +2,11 @@
 
 import { Status } from "@prisma/client";
 import prisma from "../prisma";
-import { revalidatePath, unstable_cache as cache } from "next/cache";
+import {
+  revalidatePath,
+  unstable_cache as cache,
+  revalidateTag,
+} from "next/cache";
 
 const updateTourStatus = async (updateTo: Status, id: string, path: string) => {
   try {
@@ -278,6 +282,7 @@ const updateBookingStatus = async (id: string, status: string) => {
         },
       },
     });
+    revalidateTag("bookedTours");
 
     return {
       success: true,

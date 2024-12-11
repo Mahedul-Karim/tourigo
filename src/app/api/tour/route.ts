@@ -52,3 +52,41 @@ export const POST = async (req: NextRequest) => {
     );
   }
 };
+
+
+export const PATCH=async (req:NextRequest)=>{
+
+  try{
+
+    const { id,gallery,...tourData } =await req.json();
+
+    await prisma.tour.update({
+      where:{
+        id
+      },
+      data:{...tourData}
+    });
+
+    revalidateTag("allTours");
+
+    return NextResponse.json(
+      {
+        success: true,
+      },
+      {
+        status: 201,
+      }
+    );
+
+  }catch(err:any){
+    return NextResponse.json(
+      {
+        success: false,
+        message: "Something went wrong! Please try again later",
+      },
+      {
+        status: 501,
+      }
+    );
+  }
+}

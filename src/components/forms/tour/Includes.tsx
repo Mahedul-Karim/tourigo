@@ -12,6 +12,8 @@ interface Props {
   isSubmitting: boolean;
   isSubmitSuccessful: boolean;
   getValues: UseFormGetValues<FieldValues>;
+  isEditing: boolean;
+  includesArrayPrev?: string[];
 }
 
 const includesArray = [
@@ -29,10 +31,14 @@ const Includes: React.FC<Props> = ({
   isSubmitting,
   isSubmitSuccessful,
   getValues,
+  isEditing,
+  includesArrayPrev = [],
 }) => {
-  const [includes, setIncludes] = useState<Array<string>>(
-    getValues("includes") || []
-  );
+  const [includes, setIncludes] = useState<Array<string>>(includesArrayPrev);
+
+  // useEffect(()=>{
+  //   setValue("includes", includesArrayPrev);
+  // },[])
 
   useEffect(() => {
     if (isSubmitSuccessful) {
@@ -75,7 +81,7 @@ const Includes: React.FC<Props> = ({
         disabled={isSubmitting}
         size={"lg"}
       >
-        {"Create Tour"}
+        {isEditing ? "Save changes" : "Create Tour"}
       </Button>
     </div>
   );

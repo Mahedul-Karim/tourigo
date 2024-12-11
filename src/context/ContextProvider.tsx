@@ -1,6 +1,7 @@
 "use client";
 
 
+import { Tour } from "@prisma/client";
 import React, {
   createContext,
   Dispatch,
@@ -21,6 +22,8 @@ interface ContextType {
   setIsLoggedIn: Dispatch<SetStateAction<boolean>>;
   token: string;
   setToken: Dispatch<SetStateAction<string>>;
+  tourToEdit:Tour | null;
+  setTourToEdit:Dispatch<SetStateAction<Tour | null>>
 }
 
 const Context = createContext<ContextType>({
@@ -30,11 +33,14 @@ const Context = createContext<ContextType>({
   setIsLoggedIn: () => {},
   token: "",
   setToken: () => {},
+  tourToEdit:null,
+  setTourToEdit:()=>{}
 });
 
 const ContextProvider: React.FC<Props> = ({ children }) => {
   const [user, setUser] = useState<User | null | undefined>(null);
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+  const [tourToEdit,setTourToEdit] = useState<Tour | null>(null)
 
   const userToken =
     typeof window !== "undefined" &&
@@ -76,7 +82,7 @@ const ContextProvider: React.FC<Props> = ({ children }) => {
 
   return (
     <Context.Provider
-      value={{ user, setUser, isLoggedIn, setIsLoggedIn, token, setToken }}
+      value={{ user, setUser, isLoggedIn, setIsLoggedIn, token, setToken,tourToEdit,setTourToEdit }}
     >
       {children}
     </Context.Provider>

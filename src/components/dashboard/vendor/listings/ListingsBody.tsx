@@ -1,17 +1,30 @@
 import React from "react";
 import Image from "next/image";
 import Grid from "../../common/table/Grid";
-import { formatCurrency } from "@/lib/utils";
+import { formatCurrency, formatDate } from "@/lib/utils";
 import TableAction from "../../common/table/TableAction";
 import Badge from "@/components/common/ui/Badge";
 import { STATUS } from "@/lib/data";
+import { Tour } from "@prisma/client";
 
-const ListingsBody = () => {
+interface Props{
+  gallery:{
+    public_id:string;
+    url:string;
+  }[];
+  tourName:string;
+  price:number;
+  createdAt:Date;
+  status:string;
+  tour:Tour;
+}
+
+const ListingsBody:React.FC<Props> = ({gallery,tourName,price,createdAt,status,tour}) => {
   return (
     <Grid className="items-center">
       <div>
         <Image
-          src="https://viatour-nextjs.vercel.app/_next/image?url=%2Fimg%2FtourCards%2F1%2F1.png&w=640&q=75"
+          src={gallery?.[0]?.url}
           alt=""
           width={890}
           height={750}
@@ -20,25 +33,25 @@ const ListingsBody = () => {
       </div>
       <div>
         <p className="text-[14px] text-dark-1 font-semibold">
-          Centipede Tour - Guided Arizona Desert Tour by ATV
+          {tourName}
         </p>
       </div>
       <div>
         <p className="text-[13px] text-dark-1 font-semibold">
-          {formatCurrency(1999)}
+          {formatCurrency(price)}
         </p>
       </div>
-      <div className="text-[13px] text-dark-1 font-medium">21 Aug, 2020</div>
+      <div className="text-[13px] text-dark-1 font-medium">{formatDate(new Date(createdAt))}</div>
       <div>
         <Badge
-          backgroundColor={STATUS["approved"].bg}
-          textColor={STATUS["approved"].text}
+          backgroundColor={STATUS[status].bg}
+          textColor={STATUS[status].text}
         >
-          approved
+          {status}
         </Badge>
       </div>
       <div>
-        <TableAction />
+        <TableAction tour={tour}/>
       </div>
     </Grid>
   );

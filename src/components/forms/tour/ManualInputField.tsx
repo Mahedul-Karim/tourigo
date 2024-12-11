@@ -10,18 +10,22 @@ interface Props {
   getValues: UseFormGetValues<FieldValues>;
   setValue: UseFormSetValue<FieldValues>;
   isSubmitSuccessful: boolean;
+  highlight: string[];
 }
 
 const ManualInputField: React.FC<Props> = ({
   getValues,
   setValue,
   isSubmitSuccessful,
+  highlight,
 }) => {
-  const [highlights, setHighlights] = useState<Array<string>>(
-    getValues("highlight") || []
-  );
+  const [highlights, setHighlights] = useState<Array<string>>(highlight);
 
   const [text, setText] = useState<string>("");
+
+  // useEffect(()=>{
+  //   setValue("highlight", highlight);
+  // },[])
 
   useEffect(() => {
     if (isSubmitSuccessful) {

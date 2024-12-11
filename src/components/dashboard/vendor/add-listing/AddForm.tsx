@@ -3,7 +3,7 @@
 "use client";
 
 import ContentForm from "@/components/forms/tour/ContentForm";
-import React from "react";
+import React, { useEffect } from "react";
 import { FieldValues, useForm } from "react-hook-form";
 import { Form } from "@/components/ui/form";
 import ImageAndItinerary from "@/components/forms/tour/ImageAndItinerary";
@@ -14,20 +14,44 @@ import LinearProgress from "@/components/common/ui/LinearProgress";
 import { useCtx } from "@/context/ContextProvider";
 import { toast } from "sonner";
 
-const AddForm = () => {
-  const form = useForm();
+interface Props {
+  isEditing?: boolean;
+}
 
-  const { user } = useCtx();
+const AddForm: React.FC<Props> = ({ isEditing = false }) => {
+  const { user, tourToEdit } = useCtx();
+  const form = useForm({
+    defaultValues: {
+      tourName: isEditing ? tourToEdit?.tourName : "",
+      category: isEditing ? tourToEdit?.category : "Select a category",
+      location: isEditing ? tourToEdit?.location : "",
+      duration: isEditing ? tourToEdit?.duration : "",
+      price: isEditing ? tourToEdit?.price?.toString() : "",
+      groupSize: isEditing ? tourToEdit?.groupSize?.toString() : "",
+      overview: isEditing ? tourToEdit?.overview : "",
+      highlight: isEditing ? tourToEdit?.highlight : [],
+      gallery: isEditing ? tourToEdit?.gallery?.map((tour) => tour.url) : [],
+      itinerarys: isEditing ? tourToEdit?.itinerarys : [],
+      includes: isEditing ? tourToEdit?.includes : [],
+    },
+  });
 
   const {
     reset,
     getValues,
     control,
-    formState: { errors, isSubmitting,isSubmitSuccessful },
+    formState: { errors, isSubmitting, isSubmitSuccessful, isDirty },
     setValue,
   } = form;
 
   const onSubmit = async (values: FieldValues) => {
+    if (isEditing && !isDirty) {
+      toast.error("Error!", {
+        description: "Edit a form field in order to save changes",
+      });
+      return;
+    }
+
     const validateValues = createTourSchema.safeParse(values);
 
     if (!validateValues.success) {
@@ -48,6 +72,31 @@ const AddForm = () => {
         price: +values.price,
         groupSize: +values.groupSize,
       };
+
+      if (isEditing) {
+
+
+
+        const res = await fetch("/api/tour", {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({id:tourToEdit?.id,...formData,gallery:[]}),
+        });
+
+        const data = await res.json();
+
+        if (!data.success) {
+          throw new Error(data.message);
+        }
+
+        toast.success("Success!", {
+          description: "Tour updated successfully!",
+        });
+
+        return;
+      }
 
       formData.creatorId = user?.id;
 
@@ -70,19 +119,18 @@ const AddForm = () => {
       });
 
       reset({
-        tourName:"",
-        category:"Select a category",
-        location:"",
-        duration:"",
-        price:"",
-        groupSize:"",
-        overview:""
-      })
-      setValue('highlight',[]);
-      setValue('gallery',[]);
-      setValue('itinerarys',[]);
-      setValue('includes',[])
-
+        tourName: "",
+        category: "Select a category",
+        location: "",
+        duration: "",
+        price: "",
+        groupSize: "",
+        overview: "",
+      });
+      setValue("highlight", []);
+      setValue("gallery", []);
+      setValue("itinerarys", []);
+      setValue("includes", []);
     } catch (err: any) {
       toast.error("Error!", {
         description: err.message,
@@ -103,7 +151,8 @@ const AddForm = () => {
               errors={errors}
               getValues={getValues}
               setValue={setValue}
-              isSubmitSuccessful={isSubmitSuccessful}
+              isSubmitSuccessful={isEditing ? false : isSubmitSuccessful}
+              {...(isEditing && { highlight: tourToEdit?.highlight })}
             />
           </div>
           <div className="bg-white border border-solid border-border rounded-xl p-4 flex flex-col gap-3 mt-8">
@@ -114,7 +163,11 @@ const AddForm = () => {
               errors={errors}
               getValues={getValues}
               setValue={setValue}
-              isSubmitSuccessful={isSubmitSuccessful}
+              isSubmitSuccessful={isEditing ? false : isSubmitSuccessful}
+              {...(isEditing && {
+                gallery: tourToEdit?.gallery?.map((tour) => tour.url),
+              })}
+              isEditing={isEditing}
             />
           </div>
           <div className="bg-white border border-solid border-border rounded-xl p-4 flex flex-col gap-3 mt-8">
@@ -125,12 +178,24 @@ const AddForm = () => {
               errors={errors}
               getValues={getValues}
               setValue={setValue}
-              isSubmitSuccessful={isSubmitSuccessful}
+              isSubmitSuccessful={isEditing ? false : isSubmitSuccessful}
+              {...(isEditing && {
+                itinerarys: tourToEdit?.itinerarys,
+              })}
             />
           </div>
           <div className="bg-white border border-solid border-border rounded-xl p-4 flex flex-col gap-3 mt-8">
             <h3 className="text-lg text-dark-1 font-medium">Includes</h3>
-            <Includes getValues={getValues} setValue={setValue} isSubmitting={isSubmitting} isSubmitSuccessful={isSubmitSuccessful}/>
+            <Includes
+              getValues={getValues}
+              setValue={setValue}
+              isSubmitting={isSubmitting}
+              isSubmitSuccessful={isEditing ? false : isSubmitSuccessful}
+              isEditing={isEditing}
+              {...(isEditing && {
+                includesArrayPrev: tourToEdit?.includes,
+              })}
+            />
           </div>
         </form>
       </Form>

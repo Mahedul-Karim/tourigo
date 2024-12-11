@@ -19,6 +19,10 @@ interface Props {
   setValue: UseFormSetValue<FieldValues>;
   control: Control<FieldValues, any>;
   isSubmitSuccessful: boolean;
+  itinerarys?: {
+    title: string;
+    description: string;
+  }[];
 }
 
 type ItineraryType = {
@@ -33,12 +37,16 @@ const Itinerarys: React.FC<Props> = ({
   setValue,
   control,
   isSubmitSuccessful,
+  itinerarys: itinearyPrev = [],
 }) => {
   const [title, setTitle] = useState<string>("");
   const [description, setDescription] = useState<string>("");
-  const [itinerarys, setItinerarys] = useState<Array<ItineraryType>>(
-    getValues("itinerarys") || []
-  );
+  const [itinerarys, setItinerarys] =
+    useState<Array<ItineraryType>>(itinearyPrev);
+
+  // useEffect(() => {
+  //   setValue("itinerarys", itinearyPrev);
+  // }, []);
 
   useEffect(() => {
     if (isSubmitSuccessful) {
@@ -47,14 +55,14 @@ const Itinerarys: React.FC<Props> = ({
   }, [isSubmitSuccessful]);
 
   const props = {
-    value:title,
+    value: title,
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
       setTitle(e.target.value);
     },
   };
 
   const desc = {
-    value:description,
+    value: description,
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
       setDescription(e.target.value);
     },
