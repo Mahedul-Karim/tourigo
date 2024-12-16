@@ -1,20 +1,24 @@
 import React from "react";
-import Modal from './Modal'
+import Modal from "./Modal";
 import { Button } from "@/components/ui/button";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
+import SpinnerButton from "../SpinnerButton";
 import { useForm } from "react-hook-form";
 import { Form, FormField, FormItem, FormMessage } from "@/components/ui/form";
 
 import AnimatedInput from "@/components/forms/inputs/AnimatedInput";
+import { useCtx } from "@/context/ContextProvider";
+import { toast } from "sonner";
+import { addBankDetails } from "@/lib/actions/vendor";
 
 interface Props {
   onModalClose: (val: boolean) => void;
-  onModalAction: () => void;
+  setBankDetails: (val: any) => void;
 }
 
-const BankDetailsForm: React.FC<Props> = ({ onModalClose, onModalAction }) => {
+const BankDetailsForm: React.FC<Props> = ({ onModalClose, setBankDetails }) => {
   const form = useForm();
+
+  const { user } = useCtx();
 
   const {
     formState: { errors, isSubmitting },
@@ -23,15 +27,54 @@ const BankDetailsForm: React.FC<Props> = ({ onModalClose, onModalAction }) => {
   } = form;
 
   const onSubmit = async (values: any) => {
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    console.log(values);
-    reset();
-    onModalClose(false);
+    const {
+      bankName,
+      bankCountry,
+      bankSwiftCode,
+      bankAccountNumber,
+      bankHolderName,
+    } = values;
+
+    const userId = user?.id;
+
+    try {
+      const data = await addBankDetails({
+        name: bankName,
+        country: bankCountry,
+        swiftCode: bankSwiftCode,
+        bankAccountNumber: bankAccountNumber,
+        bankHolderName: bankHolderName,
+        userId: userId as string,
+      });
+
+      if (!data.success) {
+        throw new Error(data.message);
+      }
+
+      setBankDetails(data.bankData);
+
+      toast.success("Success!", {
+        description: "Bank details added successfully!",
+      });
+    } catch (err: any) {
+      toast.error("Error!", {
+        description: err.message,
+      });
+    } finally {
+      reset({
+        bankName: "",
+        bankCountry: "",
+        bankSwiftCode: "",
+        bankAccountNumber: "",
+        bankHolderName: "",
+      });
+      onModalClose(false);
+    }
   };
 
   return (
     <Modal
-      className="h-[80vh] showScrollbar overflow-auto"
+      className="max-h-[80vh] showScrollbar overflow-auto"
       onModalClose={onModalClose}
     >
       <h3 className="text-xl text-center sm:text-2xl font-medium text-dark-1">
@@ -137,14 +180,25 @@ const BankDetailsForm: React.FC<Props> = ({ onModalClose, onModalAction }) => {
               </FormItem>
             )}
           />
-          <Button
-            type="submit"
-            className="text-xs xs:text-sm bg-primary disabled:bg-disabled hover:bg-primary w-full rounded-xl mt-[20px]"
-            disabled={isSubmitting}
-            size={"lg"}
-          >
-            Submit
-          </Button>
+          <div className="flex items-center gap-2 mt-[20px] justify-end">
+            <Button
+              type="button"
+              variant={"outline"}
+              className="hover:bg-transparent bg-transparent rounded-xl"
+              onClick={onModalClose.bind(null, false)}
+              disabled={isSubmitting}
+            >
+              Cancel
+            </Button>
+            <Button
+              type="submit"
+              className="text-xs xs:text-sm bg-primary disabled:bg-disabled hover:bg-primary rounded-xl flex items-center gap-2"
+              disabled={isSubmitting}
+              size={"lg"}
+            >
+              {isSubmitting && <SpinnerButton />} Submit
+            </Button>
+          </div>
         </form>
       </Form>
     </Modal>

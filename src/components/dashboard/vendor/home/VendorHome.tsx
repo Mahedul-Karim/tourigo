@@ -19,12 +19,12 @@ import { toast } from "sonner";
 import { useCtx } from "@/context/ContextProvider";
 
 const chartData = [
-  { month: "January", booked: 80 },
-  { month: "February", booked: 150 },
-  { month: "March", booked: 100 },
-  { month: "April", booked: 200 },
-  { month: "May", booked: 130 },
-  { month: "June", booked: 140 },
+  { month: "", booked: 0 },
+  { month: "", booked: 0 },
+  { month: "", booked: 0 },
+  { month: "", booked: 0 },
+  { month: "", booked: 0 },
+  { month: "", booked: 0 },
 ];
 
 const chartConfig = {
@@ -53,6 +53,21 @@ const chartVisitorConfig = {
   },
 } satisfies ChartConfig;
 
+const month = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
+
 const VendorHome = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [data, setData] = useState<{
@@ -62,8 +77,12 @@ const VendorHome = () => {
     earnings: 0,
     totalListing: 0,
   });
+  const [chData, setChData] = useState(chartData);
+  const [visitors, setVisitors] = useState(visitorsData);
 
   const { user } = useCtx();
+
+  const currentMonth = new Date().getMonth();
 
   useEffect(() => {
     if (!user?.id) {
@@ -78,6 +97,26 @@ const VendorHome = () => {
         if (!res.success) {
           throw new Error(res.message);
         }
+
+        const dataArray = [];
+        const visitorsArray = [];
+
+        for (let i = currentMonth - 5; i <= currentMonth; i++) {
+          const chartObject = {
+            month: month[i],
+            booked: Math.round(Math.random() * 300),
+          };
+
+          const visitorObject = {
+            month: month[i],
+            visited: Math.round(Math.random() * 214),
+            wishlist: Math.round(Math.random() * 214),
+          };
+          dataArray.push(chartObject);
+          visitorsArray.push(visitorObject);
+        }
+        setChData(dataArray);
+        setVisitors(visitorsArray);
 
         setData(res.data);
       } catch (err: any) {
@@ -121,7 +160,7 @@ const VendorHome = () => {
       <div className="grid md:grid-cols-2 gap-4 mt-6">
         <div className="bg-white rounded-md border border-solid border-border p-4">
           <BookingChart
-            chartData={chartData}
+            chartData={chData}
             chartConfig={chartConfig}
             dataKey="booked"
             title="Booking Stats"
@@ -136,7 +175,7 @@ const VendorHome = () => {
         <VisitorsBar
           dataKey1="visited"
           datakey2="wishlist"
-          chartData={visitorsData}
+          chartData={visitors}
           chartConfig={chartVisitorConfig}
         />
       </div>

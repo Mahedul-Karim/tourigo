@@ -28,13 +28,14 @@ const ConfirmationModal: React.FC<Props> = ({
             variant={"outline"}
             className="hover:bg-transparent bg-transparent"
             onClick={onModalClose.bind(null, false)}
+            disabled={isLoading}
           >
             Cancel
           </Button>
           <Button
             disabled={isLoading}
             onClick={onModalAction}
-            className="flex items-center gap-2"
+            className="flex items-center gap-2 bg-primary disabled:bg-disabled hover:bg-primary"
           >
             {isLoading && <SpinnerButton size="size-4" />} Continue
           </Button>

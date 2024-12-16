@@ -6,8 +6,9 @@ import WithdrawBody from './WithdrawBody'
 const WithdrawTable = () => {
   return (
     <GridContainer className="overflow-y-auto">
-      <THead columns="0.4fr 0.3fr 0.3fr 0.2fr 0.1fr">
-        <div>Vendor Name</div>
+      <THead columns="0.4fr 0.3fr 0.3fr 0.3fr 0.2fr 0.1fr">
+        <div>Account</div>
+        <div>Name</div>
         <div>Amount</div>
         <div>Requested At</div>
         <div>Status</div>

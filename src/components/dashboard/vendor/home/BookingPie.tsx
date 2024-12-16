@@ -11,24 +11,24 @@ import {
 import SectionHeading from "../../common/SectionHeading";
 
 const chartData = [
-  { browser: "chrome", visitors: 275, fill: "var(--color-chrome)" },
-  { browser: "safari", visitors: 200, fill: "var(--color-safari)" },
-  { browser: "firefox", visitors: 187, fill: "var(--color-firefox)" },
+  { tour: "tour1", booked: Math.round(Math.random()*275), fill: "var(--color-tour1)" },
+  { tour: "tour2", booked: Math.round(Math.random()*275), fill: "var(--color-tour2)" },
+  { tour: "tour3", booked: Math.round(Math.random()*275), fill: "var(--color-tour3)" },
 ];
 const chartConfig = {
-  visitors: {
-    label: "Visitors",
+  booked: {
+    label: "Booked",
   },
-  chrome: {
-    label: "Chrome",
+  tour1: {
+    label: "tour1",
     color: "var(--primary)",
   },
-  safari: {
-    label: "Safari",
+  tour2: {
+    label: "tour2",
     color: "hsl(var(--chart-2))",
   },
-  firefox: {
-    label: "Firefox",
+  tour3: {
+    label: "tour3",
     color: "hsl(var(--chart-3))",
   },
   
@@ -51,8 +51,8 @@ const BookingPie = () => {
             <Legend verticalAlign="top" />
             <Pie
               data={chartData}
-              dataKey="visitors"
-              nameKey="browser"
+              dataKey="booked"
+              nameKey="tour"
               stroke="0"
             />
           </PieChart>

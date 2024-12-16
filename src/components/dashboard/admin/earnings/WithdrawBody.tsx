@@ -9,8 +9,9 @@ const WithdrawBody = () => {
   return (
     <Grid
       className="items-center text-[14px] text-dark-1 font-medium py-3 px-2"
-      columns="0.4fr 0.3fr 0.3fr 0.2fr 0.1fr"
+      columns="0.4fr 0.3fr 0.3fr 0.3fr 0.2fr 0.1fr"
     >
+      <div>12345678</div>
       <div>John Doe</div>
       <div>
         <p className="text-[13px] text-dark-1 font-medium">

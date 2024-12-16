@@ -24,10 +24,14 @@ model User{
   role Role @default(user)
   status Status @default(available)
   joinedAt DateTime @default(now())
+  availableBalance Int @default(0)
+  
 
   writtenReviews Review[]
   wishlist Wishlist[]
   bookings Booking[]
+  withdraws Withdraw[]
+  bankInfo BankDetails?
  
 }
 
@@ -107,6 +111,30 @@ model Booking{
   createdAt DateTime @default(now())
   isReviewd Boolean @default(false)
 
+}
+
+model Withdraw{
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+
+  userId String @db.ObjectId
+  user User @relation(fields: [userId],references: [id],onDelete:Cascade)
+
+  status String
+  amount Int
+  createdAt DateTime @default(now())
+  accountNumber String
+}
+
+model BankDetails{
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  name String
+  country String
+  swiftCode String
+  bankAcccountNumber String
+  bankHolderName String
+
+  userId String @db.ObjectId @unique
+  user User @relation(fields: [userId],references: [id],onDelete:Cascade)
 }
 
 type Itinerary{
