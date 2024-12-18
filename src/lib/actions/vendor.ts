@@ -148,11 +148,7 @@ const getVendorEarnings = async (userId: string) => {
 
     const withdrawPromise = prisma.withdraw.aggregate({
       where: {
-        userId,
-        status: {
-          equals: "completed",
-          mode: "insensitive",
-        },
+        userId
       },
       _sum: {
         amount: true,
@@ -191,7 +187,7 @@ const getVendorEarnings = async (userId: string) => {
 
     earningObject.availableBalance = !withdrawData._sum.amount
       ? totalEarnings
-      : withdrawData._sum.amount;
+      :totalEarnings - withdrawData._sum.amount;
 
     earningObject.withdrawPending = !withdrawPendingData._sum.amount
       ? 0

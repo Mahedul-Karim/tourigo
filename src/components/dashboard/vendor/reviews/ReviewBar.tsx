@@ -13,9 +13,9 @@ const ReviewBar: React.FC<Props> = ({ totalReviews, label, value }) => {
       <p className="flex items-center gap-1">
         <span>{label}</span> <FaRegStar />
       </p>
-      <div className="h-2.5 xs:h-3 w-full xs:w-[60%] md:w-[40%] rounded-md bg-gray-200 relative overflow-clip">
+      <div className="h-2.5 xs:h-3 w-full xs:w-[60%] md:w-[40%] rounded-md bg-light relative overflow-clip">
         <div
-          className="absolute left-0 top-0 h-full bg-yellow-1"
+          className="absolute left-0 top-0 h-full bg-primary rounded-md"
           style={{
             width: `${Math.round((value / totalReviews) * 100)}%`,
           }}

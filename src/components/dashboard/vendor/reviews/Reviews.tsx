@@ -68,7 +68,7 @@ const Reviews = () => {
         <StatsCard
           Icon={RiMedalLine}
           label="Average Rating"
-          value={avgRatings}
+          value={Math.round(avgRatings)}
         />
         <StatsCard
           Icon={FaRegStar}
