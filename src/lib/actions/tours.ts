@@ -19,7 +19,7 @@ const updateTourStatus = async (updateTo: Status, id: string, path: string) => {
       },
     });
 
-    revalidateTag('allTours');
+    revalidateTag("allTours");
 
     return {
       success: true,
@@ -120,7 +120,7 @@ const allTours = cache(
       const { type, price, duration, rating, search } = queryParams;
 
       const query: any = {
-        status:'approved'
+        status: "approved",
       };
 
       if (type) {
@@ -298,10 +298,49 @@ const updateBookingStatus = async (id: string, status: string) => {
   }
 };
 
+const featuredTours = async () => {
+  try {
+    const tours = await prisma.tour.findMany({
+      select: {
+        tourName: true,
+        id: true,
+        location: true,
+        gallery: {
+          select: {
+            url: true,
+          },
+        },
+        duration: true,
+        price: true,
+        totalRatings: true,
+        overview: true,
+        reviews: {
+          select: {
+            id: true,
+          },
+        },
+      },
+      orderBy: {
+        createdAt: "desc",
+      },
+      take:8
+    });
+
+    return {
+      tours,
+    };
+  } catch (err: any) {
+    return {
+      tours: [],
+    };
+  }
+};
+
 export {
   updateTourStatus,
   adminAllTours,
   allTours,
   getSingleTour,
   updateBookingStatus,
+  featuredTours
 };

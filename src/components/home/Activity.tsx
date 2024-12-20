@@ -3,6 +3,7 @@ import Container from "../common/ui/Container";
 import Heading from "../common/ui/Heading";
 import { ACTIVITY_IMAGES } from "@/lib/data";
 import Image from "next/image";
+import Link from "next/link";
 
 const Activity = () => {
   return (
@@ -11,7 +12,8 @@ const Activity = () => {
         <Heading>Popular things to do</Heading>
         <div className="grid grid-cols-2 xs:grid-cols-3 mt-8 md:grid-cols-6 gap-6">
           {ACTIVITY_IMAGES.map((activity) => (
-            <div
+            <Link
+            href={activity.to}
               key={activity.id}
               className="rounded-lg relative overflow-clip group"
             >
@@ -30,7 +32,7 @@ const Activity = () => {
                   <p className="text-[10px] sm:text-xs">{activity.desc}</p>
                 </div>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       </Container>

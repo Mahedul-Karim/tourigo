@@ -23,36 +23,42 @@ export const ACTIVITY_IMAGES = [
     url: "/assets/activity1.webp",
     title: "City Tours",
     desc: "100+ tours",
+    to: "/tours?type=bus"
   },
   {
     id: 2,
     url: "/assets/activity2.webp",
     title: "Cultural Tours",
     desc: "100+ tours",
+    to: "/tours?type=cultural"
   },
   {
     id: 3,
     url: "/assets/activity3.webp",
     title: "Day Cruises",
     desc: "100+ tours",
+    to: "/tours?type=cruises"
   },
   {
     id: 4,
     url: "/assets/activity4.webp",
     title: "Bus Tours",
     desc: "100+ tours",
+    to: "/tours?type=bus"
   },
   {
     id: 5,
     url: "/assets/activity5.webp",
     title: "Beach Tours",
     desc: "100+ tours",
+    to: "/tours?type=beach"
   },
   {
     id: 6,
     url: "/assets/activity6.webp",
     title: "Food Tours",
     desc: "100+ tours",
+    to: "/tours?type=cultural"
   },
 ];
 
