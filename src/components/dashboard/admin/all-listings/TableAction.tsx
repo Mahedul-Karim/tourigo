@@ -29,9 +29,10 @@ type Props = {
     };
   }[];
   setListings: (val: any) => void;
+  status:string;
 };
 
-const TableAction: React.FC<Props> = ({ id, listings, setListings }) => {
+const TableAction: React.FC<Props> = ({ id, listings, setListings,status }) => {
   const [open, setOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -80,21 +81,21 @@ const TableAction: React.FC<Props> = ({ id, listings, setListings }) => {
         </button>
         {open && (
           <DotMenu>
-            <button
+            {status !== 'approved' && <button
               disabled={isLoading}
               className="hover:bg-background cursor-pointer flex items-center gap-2 disabled:hover:bg-transparent disabled:cursor-not-allowed disabled:opacity-50"
               onClick={handleStatusUpdate.bind(null, "approved")}
             >
               <IoMdCheckmarkCircleOutline className="text-base" /> Approve
-            </button>
-            <button
+            </button>}
+            {status !== 'rejected' && <button
               disabled={isLoading}
               className="hover:bg-background cursor-pointer flex items-center gap-2 disabled:hover:bg-transparent disabled:cursor-not-allowed disabled:opacity-50"
               onClick={handleStatusUpdate.bind(null, "rejected")}
             >
               <RxCross2 className="text-base" />
               Decline
-            </button>
+            </button>}
           </DotMenu>
         )}
       </div>

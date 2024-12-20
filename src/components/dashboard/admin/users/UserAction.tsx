@@ -8,7 +8,11 @@ import { FiTrash } from "react-icons/fi";
 import { IoMdCheckmarkCircleOutline } from "react-icons/io";
 import { RxCross2 } from "react-icons/rx";
 
-const UserAction = () => {
+interface Props{
+  isUserTable:boolean;
+}
+
+const UserAction:React.FC<Props> = ({isUserTable}) => {
   const [open, setOpen] = useState(false);
 
   return (
@@ -18,6 +22,7 @@ const UserAction = () => {
       </button>
       {open && (
         <DotMenu>
+          {!isUserTable && <>
           <div className="hover:bg-background cursor-pointer flex items-center gap-2">
             <IoMdCheckmarkCircleOutline className="text-base" /> Approve
           </div>
@@ -25,6 +30,7 @@ const UserAction = () => {
             <RxCross2 className="text-base" />
             Decline
           </div>
+          </>}
           <div className="hover:bg-background cursor-pointer flex items-center gap-2">
             <MdBlock className="text-base" /> Block
           </div>

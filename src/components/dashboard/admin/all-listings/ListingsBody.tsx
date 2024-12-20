@@ -95,7 +95,7 @@ const ListingsBody: React.FC<Props> = ({
         </Badge>
       </div>
 
-      <TableAction id={id} listings={listings} setListings={setListings} />
+      <TableAction id={id} listings={listings} setListings={setListings} status={status?.toLowerCase()}/>
     </Grid>
   );
 };

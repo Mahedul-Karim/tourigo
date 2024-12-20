@@ -13,7 +13,11 @@ import { useCtx } from "@/context/ContextProvider";
 import { Skeleton } from "@/components/ui/skeleton";
 import { toast } from "sonner";
 
-const Reviews = () => {
+interface Props{
+  isAdmin?:boolean;
+}
+
+const Reviews:React.FC<Props> = ({isAdmin=false}) => {
   const { user } = useCtx();
 
   const [isLoading, setIsLoading] = useState(true);
@@ -22,11 +26,11 @@ const Reviews = () => {
   const [avgRatings, setAvgRatings] = useState<any>(0);
 
   useEffect(() => {
-    if (!user?.id) return;
+    if (!user?.id && !isAdmin) return;
 
     (async () => {
       try {
-        const res = await vendorReviews(user?.id as string);
+        const res = await vendorReviews(user?.id as string,isAdmin);
 
         if (!res.success) {
           throw new Error(res.message);

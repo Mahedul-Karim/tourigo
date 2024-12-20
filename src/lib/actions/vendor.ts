@@ -148,7 +148,7 @@ const getVendorEarnings = async (userId: string) => {
 
     const withdrawPromise = prisma.withdraw.aggregate({
       where: {
-        userId
+        userId,
       },
       _sum: {
         amount: true,
@@ -187,7 +187,7 @@ const getVendorEarnings = async (userId: string) => {
 
     earningObject.availableBalance = !withdrawData._sum.amount
       ? totalEarnings
-      :totalEarnings - withdrawData._sum.amount;
+      : totalEarnings - withdrawData._sum.amount;
 
     earningObject.withdrawPending = !withdrawPendingData._sum.amount
       ? 0
@@ -233,38 +233,51 @@ const requestForWithdraw = async (
   }
 };
 
-const vendorReviews = async (creatorId: string) => {
+const vendorReviews = async (creatorId: string, isAdmin: boolean) => {
   try {
-
-
-    const allReviewPromise = prisma.review.findMany({
-      where:{
-        creatorId
-    },
-    include:{
-      user:{
-        select:{
-          firstName:true,
-          lastName:true,
-          image:true
-        }
-      }
-    }
-    });
+    const allReviewPromise = !isAdmin
+      ? prisma.review.findMany({
+          where: {
+            creatorId,
+          },
+          include: {
+            user: {
+              select: {
+                firstName: true,
+                lastName: true,
+                image: true,
+              },
+            },
+          },
+        })
+      : prisma.review.findMany({
+          include: {
+            user: {
+              select: {
+                firstName: true,
+                lastName: true,
+                image: true,
+              },
+            },
+          },
+        });
 
     const averageRatingPromise = prisma.review.aggregate({
-      where:{
-        creatorId
+      where: {
+        creatorId,
       },
-      _avg:{
-        total:true
-      }
+      _avg: {
+        total: true,
+      },
     });
 
-    const [allReviews,averageRatings] = await Promise.all([allReviewPromise,averageRatingPromise])
+    const [allReviews, averageRatings] = await Promise.all([
+      allReviewPromise,
+      averageRatingPromise,
+    ]);
 
     const data = await Promise.all(
-      [5,4,3,2,1].map(async (num) => {
+      [5, 4, 3, 2, 1].map(async (num) => {
         const res = await prisma.review.count({
           where: {
             creatorId,
@@ -273,7 +286,7 @@ const vendorReviews = async (creatorId: string) => {
         });
         return {
           value: res,
-          label:num
+          label: num,
         };
       })
     );
@@ -282,7 +295,7 @@ const vendorReviews = async (creatorId: string) => {
       success: true,
       data,
       allReviews: allReviews.length === 0 || !allReviews ? [] : allReviews,
-      averageRatings:averageRatings._avg.total
+      averageRatings: averageRatings._avg.total,
     };
   } catch (err: any) {
     return {

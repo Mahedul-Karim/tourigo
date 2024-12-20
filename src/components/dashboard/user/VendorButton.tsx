@@ -44,7 +44,7 @@ const VendorButton: React.FC<Props> = ({ className }) => {
       setUser(data.user);
 
       toast.success("Success!", {
-        description: "Vendor request placed successfully",
+        description: "Vendor account created successfully!",
       });
     } catch (err: any) {
       toast.error("Error!", {
@@ -67,7 +67,7 @@ const VendorButton: React.FC<Props> = ({ className }) => {
         {user?.role === "user" && "Become a vendor"}
 
         {(user?.role === "vendor" || user?.role === "admin") && "Dashboard"}
-        {user?.role === "pending" && "Request Pending"}
+       
       </Button>
     </div>
   );

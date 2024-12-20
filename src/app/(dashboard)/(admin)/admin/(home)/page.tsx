@@ -9,15 +9,9 @@ import { ChartConfig } from "@/components/ui/chart";
 import BookingChart from "@/components/dashboard/vendor/home/BookingChart";
 import SectionHeading from "@/components/dashboard/common/SectionHeading";
 import VisitorsBar from "@/components/dashboard/vendor/home/VisitorsBar";
+import { adminHome } from "@/lib/actions/admin";
+import { formatCurrency } from "@/lib/utils";
 
-const chartData = [
-  { month: "January", joined: 80 },
-  { month: "February", joined: 150 },
-  { month: "March", joined: 100 },
-  { month: "April", joined: 200 },
-  { month: "May", joined: 130 },
-  { month: "June", joined: 140 },
-];
 
 const chartConfig = {
   joined: {
@@ -27,14 +21,6 @@ const chartConfig = {
 } satisfies ChartConfig;
 
 
-const visitorsData = [
-  { month: "January", newCustomers: 186, existingCustomers: 80 },
-  { month: "February", newCustomers: 305, existingCustomers: 200 },
-  { month: "March", newCustomers: 237, existingCustomers: 120 },
-  { month: "April", newCustomers: 73, existingCustomers: 190 },
-  { month: "May", newCustomers: 209, existingCustomers: 130 },
-  { month: "June", newCustomers: 214, existingCustomers: 140 },
-];
 const chartVisitorConfig = {
   newCustomers: {
     label: "New Customers",
@@ -46,21 +32,30 @@ const chartVisitorConfig = {
   },
 } satisfies ChartConfig;
 
-const Page = () => {
+const Page = async () => {
+  const {
+    totalListings,
+    totalUsers,
+    totalVendors,
+    totalEarnings,
+    chartData,
+    visitorsData,
+  } = await adminHome();
+
   return (
     <>
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         <StatsCard
           Icon={HiOutlineClipboardDocumentList}
           label="Total Listing"
-          value="66"
+          value={totalListings}
         />
-        <StatsCard Icon={LuUser2} label="Total Users" value="66" />
-        <StatsCard Icon={LuUserCog} label="Total Vendors" value="66" />
+        <StatsCard Icon={LuUser2} label="Total Users" value={totalUsers} />
+        <StatsCard Icon={LuUserCog} label="Total Vendors" value={totalVendors} />
         <StatsCard
           Icon={HiOutlineCurrencyDollar}
           label="Total Earnings"
-          value="$66,000"
+          value={formatCurrency(totalEarnings)}
         />
       </div>
       {/* <div className="grid md:grid-cols-2 gap-4 mt-6"> */}

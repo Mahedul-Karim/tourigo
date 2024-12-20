@@ -5,10 +5,33 @@ import Grid from "../../common/table/Grid";
 import Image from "next/image";
 import Badge from "@/components/common/ui/Badge";
 import { STATUS } from "@/lib/data";
-import { formatCurrency } from "@/lib/utils";
+import { formatCurrency, formatDate } from "@/lib/utils";
 
-const BookingsBody = () => {
+interface Props {
+  tour: {
+    tourName: string;
+    price: number;
+    gallery: {
+      public_id: string;
+      url: string;
+    }[];
+  };
 
+  id: string;
+  status: string;
+  startDate: Date;
+  endDate: Date;
+  totalPeople: number;
+}
+
+const BookingsBody: React.FC<Props> = ({
+  tour,
+  id,
+  status,
+  startDate,
+  endDate,
+  totalPeople,
+}) => {
   return (
     <>
       <Grid
@@ -16,38 +39,33 @@ const BookingsBody = () => {
         className="text-dark-1 text-[13px] items-center"
       >
         <div className="whitespace-nowrap overflow-clip text-ellipsis">
-          728ed52f
+          {id?.slice(0, 8)}
         </div>
         <div className="flex items-center gap-2">
           <div className="shrink-0">
             <Image
-              src="https://viatour-nextjs.vercel.app/_next/image?url=%2Fimg%2FtourCards%2F1%2F1.png&w=640&q=75"
+              src={tour?.gallery?.[0].url}
               width={50}
               height={50}
               alt=""
               className="rounded-lg aspect-square"
             />
           </div>
-          <p className="line-clamp-2">
-            Phi Phi Islands Adventure Day Trip with Seaview Lunch by V. Marine
-            Tour
-          </p>
+          <p className="line-clamp-2">{tour?.tourName}</p>
         </div>
-        <p>25 Aug, 2025</p>
-        <p>25 Aug, 2025</p>
-        <div>{formatCurrency(2020)}</div>
-        <p>10 People</p>
+        <p>{formatDate(new Date(startDate))}</p>
+        <p>{formatDate(new Date(endDate))}</p>
+        <div>{formatCurrency(tour?.price)}</div>
+        <p>{totalPeople} People</p>
         <div>
           <Badge
-            backgroundColor={STATUS["pending"]?.bg}
-            textColor={STATUS["pending"]?.text}
+            backgroundColor={STATUS[status]?.bg}
+            textColor={STATUS[status]?.text}
           >
-            Pending
+            {status}
           </Badge>
         </div>
-        
       </Grid>
-     
     </>
   );
 };

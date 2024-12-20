@@ -19,7 +19,7 @@ const updateTourStatus = async (updateTo: Status, id: string, path: string) => {
       },
     });
 
-    revalidatePath(path);
+    revalidateTag('allTours');
 
     return {
       success: true,
@@ -110,7 +110,7 @@ const adminAllTours = cache(
   },
   ["adminAllTours"],
   {
-    revalidate: 3600,
+    revalidate: 300,
   }
 );
 
@@ -119,7 +119,9 @@ const allTours = cache(
     try {
       const { type, price, duration, rating, search } = queryParams;
 
-      const query: any = {};
+      const query: any = {
+        status:'approved'
+      };
 
       if (type) {
         query.category = {

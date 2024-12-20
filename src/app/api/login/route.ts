@@ -14,16 +14,15 @@ export const POST = async (req: NextRequest) => {
 
     const userDataPromise = prisma.user.findUnique({
       where: {
-        email: user.email!,
-        status: {
-          not: "blocked",
-        },
+        email: user.email!
+        
       },
       select: {
         id: true,
         firstName: true,
         lastName: true,
         email: true,
+        status:true,
         image: {
           select:{
             url:true
@@ -49,6 +48,10 @@ export const POST = async (req: NextRequest) => {
       tokenPromise,
       userDataPromise,
     ]);
+
+    if(userData?.status === "blocked"){
+      throw new Error('Your account has been blocked')
+    }
 
     cookies().set("userToken", token, {
       expires: Date.now() + 7 * 24 * 60 * 60 * 1000, //7 day from current day
@@ -76,5 +79,15 @@ export const POST = async (req: NextRequest) => {
         }
       );
     }
+
+    return NextResponse.json(
+      {
+        success: false,
+        message: err.message,
+      },
+      {
+        status: 401,
+      }
+    );
   }
 };
