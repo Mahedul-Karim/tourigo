@@ -235,37 +235,29 @@ const requestForWithdraw = async (
 
 const vendorReviews = async (creatorId: string, isAdmin: boolean) => {
   try {
-    const allReviewPromise = !isAdmin
-      ? prisma.review.findMany({
-          where: {
-            creatorId,
+
+    const query:any ={};
+
+    if(!isAdmin){
+      query.creatorId = creatorId
+    }
+
+
+    const allReviewPromise = prisma.review.findMany({
+      where: query,
+      include: {
+        user: {
+          select: {
+            firstName: true,
+            lastName: true,
+            image: true,
           },
-          include: {
-            user: {
-              select: {
-                firstName: true,
-                lastName: true,
-                image: true,
-              },
-            },
-          },
-        })
-      : prisma.review.findMany({
-          include: {
-            user: {
-              select: {
-                firstName: true,
-                lastName: true,
-                image: true,
-              },
-            },
-          },
-        });
+        },
+      },
+    });
 
     const averageRatingPromise = prisma.review.aggregate({
-      where: {
-        creatorId,
-      },
+      where: query,
       _avg: {
         total: true,
       },
@@ -280,7 +272,7 @@ const vendorReviews = async (creatorId: string, isAdmin: boolean) => {
       [5, 4, 3, 2, 1].map(async (num) => {
         const res = await prisma.review.count({
           where: {
-            creatorId,
+            ...query,
             total: num,
           },
         });
