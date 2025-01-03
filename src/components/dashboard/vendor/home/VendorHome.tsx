@@ -103,7 +103,7 @@ const VendorHome = () => {
 
         for (let i = currentMonth - 5; i <= month.length; i++) {
           if (i < 0) {
-            i = month.length  - 5;
+            i = month.length  +i;
           }
 
           if (i === month.length) {
