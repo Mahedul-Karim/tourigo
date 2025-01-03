@@ -101,7 +101,19 @@ const VendorHome = () => {
         const dataArray = [];
         const visitorsArray = [];
 
-        for (let i = currentMonth - 5; i <= currentMonth; i++) {
+        for (let i = currentMonth - 5; i <= month.length; i++) {
+          if (i < 0) {
+            i = month.length  - 5;
+          }
+
+          if (i === month.length) {
+            i = 0;
+          }
+
+          if (dataArray.length === 6 && visitorsArray.length === 6) {
+            break;
+          }
+
           const chartObject = {
             month: month[i],
             booked: Math.round(Math.random() * 300),
@@ -135,6 +147,7 @@ const VendorHome = () => {
 
   return (
     <>
+      
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         <StatsCard
           Icon={CiWallet}

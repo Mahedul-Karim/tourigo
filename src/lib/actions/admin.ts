@@ -59,7 +59,21 @@ const adminHome = async () => {
     const chartData = [];
     const visitorsData = [];
 
-    for (let i = currentMonth - 5; i <= currentMonth; i++) {
+    for (let i = currentMonth - 5; i <= month.length; i++) {
+      if (i < 0) {
+        i = month.length  - 5;
+      }
+
+      if (i === month.length) {
+        i = 0;
+      }
+
+      if (chartData.length === 6 && visitorsData.length === 6) {
+        break;
+      }
+
+
+
       const chartObject = {
         month: month[i],
         joined: Math.round(Math.random() * 300),
