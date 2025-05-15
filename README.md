@@ -1,5 +1,3 @@
-## Logo
-
 <p align="center">
   <img src="https://i.ibb.co.com/xSLrhTxk/tourigo.png" alt="Tourigo Logo" width="150">
 </p>
@@ -37,3 +35,4 @@ https://tourigo.vercel.app/
 - **ShadCN UI:** - Used shadcn UI for pre built ui components.
 - **React Hook Form:** - For handles form accross the application.
 - **Zod:** - Used for handle input validations
+- **Prisma:** - To handle database easily
